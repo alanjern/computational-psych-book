@@ -110,7 +110,7 @@ P(x|h) = \begin{cases}
 where <span class="math inline">\(|h|\)</span> is the <em>size</em> of <span class="math inline">\(h\)</span>, i.e., the number of values contained in <span class="math inline">\(h\)</span>. If you have multiple observations <span class="math inline">\(X = \{x_1, x_2, \ldots, x_n \}\)</span>, then <span class="math inline">\(P(X|h) = (1/|h|)^n\)</span>. This is because we will assume each sample is independent like a coin flip.</p>
 <p>The result of the strong sampling assumption is the <em>size principle</em>: among hypotheses that include all of the observed examples, those that are smallest will receive higher posterior probability because they will have higher likelihoods.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-20"></span>
+<span style="display:block;" id="fig:unnamed-chunk-40"></span>
 <img src="images/03/hypotheses.png" alt="Sample hypotheses. The thickness of the lines indicates their likelihood, depicting the size principle. Image from Griffiths &amp; Tenenbaum (2001)." width="90%"><p class="caption">
 Figure 4.1: Sample hypotheses. The thickness of the lines indicates their likelihood, depicting the size principle. Image from Griffiths &amp; Tenenbaum (2001).
 </p>
@@ -201,7 +201,7 @@ Horses have blicketitis</code></pre>
 <p>There are several approaches for computing the similarity between two clusters that contain multiple animals. For example, you might use the maximum similarity between any pair of individual animals in the two clusters.</p>
 <p>The results of this algorithm can be represented as a tree, shown below. Each node in the tree represents a cluster. The hypotheses we will consider will be any combination of 1, 2, or 3 of the clusters determined using the clustering algorithm.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-21"></span>
+<span style="display:block;" id="fig:unnamed-chunk-41"></span>
 <img src="images/03/animal_clusters.png" alt="The tree of animal species. Image from Sanjana &amp; Tenenbaum (2002)." width="90%"><p class="caption">
 Figure 4.2: The tree of animal species. Image from Sanjana &amp; Tenenbaum (2002).
 </p>
@@ -220,13 +220,55 @@ where <span class="math inline">\(k\)</span> is the number of clusters in <span 
 <p>Once again, we will make the <a href="generalization.html#sampling-assumptions">strong sampling assumption</a> for the likelihood. This time, <span class="math inline">\(|h|\)</span> is the number of animal species in <span class="math inline">\(h\)</span> and <span class="math inline">\(n\)</span> is the number of examples in the premises.</p>
 <p>A consequence of both of these assumptions is something like <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam’s razor</a> which says that the simplest explanation should be preferred. This model will assign 0 likelihood to any hypotheses that don’t include <span class="math inline">\(X\)</span>, thus narrowing the hypothesis space down to just hypotheses that are possible. Of those, it will favor hypotheses with fewer clusters and with fewer animals. In other words, it will favor the simplest hypotheses that are consistent with the examples we’ve seen.</p>
 </div>
-<div id="results" class="section level3" number="4.3.3">
+<div id="try-out-the-model-yourself" class="section level3" number="4.3.3">
 <h3>
-<span class="header-section-number">4.3.3</span> Results<a class="anchor" aria-label="anchor" href="#results"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3.3</span> Try out the model yourself<a class="anchor" aria-label="anchor" href="#try-out-the-model-yourself"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can try out a running version of the model by making a copy of the <a href="https://colab.research.google.com/drive/1QIhYLYMcNXjrRQBXKRz9CZ4xMirzqcsp?usp=sharing">code here</a>. Here, let’s look at how the model handles a few specific cases.</p>
+<p>Let’s start with a single example: horses can get blicketitis.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="generalization.html#cb38-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>])</span></code></pre></div>
+<pre><code>## array([1.        , 0.52984834, 0.30628906, 0.30628906, 0.19579428,
+##        0.19579428, 0.12893614, 0.12893614, 0.0842413 , 0.0842413 ])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672"></div>
+<p>Here, we see a standard generalization curve. Now, let’s add a few more animals.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="generalization.html#cb40-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>])</span></code></pre></div>
+<pre><code>## array([1.        , 1.        , 0.57379051, 0.57379051, 0.47852518,
+##        0.47852518, 1.        , 0.60980466, 0.1707609 , 0.1707609 ])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-44-3.png" width="672"></div>
+<p>Now the model has increased probability for most other animals. This makes sense because there is more reason to think blicketitis might affect lots of different animals.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="generalization.html#cb42-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>])</span></code></pre></div>
+<pre><code>## array([1.        , 1.        , 0.64983602, 0.64983602, 0.58531333,
+##        0.58531333, 1.        , 1.        , 0.18405475, 0.18405475])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-45-5.png" width="672"></div>
+<p>Adding a squirrel further supported this idea. But what if we add additional examples of animals we’ve already seen?</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="generalization.html#cb44-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>, <span class="st">"horse"</span>, <span class="st">"squirrel"</span>])</span></code></pre></div>
+<pre><code>## array([1.        , 1.        , 0.32551484, 0.32551484, 0.26938358,
+##        0.26938358, 1.        , 1.        , 0.06883892, 0.06883892])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-46-7.png" width="672"></div>
+<p>Now the probabilities for other animals drop, because it’s starting to look like maybe this disease only affects the four animals we’ve seen so far.</p>
+<p>To sum up, when we’ve seen a small number of examples, like a single horse, the model will generally prefer simpler hypotheses. But once we’ve seen more data, it will favor more complex hypotheses (like a group of animals from two separate evolutionary clusters) if the data support it.</p>
+<p>As one final example, let’s look at the specific impact of multiple examples of a single animal.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="generalization.html#cb46-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>])</span></code></pre></div>
+<pre><code>## array([0.22011594, 0.22011594, 0.22011594, 0.22011594, 0.46663258,
+##        1.        , 0.13668495, 0.13668495, 0.08643809, 0.08643809])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-47-9.png" width="672"></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="generalization.html#cb48-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>])</span></code></pre></div>
+<pre><code>## array([0.06236149, 0.06236149, 0.06236149, 0.06236149, 0.2473422 ,
+##        1.        , 0.03994508, 0.03994508, 0.02971748, 0.02971748])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-47-10.png" width="672"></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="generalization.html#cb50-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>])</span></code></pre></div>
+<pre><code>## array([0.01730482, 0.01730482, 0.01730482, 0.01730482, 0.1259028 ,
+##        1.        , 0.01270155, 0.01270155, 0.01111944, 0.01111944])</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-47-11.png" width="672"></div>
+<p>Here, we see that the model becomes increasingly confident that the property is unique to gorillas. This makes intuitive sense and it’s something that people seem to exhibit in their judgments. But, as they point out in the paper, it’s not something that non-probabilistic models can easily explain.</p>
+</div>
+<div id="results" class="section level3" number="4.3.4">
+<h3>
+<span class="header-section-number">4.3.4</span> Results<a class="anchor" aria-label="anchor" href="#results"><i class="fas fa-link"></i></a>
 </h3>
 <p>The results in the paper show that this model predicts people’s judgments quite well, better than alternative models that do not rely on Bayesian inference. These results suggest that the assumptions of the model are very similar to the assumptions that people make when making inductive generalizations.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-22"></span>
+<span style="display:block;" id="fig:unnamed-chunk-48"></span>
 <img src="images/03/st_results.png" alt="Comparison between model results and human judgments. Image from Sanjana &amp; Tenenbaum (2002)." width="90%"><p class="caption">
 Figure 4.3: Comparison between model results and human judgments. Image from Sanjana &amp; Tenenbaum (2002).
 </p>
@@ -255,7 +297,8 @@ Figure 4.3: Comparison between model results and human judgments. Image from San
 <a class="nav-link" href="#inductive-generalizations-about-animal-properties"><span class="header-section-number">4.3</span> Inductive generalizations about animal properties 🐴</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#hypothesis-space"><span class="header-section-number">4.3.1</span> Hypothesis space</a></li>
 <li><a class="nav-link" href="#the-model"><span class="header-section-number">4.3.2</span> The model</a></li>
-<li><a class="nav-link" href="#results"><span class="header-section-number">4.3.3</span> Results</a></li>
+<li><a class="nav-link" href="#try-out-the-model-yourself"><span class="header-section-number">4.3.3</span> Try out the model yourself</a></li>
+<li><a class="nav-link" href="#results"><span class="header-section-number">4.3.4</span> Results</a></li>
 </ul>
 </li>
 </ul>
@@ -274,7 +317,7 @@ Figure 4.3: Comparison between model results and human judgments. Image from San
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-03-05.</p>
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-03-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
