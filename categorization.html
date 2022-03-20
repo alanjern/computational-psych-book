@@ -45,6 +45,7 @@
 <li><a class="" href="generalization.html"><span class="header-section-number">4</span> Generalization</a></li>
 <li><a class="active" href="categorization.html"><span class="header-section-number">5</span> Categorization</a></li>
 <li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
+<li><a class="" href="sampling-assumptions-1.html"><span class="header-section-number">7</span> Sampling assumptions</a></li>
 </ul>
 
         <div class="book-extra">
@@ -92,13 +93,13 @@
 </ol>
 <p>For example, in Robert Nosofsky’s (1986) test of the GCM<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Nosofsky, R. M. (1986). Attention, similarity, and the identification-categorization relationship. Journal of Experimental Psychology: General, 115(1), 39-57.&lt;/p&gt;"><sup>3</sup></a>, the stimuli were semicircles with lines through them. The two feature dimensions were (1) circle size and (2) line orientation. Each feature had four possible values.</p>
 <p>Using our binary matrix representation, here is one possible stimulus from the Nosofsky experiment:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="categorization.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb52-2"><a href="categorization.html#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="categorization.html#cb52-3" aria-hidden="true" tabindex="-1"></a>stimulus <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb52-4"><a href="categorization.html#cb52-4" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb52-5"><a href="categorization.html#cb52-5" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb52-6"><a href="categorization.html#cb52-6" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
-<span id="cb52-7"><a href="categorization.html#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stimulus)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="categorization.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb54-2"><a href="categorization.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="categorization.html#cb54-3" aria-hidden="true" tabindex="-1"></a>stimulus <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb54-4"><a href="categorization.html#cb54-4" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb54-5"><a href="categorization.html#cb54-5" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb54-6"><a href="categorization.html#cb54-6" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb54-7"><a href="categorization.html#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stimulus)</span></code></pre></div>
 <pre><code>## [[0 0 0 0]
 ##  [0 0 0 0]
 ##  [0 0 1 0]
@@ -106,28 +107,28 @@
 <p>The Nosofksy stimuli are pretty simple: They can have exactly one value on each dimension, so this representation will always only have a single 1 in the matrix.</p>
 <p>If we wanted to know how many of each stimulus to present our model, it would be pretty cumbersome to maintain a long list of arrays like this one. So we could instead maintain a single matrix that stores counts of stimuli. That is, the values at each element will represent the number of stimuli observed with those feature values.</p>
 <p>For example, let’s consider the “dimensional” condition of Nosofsky’s experiment, in which subjects saw only the stimuli on the “diagonals” of the matrix. Let’s assume they saw each one 100 times (actually, they did a mind-numbing 1200 trials after 2600 practice trials 🥴). We could represent that like so:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="categorization.html#cb54-1" aria-hidden="true" tabindex="-1"></a>training_set <span class="op">=</span> np.array([[<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">100</span>],</span>
-<span id="cb54-2"><a href="categorization.html#cb54-2" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>],</span>
-<span id="cb54-3"><a href="categorization.html#cb54-3" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>],</span>
-<span id="cb54-4"><a href="categorization.html#cb54-4" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">100</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
-<span id="cb54-5"><a href="categorization.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(training_set)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="categorization.html#cb56-1" aria-hidden="true" tabindex="-1"></a>training_set <span class="op">=</span> np.array([[<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">100</span>],</span>
+<span id="cb56-2"><a href="categorization.html#cb56-2" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>],</span>
+<span id="cb56-3"><a href="categorization.html#cb56-3" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>],</span>
+<span id="cb56-4"><a href="categorization.html#cb56-4" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">100</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb56-5"><a href="categorization.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(training_set)</span></code></pre></div>
 <pre><code>## [[100   0   0 100]
 ##  [  0 100 100   0]
 ##  [  0 100 100   0]
 ##  [100   0   0 100]]</code></pre>
 <p>This still isn’t ideal though. Because it doesn’t represent the category labels that subjects got during their training. We don’t know which examples belonged to which categories.</p>
 <p>Thinking ahead to how the GCM works, let’s instead represent the training examples more like a list, so that we can iterate through them:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="categorization.html#cb56-1" aria-hidden="true" tabindex="-1"></a>tDimensional <span class="op">=</span> np.zeros((<span class="dv">8</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="bu">int</span>)</span>
-<span id="cb56-2"><a href="categorization.html#cb56-2" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">0</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]</span>
-<span id="cb56-3"><a href="categorization.html#cb56-3" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">1</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>]</span>
-<span id="cb56-4"><a href="categorization.html#cb56-4" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">2</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>]</span>
-<span id="cb56-5"><a href="categorization.html#cb56-5" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">3</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>]</span>
-<span id="cb56-6"><a href="categorization.html#cb56-6" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">4</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>]</span>
-<span id="cb56-7"><a href="categorization.html#cb56-7" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">5</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span>
-<span id="cb56-8"><a href="categorization.html#cb56-8" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">6</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
-<span id="cb56-9"><a href="categorization.html#cb56-9" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">7</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>]</span>
-<span id="cb56-10"><a href="categorization.html#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-11"><a href="categorization.html#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tDimensional)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="categorization.html#cb58-1" aria-hidden="true" tabindex="-1"></a>tDimensional <span class="op">=</span> np.zeros((<span class="dv">8</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb58-2"><a href="categorization.html#cb58-2" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">0</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb58-3"><a href="categorization.html#cb58-3" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">1</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>]</span>
+<span id="cb58-4"><a href="categorization.html#cb58-4" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">2</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>]</span>
+<span id="cb58-5"><a href="categorization.html#cb58-5" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">3</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>]</span>
+<span id="cb58-6"><a href="categorization.html#cb58-6" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">4</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>]</span>
+<span id="cb58-7"><a href="categorization.html#cb58-7" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">5</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb58-8"><a href="categorization.html#cb58-8" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">6</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
+<span id="cb58-9"><a href="categorization.html#cb58-9" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">7</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>]</span>
+<span id="cb58-10"><a href="categorization.html#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-11"><a href="categorization.html#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tDimensional)</span></code></pre></div>
 <pre><code>## [[1 1 1]
 ##  [1 2 2]
 ##  [1 3 2]
@@ -138,7 +139,7 @@
 ##  [2 4 4]]</code></pre>
 <p>In this format, each row of the matrix is an array with three elements. The first element is the category label: 1 or 2. The second two elements are the indices into the stimulus matrix. <strong>Note: Here I’ve deviated from Python norms to be consistent with the numbering in the table in the original Nosofsky paper, shown below. When working with the model, remember that indexing in Python starts with 0.</strong></p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-52"></span>
+<span style="display:block;" id="fig:unnamed-chunk-32"></span>
 <img src="images/04/dimensional_table.png" alt="Training examples from the dimensional condition. Image from Nosofsky (1986)." width="50%"><p class="caption">
 Figure 5.1: Training examples from the dimensional condition. Image from Nosofsky (1986).
 </p>

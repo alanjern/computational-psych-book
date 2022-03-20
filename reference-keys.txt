@@ -1,11 +1,12 @@
-fig:unnamed-chunk-22
-fig:unnamed-chunk-23
-fig:unnamed-chunk-40
-fig:unnamed-chunk-41
-fig:unnamed-chunk-48
-fig:unnamed-chunk-52
+fig:unnamed-chunk-2
+fig:unnamed-chunk-3
+fig:unnamed-chunk-20
+fig:unnamed-chunk-21
+fig:unnamed-chunk-28
+fig:unnamed-chunk-32
 eq:gcm1
-fig:unnamed-chunk-53
+fig:unnamed-chunk-33
+fig:unnamed-chunk-44
 preface
 thanks
 license
@@ -54,4 +55,5 @@ conjugate-distributions
 parameter-estimation
 overhypotheses
 the-shape-bias
-kemp-et-al-introduction-and-results
+modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning
+sampling-assumptions-1

@@ -45,6 +45,7 @@
 <li><a class="" href="generalization.html"><span class="header-section-number">4</span> Generalization</a></li>
 <li><a class="" href="categorization.html"><span class="header-section-number">5</span> Categorization</a></li>
 <li><a class="active" href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
+<li><a class="" href="sampling-assumptions-1.html"><span class="header-section-number">7</span> Sampling assumptions</a></li>
 </ul>
 
         <div class="book-extra">
@@ -62,7 +63,7 @@
 <span class="header-section-number">6.1</span> The Beta-Binomial model 🪙<a class="anchor" aria-label="anchor" href="#the-beta-binomial-model"><i class="fas fa-link"></i></a>
 </h2>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-53"></span>
+<span style="display:block;" id="fig:unnamed-chunk-33"></span>
 <img src="images/05/coin-in-hand.jpg" alt="Photo by ZSun Fu on Unsplash." width="75%"><p class="caption">
 Figure 6.1: Photo by ZSun Fu on Unsplash.
 </p>
@@ -86,37 +87,35 @@ P(d|\theta) = P(k|\theta,n) &amp;= \text{Bin}(k; n, \theta) \\
 P(\theta) = \text{Beta}(\theta;\alpha,\beta)
 \]</span></p>
 <p>The <a href="https://en.wikipedia.org/wiki/Beta_distribution">Beta distribution</a> has two parameters: <span class="math inline">\(\alpha &gt; 0\)</span> and <span class="math inline">\(\beta &gt; 0\)</span>. Let’s create a function that will allow us to visualize the Beta distribution.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="hierarchical-generalization.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb58-2"><a href="hierarchical-generalization.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb58-3"><a href="hierarchical-generalization.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb58-4"><a href="hierarchical-generalization.html#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-5"><a href="hierarchical-generalization.html#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_beta(a, b):</span>
-<span id="cb58-6"><a href="hierarchical-generalization.html#cb58-6" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">1</span>,num<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb58-7"><a href="hierarchical-generalization.html#cb58-7" aria-hidden="true" tabindex="-1"></a>  px <span class="op">=</span> stats.beta.pdf(x, a, b)</span>
-<span id="cb58-8"><a href="hierarchical-generalization.html#cb58-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb58-9"><a href="hierarchical-generalization.html#cb58-9" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb58-10"><a href="hierarchical-generalization.html#cb58-10" aria-hidden="true" tabindex="-1"></a>  ax.plot(x, px)</span>
-<span id="cb58-11"><a href="hierarchical-generalization.html#cb58-11" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="hierarchical-generalization.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb60-2"><a href="hierarchical-generalization.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb60-3"><a href="hierarchical-generalization.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb60-4"><a href="hierarchical-generalization.html#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="hierarchical-generalization.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_beta(a, b):</span>
+<span id="cb60-6"><a href="hierarchical-generalization.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">1</span>,num<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb60-7"><a href="hierarchical-generalization.html#cb60-7" aria-hidden="true" tabindex="-1"></a>  px <span class="op">=</span> stats.beta.pdf(x, a, b)</span>
+<span id="cb60-8"><a href="hierarchical-generalization.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb60-9"><a href="hierarchical-generalization.html#cb60-9" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb60-10"><a href="hierarchical-generalization.html#cb60-10" aria-hidden="true" tabindex="-1"></a>  ax.plot(x, px)</span>
+<span id="cb60-11"><a href="hierarchical-generalization.html#cb60-11" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code></pre></div>
 <p><code>plot_beta</code> takes two arguments: <code>a</code> (<span class="math inline">\(\alpha\)</span>), and <code>b</code>(<span class="math inline">\(\beta\)</span>) and plots a Beta distribution with those parameter values.</p>
 <p>Let’s see what it looks like with a few different values.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="hierarchical-generalization.html#cb59-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">1</span>,<span class="dv">1</span>)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672"></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="hierarchical-generalization.html#cb61-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">1</span>,<span class="dv">1</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672"></div>
 <p>When <span class="math inline">\(\alpha = \beta = 1\)</span>, the Beta distribution is identical to a Uniform(<span class="math inline">\([0,1]\)</span>) distribution.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="hierarchical-generalization.html#cb60-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">3</span>,<span class="dv">3</span>)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-56-3.png" width="672"></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="hierarchical-generalization.html#cb62-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">3</span>,<span class="dv">3</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-36-3.png" width="672"></div>
 <p>When <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are greater than 1 and equal, we get a distribution with a peak around 0.5. If we had strong prior expectations that the coin was unbiased, we could increase the parameters even more:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="hierarchical-generalization.html#cb61-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">50</span>,<span class="dv">50</span>)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-57-5.png" width="672"></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="hierarchical-generalization.html#cb63-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">50</span>,<span class="dv">50</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-37-5.png" width="672"></div>
 <p>What about when <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are not equal?</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="hierarchical-generalization.html#cb62-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">4</span>,<span class="dv">2</span>)</span></code></pre></div>
-<div class="inline-figure">
-<img src="_main_files/figure-html/unnamed-chunk-58-7.png" width="672">
-This allows us to capture skewed priors, perhaps capturing a belief that the coin has a specific bias.</div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="hierarchical-generalization.html#cb64-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">4</span>,<span class="dv">2</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-38-7.png" width="672"></div>
+<p>This allows us to capture skewed priors, perhaps capturing a belief that the coin has a specific bias.</p>
 <p>Now, what if <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are less than 1?</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="hierarchical-generalization.html#cb63-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="fl">0.5</span>,<span class="fl">0.5</span>)</span></code></pre></div>
-<div class="inline-figure">
-<img src="_main_files/figure-html/unnamed-chunk-59-9.png" width="672">
-This might capture the belief that the coin is strongly biased, but we aren’t sure in which direction.</div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="hierarchical-generalization.html#cb65-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="fl">0.5</span>,<span class="fl">0.5</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-39-9.png" width="672"></div>
+<p>This might capture the belief that the coin is strongly biased, but we aren’t sure in which direction.</p>
 <div id="conjugate-distributions" class="section level3" number="6.1.1">
 <h3>
 <span class="header-section-number">6.1.1</span> Conjugate distributions<a class="anchor" aria-label="anchor" href="#conjugate-distributions"><i class="fas fa-link"></i></a>
@@ -125,7 +124,7 @@ This might capture the belief that the coin is strongly biased, but we aren’t 
 <p><span class="math display">\[
 P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 \]</span></p>
-<p>The parameters of the posterior distribution are (1) the sum of <span class="math inline">\(\alpha\)</span> from the prior and the number of observed heads and (2) the sum of <span class="math inline">\(\beta\)</span> from the prior and the number of observed tails. This means that the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of the Beta prior have a natural interpretation as “virtual’’ flips.” For example, the larger <span class="math inline">\(\alpha\)</span> is compared to <span class="math inline">\(\beta\)</span>, the more biased toward heads we expect <span class="math inline">\(\theta\)</span> to be. Additionally, the larger <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are, the more certain (less diffuse) the prior is.</p>
+<p>The parameters of the posterior distribution are (1) the sum of <span class="math inline">\(\alpha\)</span> from the prior and the number of observed heads and (2) the sum of <span class="math inline">\(\beta\)</span> from the prior and the number of observed tails. This means that the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of the Beta prior have a natural interpretation as “virtual flips.” For example, the larger <span class="math inline">\(\alpha\)</span> is compared to <span class="math inline">\(\beta\)</span>, the more biased toward heads we expect <span class="math inline">\(\theta\)</span> to be. Additionally, the larger <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are, the more certain (less diffuse) the prior is.</p>
 </div>
 <div id="parameter-estimation" class="section level3" number="6.1.2">
 <h3>
@@ -133,53 +132,56 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 </h3>
 <p>Because we used a conjugate distribution, we can use our same <code>plot_beta</code> function to generate posterior probability distributions after some coin flips.</p>
 <p>Suppose we start with a fairly strong belief that a coin is fair, represented by this distribution:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="hierarchical-generalization.html#cb64-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span>,<span class="dv">30</span>)</span></code></pre></div>
-<div class="inline-figure">
-<img src="_main_files/figure-html/unnamed-chunk-60-11.png" width="672">
-Now, suppose you flip a coin 20 times and it comes up heads every time. What should you think about the bias of the coin now? According to our model:</div>
-<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="hierarchical-generalization.html#cb65-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">30</span>)</span></code></pre></div>
-<div class="inline-figure">
-<img src="_main_files/figure-html/unnamed-chunk-61-13.png" width="672">
-As you can see, this should cause you to shift your beliefs somewhat.</div>
-<p>This wasn’t totally realistic, though. If you picked a coin off the ground, your prior beliefs about it being bias would probably look more like this:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="hierarchical-generalization.html#cb66-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span>,<span class="dv">2000</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-62-15.png" width="672">
-What happens if we <em>now</em> flipped this coin 20 times and it came up heads every time?</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="hierarchical-generalization.html#cb67-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">2000</span>)</span></code></pre></div>
-<div class="inline-figure">
-<img src="_main_files/figure-html/unnamed-chunk-63-17.png" width="672">
-You might be mildly surprised, but those 20 flips wouldn’t be enough to budge your estimate about the bias of the coin by much.</div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="hierarchical-generalization.html#cb66-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span>,<span class="dv">30</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-40-11.png" width="672"></div>
+<p>Now, suppose you flip a coin 20 times and it comes up heads every time. What should you think about the bias of the coin now? According to our model:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="hierarchical-generalization.html#cb67-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">30</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-41-13.png" width="672"></div>
+<p>As you can see, this should cause you to shift your beliefs somewhat.</p>
+<p>This wasn’t totally realistic, though. If you picked a coin off the ground, your prior beliefs about it being biased would probably look more like this:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="hierarchical-generalization.html#cb68-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span>,<span class="dv">2000</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-42-15.png" width="672"></div>
+<p>What happens if we <em>now</em> flipped this coin 20 times and it came up heads every time?</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="hierarchical-generalization.html#cb69-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">2000</span>)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-43-17.png" width="672"></div>
+<p>You might be mildly surprised, but those 20 flips wouldn’t be enough to budge your estimate about the bias of the coin by much.</p>
 </div>
 </div>
 <div id="overhypotheses" class="section level2" number="6.2">
 <h2>
-<span class="header-section-number">6.2</span> Overhypotheses<a class="anchor" aria-label="anchor" href="#overhypotheses"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2</span> Overhypotheses 🙆<a class="anchor" aria-label="anchor" href="#overhypotheses"><i class="fas fa-link"></i></a>
 </h2>
-<p>Flip 19 coins in a row and they all come up heads. What is the probability that the 20th coin comes up heads. Is it higher than 0.5. Why?</p>
+<p>Now consider a slightly different situation. You flip 19 different coins in a row, each one time, and they all come up heads. Now you pick up a 20th coin from the same bag as the previous 19 coins. What do you think is the probability of that 20th coin coming up heads? Is it higher than 0.5?</p>
+<p>If you answered yes, it’s probably because you formed an <em>overhypothesis</em> about the bias of the coins. After flipping all those coins, you may have concluded that this particular set of coins is more likely than usual to be biased. As a result, your estimate about the probability of the 20th coin coming up heads was higher than it otherwise would be.</p>
 <div id="the-shape-bias" class="section level3" number="6.2.1">
 <h3>
 <span class="header-section-number">6.2.1</span> The shape bias<a class="anchor" aria-label="anchor" href="#the-shape-bias"><i class="fas fa-link"></i></a>
 </h3>
+<p>This coins example is pretty artificial, but the notion of overhypotheses is one that you find in language learning. A phenomenon known as <a href="https://doi.org/10.1016/0885-2014(88)90014-7">the shape bias</a> refers to the fact that even young children are more likely to generalize a new word based on its shape rather than other properties like color or texture.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-44"></span>
+<img src="images/05/shape_bias.gif" alt="A common task used to test for the shape bias."><p class="caption">
+Figure 6.2: A common task used to test for the shape bias.
+</p>
+</div>
+<p>This makes sense because objects tend to have common shapes and are less likely to have common colors or textures.</p>
+</div>
+<div id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="section level3" number="6.2.2">
+<h3>
+<span class="header-section-number">6.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning<a class="anchor" aria-label="anchor" href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><i class="fas fa-link"></i></a>
+</h3>
+<p>Charles Kemp, Andy Perfors, and Josh Tenenbaum developed <a href="http://www.charleskemp.com/papers/KempPTDevSci.pdf">a model</a> of this kind of learning. They focused on bags of black and white marbles rather than flipping coins. They imagine a problem in which you have many bags of marbles that you draw from. After drawing from many bags, you draw a single marble from a new bag and make a prediction about the proportion of black and white marbles in that bag.</p>
+<p>The details of the model are outside the scope of this book. But the basic idea is that the model learns at two levels simultaneously. At the higher level, the model learns the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of a Beta distribution that characterizes the proportion of black and white marbles in each bag. As we saw above, a Beta distribution can have a peak around a particular proportion, or it can be peaked around both 0 and 1, meaning that each bag is likely to be nearly all black or all white.</p>
+<p>At the lower level, the model learns the specific distribution of marbles within a bag. If you draw 20 marbles and 5 of them are black, you may have some uncertainty about the overall proportion in the bag, but your best estimate will be around 5/20 or 1/4.</p>
+<p>Where the model excels is being able to draw inferences <em>across</em> bags. If you see many bags that are full of <em>only</em> black or <em>only</em> white marbles, and then you draw a single black marble out of a new bag, you are likely to be very confident that the rest of the marbles in that bag are black.</p>
+<p>But if you see many bags that have mixed proportions of black and white marbles, and then you draw a single black marble out of a new bag, you will be far less confident about the proportion of black marbles in that bag. A model that doesn’t make inferences at multiple levels would struggle to draw this distinction.</p>
+
 </div>
 </div>
-<div id="kemp-et-al-introduction-and-results" class="section level2" number="6.3">
-<h2>
-<span class="header-section-number">6.3</span> Kemp et al introduction and results<a class="anchor" aria-label="anchor" href="#kemp-et-al-introduction-and-results"><i class="fas fa-link"></i></a>
-</h2>
-
 </div>
-</div>
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="categorization.html"><span class="header-section-number">5</span> Categorization</a></div>
-<div class="empty"></div>
+<div class="next"><a href="sampling-assumptions-1.html"><span class="header-section-number">7</span> Sampling assumptions</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -191,9 +193,11 @@ You might be mildly surprised, but those 20 flips wouldn’t be enough to budge 
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#overhypotheses"><span class="header-section-number">6.2</span> Overhypotheses</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-shape-bias"><span class="header-section-number">6.2.1</span> The shape bias</a></li></ul>
+<a class="nav-link" href="#overhypotheses"><span class="header-section-number">6.2</span> Overhypotheses 🙆</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-shape-bias"><span class="header-section-number">6.2.1</span> The shape bias</a></li>
+<li><a class="nav-link" href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><span class="header-section-number">6.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning</a></li>
+</ul>
 </li>
-<li><a class="nav-link" href="#kemp-et-al-introduction-and-results"><span class="header-section-number">6.3</span> Kemp et al introduction and results</a></li>
 </ul>
 
       <div class="book-extra">
