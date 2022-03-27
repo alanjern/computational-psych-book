@@ -6,18 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 7 Sampling assumptions | Computational Psychology in Python</title>
 <meta name="author" content="Alan Jern">
-<meta name="description" content="I haven’t written this chapter yet, okay? Geez, get off my back.">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="description" content="So far, we’ve seen where strong sampling was a logical assumption to make. But it isn’t always. For example, consider the hormone problem from Chapter 4. If you were randomly testing people’s...">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Sampling assumptions | Computational Psychology in Python">
 <meta property="og:type" content="book">
-<meta property="og:description" content="I haven’t written this chapter yet, okay? Geez, get off my back.">
+<meta property="og:description" content="So far, we’ve seen where strong sampling was a logical assumption to make. But it isn’t always. For example, consider the hormone problem from Chapter 4. If you were randomly testing people’s...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Sampling assumptions | Computational Psychology in Python">
-<meta name="twitter:description" content="I haven’t written this chapter yet, okay? Geez, get off my back.">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:description" content="So far, we’ve seen where strong sampling was a logical assumption to make. But it isn’t always. For example, consider the hormone problem from Chapter 4. If you were randomly testing people’s...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -38,15 +41,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Preface</a></li>
-<li><a class="" href="intro.html"><span class="header-section-number">2</span> Why computational modeling?</a></li>
-<li><a class="" href="bayes.html"><span class="header-section-number">3</span> Bayesian inference</a></li>
-<li><a class="" href="generalization.html"><span class="header-section-number">4</span> Generalization</a></li>
-<li><a class="" href="categorization.html"><span class="header-section-number">5</span> Categorization</a></li>
-<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
-<li><a class="active" href="sampling-assumptions-1.html"><span class="header-section-number">7</span> Sampling assumptions</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 7</span> Sampling assumptions</a></li></ul>
 
         <div class="book-extra">
           
@@ -57,23 +52,62 @@
 <h1>
 <span class="header-section-number">7</span> Sampling assumptions<a class="anchor" aria-label="anchor" href="#sampling-assumptions-1"><i class="fas fa-link"></i></a>
 </h1>
-<p>I haven’t written this chapter yet, okay? Geez, get off my back.</p>
+<p>So far, we’ve seen where <a href="generalization.html#sampling-assumptions">strong sampling</a> was a logical assumption to make. But it isn’t always.</p>
+<p>For example, consider <a href="generalization.html#hormones">the hormone problem from Chapter 4</a>. If you were randomly testing people’s hormone levels and every person just happened to be healthy, clearly strong sampling wouldn’t be appropriate, because we were sampling from the full population of both healthy and unhealthy people.</p>
+<p>This raises a question: Are people sensitive to the process by which data are sampled?</p>
+<p><em>Spoiler alert: Yes.</em></p>
+<div id="word-learning" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Word learning<a class="anchor" aria-label="anchor" href="#word-learning"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose you see the following collection of objects on a table.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="images/06/xu_tenenbaum_objects.png" alt="From Xu &amp; Tenenbaum (2007)." width="75%"><p class="caption">
+Figure 7.1: From Xu &amp; Tenenbaum (2007).
+</p>
+</div>
+<p>Now consider the following situation:</p>
+<blockquote>
+<p>A teacher picks three silver peace signs from the pile and calls them “wugs.”</p>
+</blockquote>
+<p><strong>What is a wug?</strong> Are all peace signs wugs? Or just silver peace signs?</p>
+<p>Consider a different situation:</p>
+<blockquote>
+<p>A teacher picks one silver peace sign from the pile and calls it a “wug.” The teacher then asks a child to choose two more (the child picks two more silver peace signs). The teacher confirms that they are also wugs.</p>
+</blockquote>
+<p><strong>What is a wug?</strong> Are all peace signs wugs? Or just silver peace signs?</p>
+<p>In both situations, the observed data is the same: three silver peace signs labeled as wugs. What’s different is the process by which the data was collected. In one case, a knowledgeable teacher picked all the wugs; in the other, the teacher only picked one example and (probably not knowledgeable) child picked the others.</p>
+<p>To use some terms we’ve seen before, the teacher is using strong sampling. The child is using something closer to weak sampling.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="images/06/xu_tenenbaum_hierarchy.png" alt="The hierarchy of objects. From Xu &amp; Tenenbaum (2007)." width="65%"><p class="caption">
+Figure 7.2: The hierarchy of objects. From Xu &amp; Tenenbaum (2007).
+</p>
+</div>
+<p>This is based on an <a href="http://web.mit.edu/cocosci/archive/Papers/devsci07_xu_tenenbaum.pdf">actual study</a> done by Fei Xu and Josh Tenenbaum, who also developed a model of the task. They asked whether children and adults would generalize the word “wug” to the basic-level category (peace signs) or the subordinate category (silver peace signs). Here are their results:</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="images/06/xu_tenenbaum_results.png" alt="Experimental results from Xu &amp; Tenenbaum (2007)." width="75%"><p class="caption">
+Figure 7.3: Experimental results from Xu &amp; Tenenbaum (2007).
+</p>
+</div>
+<p>As you can see, people clearly distinguished between the teacher-driven situation and the child-driven (learner-driven) situation, and were much more likely to generalize “wugs” to the subordinate category when the teacher picked the objects.</p>
+</div>
+<div id="pedagogical-sampling" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Pedagogical sampling<a class="anchor" aria-label="anchor" href="#pedagogical-sampling"><i class="fas fa-link"></i></a>
+</h2>
+<p>Shato et al</p>
 
 </div>
-
-
-
-
-
-
-
-
+</div>
   <div class="chapter-nav">
-<div class="prev"><a href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></div>
+<div class="empty"></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#sampling-assumptions-1"><span class="header-section-number">7</span> Sampling assumptions</a></li></ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -89,7 +123,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-03-20.</p>
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-03-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -97,34 +131,6 @@
   </div>
 
 </div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
-</script>
+</footer>
 </body>
 </html>
