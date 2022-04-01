@@ -133,7 +133,7 @@ Figure 3.1: The duck-rabbit illusion.
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="bayes.html#cb8-1" aria-hidden="true" tabindex="-1"></a>ball_samples <span class="op">=</span> np.random.binomial(n <span class="op">=</span> np.repeat(<span class="dv">1</span>,<span class="bu">len</span>(p_black)),</span>
 <span id="cb8-2"><a href="bayes.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                                  p <span class="op">=</span> p_black)</span>
 <span id="cb8-3"><a href="bayes.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ball_samples[<span class="dv">0</span>:<span class="dv">9</span>])</span></code></pre></div>
-<pre><code>## [1 0 1 0 0 1 0 1 1]</code></pre>
+<pre><code>## [1 1 1 0 1 1 1 0 1]</code></pre>
 <p><code>ball_samples</code> is 1 for black and 0 for red. Once again, let’s plot all our samples.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="bayes.html#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb10-2"><a href="bayes.html#cb10-2" aria-hidden="true" tabindex="-1"></a>n, bins, patches <span class="op">=</span> ax.hist(ball_samples, bins<span class="op">=</span><span class="dv">2</span>)</span>
