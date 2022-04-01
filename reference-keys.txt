@@ -69,4 +69,11 @@ sampling-assumptions
 word-learning
 pedagogical-sampling
 the-rectangle-game
+pragmatics
+surprisal
 the-rational-speech-act-model
+does-this-model-match-human-behavior
+the-task
+the-model-1
+homework-4-implement-the-model
+social-cognition
