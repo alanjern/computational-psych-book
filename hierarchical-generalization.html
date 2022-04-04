@@ -160,6 +160,7 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-44-19.png" width="672"></div>
 <p>Now you flip the coin 100 times and it comes up heads 48 times. What should your updated beliefs be?</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="hierarchical-generalization.html#cb69-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span><span class="op">+</span><span class="dv">48</span>,<span class="dv">1</span><span class="op">+</span><span class="dv">52</span>)</span></code></pre></div>
+<pre><code>## &lt;string&gt;:5: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).</code></pre>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-45-21.png" width="672"></div>
 <p>As you can see, the posterior distribution shows that you should think this coin is probably fair now. This illustrates how sufficient evidence can override prior beliefs.</p>
 </div>
@@ -242,7 +243,7 @@ Figure 6.2: A common task used to test for the shape bias.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-01.</p>
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
