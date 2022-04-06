@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 6 Hierarchical generalization | Computational Psychology in Python</title>
+<title>Chapter 5 Hierarchical generalization | Computational Psychology in Python</title>
 <meta name="author" content="Alan Jern">
 <meta name="description" content="In previous examples, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 6 Hierarchical generalization | Computational Psychology in Python">
+<meta property="og:title" content="Chapter 5 Hierarchical generalization | Computational Psychology in Python">
 <meta property="og:type" content="book">
 <meta property="og:description" content="In previous examples, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 6 Hierarchical generalization | Computational Psychology in Python">
+<meta name="twitter:title" content="Chapter 5 Hierarchical generalization | Computational Psychology in Python">
 <meta name="twitter:description" content="In previous examples, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -47,15 +47,15 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Preface</a></li>
-<li><a class="" href="intro.html"><span class="header-section-number">2</span> Why computational modeling?</a></li>
-<li><a class="" href="bayes.html"><span class="header-section-number">3</span> Bayesian inference</a></li>
-<li><a class="" href="generalization.html"><span class="header-section-number">4</span> Generalization</a></li>
-<li><a class="" href="categorization.html"><span class="header-section-number">5</span> Categorization</a></li>
-<li><a class="active" href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
-<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">7</span> Sampling assumptions</a></li>
-<li><a class="" href="pragmatics.html"><span class="header-section-number">8</span> Language pragmatics</a></li>
-<li><a class="" href="social-cognition.html"><span class="header-section-number">9</span> Social cognition</a></li>
+<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">1</span> Why computational modeling?</a></li>
+<li><a class="" href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></li>
+<li><a class="" href="generalization.html"><span class="header-section-number">3</span> Generalization</a></li>
+<li><a class="" href="categorization.html"><span class="header-section-number">4</span> Categorization</a></li>
+<li><a class="active" href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></li>
+<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">6</span> Sampling assumptions</a></li>
+<li><a class="" href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></li>
+<li><a class="" href="social-cognition.html"><span class="header-section-number">8</span> Social cognition</a></li>
 </ul>
 
         <div class="book-extra">
@@ -63,19 +63,19 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="hierarchical-generalization" class="section level1" number="6">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="hierarchical-generalization" class="section level1" number="5">
 <h1>
-<span class="header-section-number">6</span> Hierarchical generalization<a class="anchor" aria-label="anchor" href="#hierarchical-generalization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5</span> Hierarchical generalization<a class="anchor" aria-label="anchor" href="#hierarchical-generalization"><i class="fas fa-link"></i></a>
 </h1>
 <p>In <a href="bayes.html#bayes">previous examples</a>, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval [0,1].</p>
-<div id="the-beta-binomial-model" class="section level2" number="6.1">
+<div id="the-beta-binomial-model" class="section level2" number="5.1">
 <h2>
-<span class="header-section-number">6.1</span> The Beta-Binomial model 🪙<a class="anchor" aria-label="anchor" href="#the-beta-binomial-model"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> The Beta-Binomial model 🪙<a class="anchor" aria-label="anchor" href="#the-beta-binomial-model"><i class="fas fa-link"></i></a>
 </h2>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:unnamed-chunk-33"></span>
 <img src="images/05/coin-in-hand.jpg" alt="Photo by ZSun Fu on Unsplash." width="75%"><p class="caption">
-Figure 6.1: Photo by ZSun Fu on Unsplash.
+Figure 5.1: Photo by ZSun Fu on Unsplash.
 </p>
 </div>
 <p>We can answer this question with a model called the Beta-Binomial model, named for the probability distributions it uses. First, let’s set up the basic assumptions of the model.</p>
@@ -126,9 +126,9 @@ P(\theta) = \text{Beta}(\theta;\alpha,\beta)
 <div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="hierarchical-generalization.html#cb63-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="fl">0.5</span>,<span class="fl">0.5</span>)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-39-9.png" width="672"></div>
 <p>This might capture the belief that the coin is strongly biased, but we aren’t sure in which direction.</p>
-<div id="conjugate-distributions" class="section level3" number="6.1.1">
+<div id="conjugate-distributions" class="section level3" number="5.1.1">
 <h3>
-<span class="header-section-number">6.1.1</span> Conjugate distributions<a class="anchor" aria-label="anchor" href="#conjugate-distributions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1.1</span> Conjugate distributions<a class="anchor" aria-label="anchor" href="#conjugate-distributions"><i class="fas fa-link"></i></a>
 </h3>
 <p>The Beta distribution is the <em>conjugate distribution</em> for the Binomial distribution. This means that when the likelihood is a Binomial distribution and the prior is a Beta distribution, then the posterior is also a Beta distribution. Specifically, after making these assumptions,</p>
 <p><span class="math display">\[
@@ -136,9 +136,9 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 \]</span></p>
 <p>The parameters of the posterior distribution are (1) the sum of <span class="math inline">\(\alpha\)</span> from the prior and the number of observed heads and (2) the sum of <span class="math inline">\(\beta\)</span> from the prior and the number of observed tails. This means that the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of the Beta prior have a natural interpretation as “virtual flips.” For example, the larger <span class="math inline">\(\alpha\)</span> is compared to <span class="math inline">\(\beta\)</span>, the more biased toward heads we expect <span class="math inline">\(\theta\)</span> to be. Additionally, the larger <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are, the more certain (less diffuse) the prior is.</p>
 </div>
-<div id="parameter-estimation" class="section level3" number="6.1.2">
+<div id="parameter-estimation" class="section level3" number="5.1.2">
 <h3>
-<span class="header-section-number">6.1.2</span> Parameter estimation<a class="anchor" aria-label="anchor" href="#parameter-estimation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1.2</span> Parameter estimation<a class="anchor" aria-label="anchor" href="#parameter-estimation"><i class="fas fa-link"></i></a>
 </h3>
 <p>Because we used a conjugate distribution, we can use our same <code>plot_beta</code> function to generate posterior probability distributions after some coin flips.</p>
 <p>Suppose we start with a fairly strong belief that a coin is fair, represented by this distribution:</p>
@@ -160,43 +160,42 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-44-19.png" width="672"></div>
 <p>Now you flip the coin 100 times and it comes up heads 48 times. What should your updated beliefs be?</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb69-1"><a href="hierarchical-generalization.html#cb69-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span><span class="op">+</span><span class="dv">48</span>,<span class="dv">1</span><span class="op">+</span><span class="dv">52</span>)</span></code></pre></div>
-<pre><code>## &lt;string&gt;:5: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).</code></pre>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-45-21.png" width="672"></div>
 <p>As you can see, the posterior distribution shows that you should think this coin is probably fair now. This illustrates how sufficient evidence can override prior beliefs.</p>
 </div>
-<div id="hypothesis-averaging" class="section level3" number="6.1.3">
+<div id="hypothesis-averaging" class="section level3" number="5.1.3">
 <h3>
-<span class="header-section-number">6.1.3</span> Hypothesis averaging<a class="anchor" aria-label="anchor" href="#hypothesis-averaging"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1.3</span> Hypothesis averaging<a class="anchor" aria-label="anchor" href="#hypothesis-averaging"><i class="fas fa-link"></i></a>
 </h3>
-<p><a href="generalization.html#generalizing">In Chapter 4</a>, we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.</p>
+<p><a href="generalization.html#generalizing">In Chapter 3</a>, we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.</p>
 <p>Suppose we want to know the probability of the next flip coming up heads. In other words, we want to know <span class="math inline">\(P(\text{heads}|D)\)</span>. We can do that by averaging over all possible values of <span class="math inline">\(\theta\)</span>:</p>
 <p><span class="math display">\[
 P(\text{heads}|D) = \int_\theta P(\text{heads}|\theta) \cdot P(\theta|D) d\theta = \int_\theta \theta \cdot P(\theta|D) d\theta
 \]</span></p>
 </div>
 </div>
-<div id="overhypotheses" class="section level2" number="6.2">
+<div id="overhypotheses" class="section level2" number="5.2">
 <h2>
-<span class="header-section-number">6.2</span> Overhypotheses 🙆<a class="anchor" aria-label="anchor" href="#overhypotheses"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2</span> Overhypotheses 🙆<a class="anchor" aria-label="anchor" href="#overhypotheses"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now consider a slightly different situation. You flip 19 different coins in a row, each one time, and they all come up heads. Now you pick up a 20th coin from the same bag as the previous 19 coins. What do you think is the probability of that 20th coin coming up heads? Is it higher than 0.5?</p>
 <p>If you answered yes, it’s probably because you formed an <em>overhypothesis</em> about the bias of the coins. After flipping all those coins, you may have concluded that this particular set of coins is more likely than usual to be biased. As a result, your estimate about the probability of the 20th coin coming up heads was higher than it otherwise would be.</p>
-<div id="the-shape-bias" class="section level3" number="6.2.1">
+<div id="the-shape-bias" class="section level3" number="5.2.1">
 <h3>
-<span class="header-section-number">6.2.1</span> The shape bias<a class="anchor" aria-label="anchor" href="#the-shape-bias"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.1</span> The shape bias<a class="anchor" aria-label="anchor" href="#the-shape-bias"><i class="fas fa-link"></i></a>
 </h3>
 <p>This coins example is pretty artificial, but the notion of overhypotheses is one that you find in language learning. A phenomenon known as <a href="https://doi.org/10.1016/0885-2014(88)90014-7">the shape bias</a> refers to the fact that even young children are more likely to generalize a new word based on its shape rather than other properties like color or texture.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:unnamed-chunk-46"></span>
 <img src="images/05/shape_bias.gif" alt="A common task used to test for the shape bias."><p class="caption">
-Figure 6.2: A common task used to test for the shape bias.
+Figure 5.2: A common task used to test for the shape bias.
 </p>
 </div>
 <p>This makes sense because objects tend to have common shapes and are less likely to have common colors or textures.</p>
 </div>
-<div id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="section level3" number="6.2.2">
+<div id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="section level3" number="5.2.2">
 <h3>
-<span class="header-section-number">6.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning<a class="anchor" aria-label="anchor" href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning<a class="anchor" aria-label="anchor" href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><i class="fas fa-link"></i></a>
 </h3>
 <p>Charles Kemp, Andy Perfors, and Josh Tenenbaum developed <a href="http://www.charleskemp.com/papers/KempPTDevSci.pdf">a model</a> of this kind of learning. They focused on bags of black and white marbles rather than flipping coins. They imagine a problem in which you have many bags of marbles that you draw from. After drawing from many bags, you draw a single marble from a new bag and make a prediction about the proportion of black and white marbles in that bag.</p>
 <p>The details of the model are outside the scope of this book. But the basic idea is that the model learns at two levels simultaneously. At the higher level, the model learns the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of a Beta distribution that characterizes the proportion of black and white marbles in each bag. As we saw above, a Beta distribution can have a peak around a particular proportion, or it can be peaked around both 0 and 1, meaning that each bag is likely to be nearly all black or all white.</p>
@@ -208,23 +207,23 @@ Figure 6.2: A common task used to test for the shape bias.
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="categorization.html"><span class="header-section-number">5</span> Categorization</a></div>
-<div class="next"><a href="sampling-assumptions.html"><span class="header-section-number">7</span> Sampling assumptions</a></div>
+<div class="prev"><a href="categorization.html"><span class="header-section-number">4</span> Categorization</a></div>
+<div class="next"><a href="sampling-assumptions.html"><span class="header-section-number">6</span> Sampling assumptions</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#hierarchical-generalization"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
+<li><a class="nav-link" href="#hierarchical-generalization"><span class="header-section-number">5</span> Hierarchical generalization</a></li>
 <li>
-<a class="nav-link" href="#the-beta-binomial-model"><span class="header-section-number">6.1</span> The Beta-Binomial model 🪙</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#conjugate-distributions"><span class="header-section-number">6.1.1</span> Conjugate distributions</a></li>
-<li><a class="nav-link" href="#parameter-estimation"><span class="header-section-number">6.1.2</span> Parameter estimation</a></li>
-<li><a class="nav-link" href="#hypothesis-averaging"><span class="header-section-number">6.1.3</span> Hypothesis averaging</a></li>
+<a class="nav-link" href="#the-beta-binomial-model"><span class="header-section-number">5.1</span> The Beta-Binomial model 🪙</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#conjugate-distributions"><span class="header-section-number">5.1.1</span> Conjugate distributions</a></li>
+<li><a class="nav-link" href="#parameter-estimation"><span class="header-section-number">5.1.2</span> Parameter estimation</a></li>
+<li><a class="nav-link" href="#hypothesis-averaging"><span class="header-section-number">5.1.3</span> Hypothesis averaging</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#overhypotheses"><span class="header-section-number">6.2</span> Overhypotheses 🙆</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#the-shape-bias"><span class="header-section-number">6.2.1</span> The shape bias</a></li>
-<li><a class="nav-link" href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><span class="header-section-number">6.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning</a></li>
+<a class="nav-link" href="#overhypotheses"><span class="header-section-number">5.2</span> Overhypotheses 🙆</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-shape-bias"><span class="header-section-number">5.2.1</span> The shape bias</a></li>
+<li><a class="nav-link" href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><span class="header-section-number">5.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning</a></li>
 </ul>
 </li>
 </ul>
@@ -243,7 +242,7 @@ Figure 6.2: A common task used to test for the shape bias.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-04.</p>
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

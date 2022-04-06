@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 Categorization | Computational Psychology in Python</title>
+<title>Chapter 4 Categorization | Computational Psychology in Python</title>
 <meta name="author" content="Alan Jern">
 <meta name="description" content="The last chapter introduced the problem of inductive generalization. This chapter will focus on a specific case of generalization that is particular interest to psychologists, cognitive...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 5 Categorization | Computational Psychology in Python">
+<meta property="og:title" content="Chapter 4 Categorization | Computational Psychology in Python">
 <meta property="og:type" content="book">
 <meta property="og:description" content="The last chapter introduced the problem of inductive generalization. This chapter will focus on a specific case of generalization that is particular interest to psychologists, cognitive...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 Categorization | Computational Psychology in Python">
+<meta name="twitter:title" content="Chapter 4 Categorization | Computational Psychology in Python">
 <meta name="twitter:description" content="The last chapter introduced the problem of inductive generalization. This chapter will focus on a specific case of generalization that is particular interest to psychologists, cognitive...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -47,15 +47,15 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Preface</a></li>
-<li><a class="" href="intro.html"><span class="header-section-number">2</span> Why computational modeling?</a></li>
-<li><a class="" href="bayes.html"><span class="header-section-number">3</span> Bayesian inference</a></li>
-<li><a class="" href="generalization.html"><span class="header-section-number">4</span> Generalization</a></li>
-<li><a class="active" href="categorization.html"><span class="header-section-number">5</span> Categorization</a></li>
-<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
-<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">7</span> Sampling assumptions</a></li>
-<li><a class="" href="pragmatics.html"><span class="header-section-number">8</span> Language pragmatics</a></li>
-<li><a class="" href="social-cognition.html"><span class="header-section-number">9</span> Social cognition</a></li>
+<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">1</span> Why computational modeling?</a></li>
+<li><a class="" href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></li>
+<li><a class="" href="generalization.html"><span class="header-section-number">3</span> Generalization</a></li>
+<li><a class="active" href="categorization.html"><span class="header-section-number">4</span> Categorization</a></li>
+<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></li>
+<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">6</span> Sampling assumptions</a></li>
+<li><a class="" href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></li>
+<li><a class="" href="social-cognition.html"><span class="header-section-number">8</span> Social cognition</a></li>
 </ul>
 
         <div class="book-extra">
@@ -63,9 +63,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="categorization" class="section level1" number="5">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="categorization" class="section level1" number="4">
 <h1>
-<span class="header-section-number">5</span> Categorization<a class="anchor" aria-label="anchor" href="#categorization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4</span> Categorization<a class="anchor" aria-label="anchor" href="#categorization"><i class="fas fa-link"></i></a>
 </h1>
 <p>The last chapter introduced the problem of inductive generalization. This chapter will focus on a specific case of generalization that is particular interest to psychologists, cognitive scientists, and people who use AI and machine learning: <em>classification</em> or <em>categorization</em>. Basically, assigning labels to things.</p>
 <p>People constantly classify things in the world into categories (chairs, cats, friends, enemies, edible things, and so on). Doing this helps us to communicate and function in novel situations.</p>
@@ -78,9 +78,9 @@
 <li>Assign it to the category that has the highest average similarity.</li>
 </ol>
 <p>This model makes some outlandish assumptions (like the idea that people would remember every example they had seen before). But, to a first approximation, it does a decent job of predicting people’s classification judgments in a lot of situations. And for learning purposes, it has the advantage of being pretty easy to understand and implement.</p>
-<div id="a-typical-category-learning-experiment" class="section level2" number="5.1">
+<div id="a-typical-category-learning-experiment" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">5.1</span> A typical category learning experiment 🟢🟨<a class="anchor" aria-label="anchor" href="#a-typical-category-learning-experiment"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> A typical category learning experiment 🟢🟨<a class="anchor" aria-label="anchor" href="#a-typical-category-learning-experiment"><i class="fas fa-link"></i></a>
 </h2>
 <p>In psychology, category learning experiments have a pretty similar structure. People see some unfamiliar stimuli that differ on several dimensions and can be sorted into different categories. The task is to learn what distinguishes one category from another. The experiments usually consist of two phases: a training phase, and a testing phase.</p>
 <ul>
@@ -91,9 +91,9 @@
 </ul>
 <p>The stimuli could be abstract shapes, cartoon insects, race cars with different features, or anything else. What matters is that they have clearly distinguishable features.</p>
 </div>
-<div id="representing-stimuli-in-a-model" class="section level2" number="5.2">
+<div id="representing-stimuli-in-a-model" class="section level2" number="4.2">
 <h2>
-<span class="header-section-number">5.2</span> Representing stimuli in a model 🧩<a class="anchor" aria-label="anchor" href="#representing-stimuli-in-a-model"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2</span> Representing stimuli in a model 🧩<a class="anchor" aria-label="anchor" href="#representing-stimuli-in-a-model"><i class="fas fa-link"></i></a>
 </h2>
 <p>For modeling purposes, all of these types of stimuli (with discrete-valued features) can be represented in a matrix, with the following properties:</p>
 <ol style="list-style-type: decimal">
@@ -151,35 +151,35 @@
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:unnamed-chunk-32"></span>
 <img src="images/04/dimensional_table.png" alt="Training examples from the dimensional condition. Image from Nosofsky (1986)." width="50%"><p class="caption">
-Figure 5.1: Training examples from the dimensional condition. Image from Nosofsky (1986).
+Figure 4.1: Training examples from the dimensional condition. Image from Nosofsky (1986).
 </p>
 </div>
 </div>
-<div id="the-generalized-context-model-gcm" class="section level2" number="5.3">
+<div id="the-generalized-context-model-gcm" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">5.3</span> The Generalized Context Model (GCM)<a class="anchor" aria-label="anchor" href="#the-generalized-context-model-gcm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> The Generalized Context Model (GCM)<a class="anchor" aria-label="anchor" href="#the-generalized-context-model-gcm"><i class="fas fa-link"></i></a>
 </h2>
 <p>Here, I will describe a special case of the model here that applies to tasks (like the one in the paper) with only two categories. However, this model can easily be extended to any number of categories. The model is defined by two key equations.</p>
 <p>The first equation defines the probability of classifying Stimulus <span class="math inline">\(S_i\)</span> into Category <span class="math inline">\(C_1\)</span> (i.e., Category 1):</p>
 <p><span class="math display" id="eq:gcm1">\[
 \begin{equation}
 P(C_1|S_i) = \frac{b_1 \sum_{j \in C_1} \eta_{ij}}{b_1 \sum_{j \in C_1} \eta_{ij} + (1-b_1) \sum_{k \in C_2} \eta_{ik}}
-\tag{5.1}
+\tag{4.1}
 \end{equation}
 \]</span></p>
 <p>The sum <span class="math inline">\(\sum_{j \in C_1}\)</span> is a sum over all stimuli <span class="math inline">\(S_j\)</span> that belong to Category 1. The sum <span class="math inline">\(\sum_{j \in C_1}\)</span> is a sum over all stimuli <span class="math inline">\(S_k\)</span> that belong to Category 2.</p>
-<p>Equation <a href="categorization.html#eq:gcm1">(5.1)</a> has a parameter <span class="math inline">\(b_1\)</span> which is defined as the response bias for Category 1. <span class="math inline">\(b_1\)</span> can range from 0 to 1 and captures the possibility that a subject is biased to respond with one category or another. This is similar but not identical to a prior distribution. When <span class="math inline">\(b_1\)</span> is small, the model is biased toward Category 2; when <span class="math inline">\(b_1\)</span> is large, the model is biased toward Category 1. Note that when <span class="math inline">\(b = 0.5\)</span>, it cancels out of the equation.</p>
-<p>We could also include a response bias for Category 2, but the model assumes that <span class="math inline">\(\sum_i b_i = 1\)</span>. Therefore, when there are only two categories, <span class="math inline">\(b_2 = 1 - b_1\)</span> which is what you see in the second term of the denominator of Equation <a href="categorization.html#eq:gcm1">(5.1)</a>.</p>
+<p>Equation <a href="categorization.html#eq:gcm1">(4.1)</a> has a parameter <span class="math inline">\(b_1\)</span> which is defined as the response bias for Category 1. <span class="math inline">\(b_1\)</span> can range from 0 to 1 and captures the possibility that a subject is biased to respond with one category or another. This is similar but not identical to a prior distribution. When <span class="math inline">\(b_1\)</span> is small, the model is biased toward Category 2; when <span class="math inline">\(b_1\)</span> is large, the model is biased toward Category 1. Note that when <span class="math inline">\(b = 0.5\)</span>, it cancels out of the equation.</p>
+<p>We could also include a response bias for Category 2, but the model assumes that <span class="math inline">\(\sum_i b_i = 1\)</span>. Therefore, when there are only two categories, <span class="math inline">\(b_2 = 1 - b_1\)</span> which is what you see in the second term of the denominator of Equation <a href="categorization.html#eq:gcm1">(4.1)</a>.</p>
 <p><span class="math inline">\(\eta_{ij}\)</span> is a function that defines how similar to <span class="math inline">\(S_i\)</span> and <span class="math inline">\(S_j\)</span> are. The GCM assumes that stimuli can be represented as points in a multi-dimensional space (in this case, a two-dimensional space) and the similarity is defined as a function of the distance between those two points:</p>
 <p><span class="math display">\[
 \eta_{ij} = e^{-c^2 \left[w_1 (f_{i1} - f_{j1})^2 + (1-w_1)(f_{i2} - f_{j2})^2 \right]}
 \]</span></p>
 <p>where <span class="math inline">\(f_{i1}\)</span> and <span class="math inline">\(f_{i2}\)</span> refer to the feature values on dimensions 1 and 2 of <span class="math inline">\(S_i\)</span>. This equation has two parameters: <span class="math inline">\(c\)</span> and <span class="math inline">\(w_1\)</span>. <span class="math inline">\(c\)</span> is a scaling parameter that affects how steeply the exponential curve is. This will allow us to account for how different people might have different ideas of how close two stimuli have must be to be called similar. <span class="math inline">\(w_1\)</span> is called the attentional weight for dimension 1. This parameter captures how much weight is placed on dimension 1 over dimension 2. Just like <span class="math inline">\(b_1\)</span>, <span class="math inline">\(w_1\)</span> can range from 0 to 1, and the larger it is, the more weight is placed on dimension 1. Similarly, we could add a <span class="math inline">\(w_2\)</span>, but the attention weights are constrained to sum to 1.</p>
-<div id="generating-model-predictions" class="section level3" number="5.3.1">
+<div id="generating-model-predictions" class="section level3" number="4.3.1">
 <h3>
-<span class="header-section-number">5.3.1</span> Generating model predictions<a class="anchor" aria-label="anchor" href="#generating-model-predictions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3.1</span> Generating model predictions<a class="anchor" aria-label="anchor" href="#generating-model-predictions"><i class="fas fa-link"></i></a>
 </h3>
-<p>In order to generate predictions from this model, we need two things. First, we need to define what the training stimuli are, and what their feature values are. This is what will allow us to compute the sums in Equation <a href="categorization.html#eq:gcm1">(5.1)</a>.</p>
+<p>In order to generate predictions from this model, we need two things. First, we need to define what the training stimuli are, and what their feature values are. This is what will allow us to compute the sums in Equation <a href="categorization.html#eq:gcm1">(4.1)</a>.</p>
 <p>Next, we need to specify the values of the 3 parameters <span class="math inline">\(b_1\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(w_1\)</span>. Nosofsky does this by first collecting data from people in the experiment. That is, for every stimulus <span class="math inline">\(S_i\)</span> we can record the proportion of times people classified it as Category 1. In other words, we can collect empirical estimates of <span class="math inline">\(P(C_1|S_i)\)</span> for all values of <span class="math inline">\(S_i\)</span>.</p>
 <p>Then Nosofsky uses a maximum likelihood procedure for fitting the model to the data. Conceptually, the idea is to find the set of values of the three parameters that produce model predictions that are as close as possible to the empirical data. (This is exactly how linear regression works, where you have some data <span class="math inline">\((\bar{x},\bar{y})\)</span> and want to find the best-fitting values of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> for the function <span class="math inline">\(y = ax + b\)</span> that describes the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.)</p>
 <p>We can define model fit by mean squared error (MSE). MSE is defined as</p>
@@ -199,9 +199,9 @@ P(C_1|S_i) = \frac{b_1 \sum_{j \in C_1} \eta_{ij}}{b_1 \sum_{j \in C_1} \eta_{ij
 <li>Return the stored values of <span class="math inline">\(b_1\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(w_1\)</span>.</li>
 </ol>
 </div>
-<div id="homework-3" class="section level3" number="5.3.2">
+<div id="homework-3" class="section level3" number="4.3.2">
 <h3>
-<span class="header-section-number">5.3.2</span> Homework 3<a class="anchor" aria-label="anchor" href="#homework-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3.2</span> Homework 3<a class="anchor" aria-label="anchor" href="#homework-3"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://colab.research.google.com/drive/166ptmuGWwqxLvRfbXaoZ7qI0B5326lh7?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg"></a></p>
 <p>In your next homework you will implement the GCM described above. In the homework, you will have to encode training and test stimuli and implement the equations and model-fitting algorithm above. Additionally, to get some experience with the behavioral side of cognitive science, you will create a working version of a category learning experiment in order to collect some data that you can use to compare with the GCM’s predictions.</p>
@@ -211,18 +211,18 @@ P(C_1|S_i) = \frac{b_1 \sum_{j \in C_1} \eta_{ij}}{b_1 \sum_{j \in C_1} \eta_{ij
 </div>
 
   <div class="chapter-nav">
-<div class="prev"><a href="generalization.html"><span class="header-section-number">4</span> Generalization</a></div>
-<div class="next"><a href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></div>
+<div class="prev"><a href="generalization.html"><span class="header-section-number">3</span> Generalization</a></div>
+<div class="next"><a href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#categorization"><span class="header-section-number">5</span> Categorization</a></li>
-<li><a class="nav-link" href="#a-typical-category-learning-experiment"><span class="header-section-number">5.1</span> A typical category learning experiment 🟢🟨</a></li>
-<li><a class="nav-link" href="#representing-stimuli-in-a-model"><span class="header-section-number">5.2</span> Representing stimuli in a model 🧩</a></li>
+<li><a class="nav-link" href="#categorization"><span class="header-section-number">4</span> Categorization</a></li>
+<li><a class="nav-link" href="#a-typical-category-learning-experiment"><span class="header-section-number">4.1</span> A typical category learning experiment 🟢🟨</a></li>
+<li><a class="nav-link" href="#representing-stimuli-in-a-model"><span class="header-section-number">4.2</span> Representing stimuli in a model 🧩</a></li>
 <li>
-<a class="nav-link" href="#the-generalized-context-model-gcm"><span class="header-section-number">5.3</span> The Generalized Context Model (GCM)</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#generating-model-predictions"><span class="header-section-number">5.3.1</span> Generating model predictions</a></li>
-<li><a class="nav-link" href="#homework-3"><span class="header-section-number">5.3.2</span> Homework 3</a></li>
+<a class="nav-link" href="#the-generalized-context-model-gcm"><span class="header-section-number">4.3</span> The Generalized Context Model (GCM)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#generating-model-predictions"><span class="header-section-number">4.3.1</span> Generating model predictions</a></li>
+<li><a class="nav-link" href="#homework-3"><span class="header-section-number">4.3.2</span> Homework 3</a></li>
 </ul>
 </li>
 </ul>
@@ -241,7 +241,7 @@ P(C_1|S_i) = \frac{b_1 \sum_{j \in C_1} \eta_{ij}}{b_1 \sum_{j \in C_1} \eta_{ij
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-04.</p>
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

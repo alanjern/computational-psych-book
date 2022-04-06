@@ -15,9 +15,6 @@ eq:plearner
 eq:pteacher
 fig:unnamed-chunk-50
 fig:unnamed-chunk-51
-preface
-thanks
-license
 intro
 representations
 homework-1-build-your-first-computational-model

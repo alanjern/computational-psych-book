@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Why computational modeling? | Computational Psychology in Python</title>
+<title>Chapter 1 Why computational modeling? | Computational Psychology in Python</title>
 <meta name="author" content="Alan Jern">
 <meta name="description" content="The field of psychology is full of theories. But this book is focused on a specific type of theory: the type that can be formalized as a computational model. What advantage does a computational...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 2 Why computational modeling? | Computational Psychology in Python">
+<meta property="og:title" content="Chapter 1 Why computational modeling? | Computational Psychology in Python">
 <meta property="og:type" content="book">
 <meta property="og:description" content="The field of psychology is full of theories. But this book is focused on a specific type of theory: the type that can be formalized as a computational model. What advantage does a computational...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 2 Why computational modeling? | Computational Psychology in Python">
+<meta name="twitter:title" content="Chapter 1 Why computational modeling? | Computational Psychology in Python">
 <meta name="twitter:description" content="The field of psychology is full of theories. But this book is focused on a specific type of theory: the type that can be formalized as a computational model. What advantage does a computational...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -47,15 +47,15 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Preface</a></li>
-<li><a class="active" href="intro.html"><span class="header-section-number">2</span> Why computational modeling?</a></li>
-<li><a class="" href="bayes.html"><span class="header-section-number">3</span> Bayesian inference</a></li>
-<li><a class="" href="generalization.html"><span class="header-section-number">4</span> Generalization</a></li>
-<li><a class="" href="categorization.html"><span class="header-section-number">5</span> Categorization</a></li>
-<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">6</span> Hierarchical generalization</a></li>
-<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">7</span> Sampling assumptions</a></li>
-<li><a class="" href="pragmatics.html"><span class="header-section-number">8</span> Language pragmatics</a></li>
-<li><a class="" href="social-cognition.html"><span class="header-section-number">9</span> Social cognition</a></li>
+<li><a class="" href="index.html">Preface</a></li>
+<li><a class="active" href="intro.html"><span class="header-section-number">1</span> Why computational modeling?</a></li>
+<li><a class="" href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></li>
+<li><a class="" href="generalization.html"><span class="header-section-number">3</span> Generalization</a></li>
+<li><a class="" href="categorization.html"><span class="header-section-number">4</span> Categorization</a></li>
+<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></li>
+<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">6</span> Sampling assumptions</a></li>
+<li><a class="" href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></li>
+<li><a class="" href="social-cognition.html"><span class="header-section-number">8</span> Social cognition</a></li>
 </ul>
 
         <div class="book-extra">
@@ -63,23 +63,23 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="intro" class="section level1" number="2">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="intro" class="section level1" number="1">
 <h1>
-<span class="header-section-number">2</span> Why computational modeling?<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1</span> Why computational modeling?<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
 </h1>
 <p>The field of psychology is full of theories. But this book is focused on a specific type of theory: the type that can be formalized as a computational model.</p>
 <p>What advantage does a computational (or mathematical) theory have over one that can’t be expressed in computational terms? The biggest advantage is precision. For example, suppose you say that attention is like a spotlight 🔦: you can attend to things that are currently within the light, and you can control where the light is shining, but things outside of the light are outside of our awareness. This is a kind of theory – an analogy-based one – and it’s a good start for making some general <em>qualitative</em> predictions about how attention works.</p>
 <p>But you’ll quickly run into problems if you want to make precise <em>quantitative</em> predictions about attention. How big is the spotlight? Does the size expand and contract? How quickly does it move around? Is attention completely absent outside of the spotlight or does it ramp down as you get near the edge of the light? In other words, if you wanted to build a computer model of this theory, a simple analogy doesn’t cut it.</p>
 <p><em>Computational models, if nothing else, force us to be explicit about all of our assumptions.</em></p>
-<div id="representations" class="section level2" number="2.1">
+<div id="representations" class="section level2" number="1.1">
 <h2>
-<span class="header-section-number">2.1</span> Representations 🔸<a class="anchor" aria-label="anchor" href="#representations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.1</span> Representations 🔸<a class="anchor" aria-label="anchor" href="#representations"><i class="fas fa-link"></i></a>
 </h2>
 <p>We don’t perceive the world as it truly is. To give one example, the visible spectrum that our eyes can detect is just a fraction of the full electromagnetic spectrum. In other words, we’re seeing an incomplete picture of the surrounding world.</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-2"></span>
 <img src="images/01/EM_spectrum.svg.png" alt="The visible light spectrum. Source: Philip Ronan/Wikipedia." width="95%"><p class="caption">
-Figure 2.1: The visible light spectrum. Source: Philip Ronan/Wikipedia.
+Figure 1.1: The visible light spectrum. Source: Philip Ronan/Wikipedia.
 </p>
 </div>
 <p>Similarly, we are constantly making assumptions about the things we see and hear and using those assumptions to fill in gaps.</p>
@@ -92,9 +92,9 @@ Figure 2.1: The visible light spectrum. Source: Philip Ronan/Wikipedia.
 </ol>
 <p>This book will elaborate, with examples, on each of these questions.</p>
 </div>
-<div id="homework-1-build-your-first-computational-model" class="section level2" number="2.2">
+<div id="homework-1-build-your-first-computational-model" class="section level2" number="1.2">
 <h2>
-<span class="header-section-number">2.2</span> Homework 1: Build your first computational model 💻<a class="anchor" aria-label="anchor" href="#homework-1-build-your-first-computational-model"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2</span> Homework 1: Build your first computational model 💻<a class="anchor" aria-label="anchor" href="#homework-1-build-your-first-computational-model"><i class="fas fa-link"></i></a>
 </h2>
 <p><a href="https://colab.research.google.com/drive/1MEiil0swXHERwJ38rVGZPTndyetHJPYQ?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg"></a></p>
 <p>To get some initial experience with computational modeling, you’ll build and experiment with a simple model of classical conditioning developed by Robert Rescorla and Allan Wagner – now called the Rescorla-Wagner model.</p>
@@ -109,14 +109,14 @@ Figure 2.1: The visible light spectrum. Source: Philip Ronan/Wikipedia.
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Preface</a></div>
-<div class="next"><a href="bayes.html"><span class="header-section-number">3</span> Bayesian inference</a></div>
+<div class="prev"><a href="index.html">Preface</a></div>
+<div class="next"><a href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#intro"><span class="header-section-number">2</span> Why computational modeling?</a></li>
-<li><a class="nav-link" href="#representations"><span class="header-section-number">2.1</span> Representations 🔸</a></li>
-<li><a class="nav-link" href="#homework-1-build-your-first-computational-model"><span class="header-section-number">2.2</span> Homework 1: Build your first computational model 💻</a></li>
+<li><a class="nav-link" href="#intro"><span class="header-section-number">1</span> Why computational modeling?</a></li>
+<li><a class="nav-link" href="#representations"><span class="header-section-number">1.1</span> Representations 🔸</a></li>
+<li><a class="nav-link" href="#homework-1-build-your-first-computational-model"><span class="header-section-number">1.2</span> Homework 1: Build your first computational model 💻</a></li>
 </ul>
 
       <div class="book-extra">
@@ -133,7 +133,7 @@ Figure 2.1: The visible light spectrum. Source: Philip Ronan/Wikipedia.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-04.</p>
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
