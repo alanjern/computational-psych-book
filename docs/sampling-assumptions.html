@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Sampling assumptions | Computational Psychology in Python</title>
+<meta name="author" content="Alan Jern">
+<meta name="description" content="So far, we’ve seen where strong sampling was a logical assumption to make. But it isn’t always. For example, consider the hormone problem from Chapter 3. If you were randomly testing people’s...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Sampling assumptions | Computational Psychology in Python">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alanjern.github.io/computational-psych-book/sampling-assumptions.html">
+<meta property="og:image" content="https://alanjern.github.io/computational-psych-book/images/marble.jpg">
+<meta property="og:description" content="So far, we’ve seen where strong sampling was a logical assumption to make. But it isn’t always. For example, consider the hormone problem from Chapter 3. If you were randomly testing people’s...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Sampling assumptions | Computational Psychology in Python">
+<meta name="twitter:description" content="So far, we’ve seen where strong sampling was a logical assumption to make. But it isn’t always. For example, consider the hormone problem from Chapter 3. If you were randomly testing people’s...">
+<meta name="twitter:image" content="https://alanjern.github.io/computational-psych-book/images/marble.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+<link rel="manifest" href="images/favicons/site.webmanifest">
+<link rel="shortcut icon" href="images/favicons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="images/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Computational Psychology in Python</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">1</span> Why computational modeling?</a></li>
+<li><a class="" href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></li>
+<li><a class="" href="generalization.html"><span class="header-section-number">3</span> Generalization</a></li>
+<li><a class="" href="categorization.html"><span class="header-section-number">4</span> Categorization</a></li>
+<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></li>
+<li><a class="active" href="sampling-assumptions.html"><span class="header-section-number">6</span> Sampling assumptions</a></li>
+<li><a class="" href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></li>
+<li><a class="" href="social-cognition.html"><span class="header-section-number">8</span> Social cognition</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="sampling-assumptions" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Sampling assumptions<a class="anchor" aria-label="anchor" href="#sampling-assumptions"><i class="fas fa-link"></i></a>
+</h1>
+<p>So far, we’ve seen where <a href="generalization.html#weak-strong-sampling">strong sampling</a> was a logical assumption to make. But it isn’t always.</p>
+<p>For example, consider <a href="generalization.html#hormones">the hormone problem from Chapter 3</a>. If you were randomly testing people’s hormone levels and every person just happened to be healthy, clearly strong sampling wouldn’t be appropriate, because we were sampling from the full population of both healthy and unhealthy people.</p>
+<p>This raises a question: Are people sensitive to the process by which data are generated?</p>
+<p><em>Spoiler alert: Yes.</em></p>
+<div id="word-learning" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> Word learning 💬<a class="anchor" aria-label="anchor" href="#word-learning"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose you see the following collection of objects on a table.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-47"></span>
+<img src="images/06/xu_tenenbaum_objects.png" alt="From Xu &amp; Tenenbaum (2007)." width="70%"><p class="caption">
+Figure 6.1: From Xu &amp; Tenenbaum (2007).
+</p>
+</div>
+<p>Now consider the following situation:</p>
+<blockquote>
+<p>A teacher picks three blue circles from the pile and calls them “wugs.”</p>
+</blockquote>
+<p><strong>What is a wug?</strong> Are all circles wugs? Or just blue circles?</p>
+<p>Consider a different situation:</p>
+<blockquote>
+<p>A teacher picks one blue circle from the pile and calls it a “wug.” The teacher then asks a child to choose two more (the child picks two blue circles). The teacher confirms that they are also wugs.</p>
+</blockquote>
+<p><strong>What is a wug?</strong> Are all circles wugs? Or just blue circles?</p>
+<p>In both situations, the observed data is the same: three blue circles labeled as wugs. What’s different is the process by which the data was generated. In one case, a knowledgeable teacher picked all the wugs; in the other, the teacher only picked one example and a (probably not knowledgeable) child picked the others.</p>
+<p>To use some terms we’ve seen before, the teacher is using strong sampling. The child is using something closer to weak sampling.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-48"></span>
+<img src="images/06/xu_tenenbaum_hierarchy.png" alt="The hierarchy of objects. From Xu &amp; Tenenbaum (2007)." width="65%"><p class="caption">
+Figure 6.2: The hierarchy of objects. From Xu &amp; Tenenbaum (2007).
+</p>
+</div>
+<p>This is based on an <a href="http://web.mit.edu/cocosci/archive/Papers/devsci07_xu_tenenbaum.pdf">actual study</a> by Fei Xu and Josh Tenenbaum, who also developed a model of the task. They asked whether children and adults would generalize the word “wug” to the basic-level category (circles with lines in them) or the subordinate category (blue circles with lines in them). Here are their results:</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-49"></span>
+<img src="images/06/xu_tenenbaum_results.png" alt="Experimental results from Xu &amp; Tenenbaum (2007)." width="75%"><p class="caption">
+Figure 6.3: Experimental results from Xu &amp; Tenenbaum (2007).
+</p>
+</div>
+<p>People clearly distinguished between the teacher-driven situation and the child-driven (learner-driven) situation, and were much more likely to generalize “wugs” to the subordinate category when the teacher picked the objects.</p>
+</div>
+<div id="pedagogical-sampling" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Pedagogical sampling 🧑‍🏫<a class="anchor" aria-label="anchor" href="#pedagogical-sampling"><i class="fas fa-link"></i></a>
+</h2>
+<p>The teacher choosing wugs could be said to be using <em>pedagogical sampling</em>. The teacher deliberately used knowledge of the wug concept to select informative examples to help the child learn the concept as quickly as possible.</p>
+<p>This is an idea <a href="http://shaftolab.com/assets/papers/shaftogg14.pdf">explored</a> by Patrick Shafto, Noah Goodman, and Thomas Griffiths (as well as Elizabeth Bonawitz and other researchers in related work). To put it in formal terms:</p>
+<p><span class="math display" id="eq:pedagogical">\[
+\begin{equation}
+P_{\text{teacher}}(d|h) \propto (P_{\text{learner}}(h|d))^\alpha
+\tag{6.1}
+\end{equation}
+\]</span></p>
+<p>Here, <span class="math inline">\(\alpha\)</span> is a parameter that controls how optimized the teacher’s choices are. As <span class="math inline">\(\alpha \rightarrow \infty\)</span>, the teacher will choose examples <span class="math inline">\(d\)</span> that maximize the learner’s posterior probability.</p>
+<p>This means we can figure out how the learner will update their beliefs about a concept by directly applying Bayes rule:</p>
+<p><span class="math display" id="eq:plearner">\[
+\begin{equation}
+  P_{\text{learner}}(h|d) = \frac{P_{\text{teacher}}(d|h)P(h)}{\sum_{h_i} P_{\text{teacher}}(d|h_i)P(h_i)}
+\tag{6.2}
+\end{equation}
+\]</span></p>
+<p>This equation makes it clear that the teacher and learner are inextricably linked: The teacher chooses examples to maximize the learner’s understanding, and the learner updates beliefs based on expectations of how the teacher is choosing examples. The model is <em>recursive</em>.</p>
+<p>As the researchers explain in their paper, the two equations above are a system of equations that can be rearranged to create the following equation defining how the teacher should choose examples:</p>
+<p><span class="math display" id="eq:pteacher">\[
+\begin{equation}
+  P_{\text{teacher}}(d|h) \propto \left( \frac{P_{\text{teacher}}(d|h) P(h)}{\sum_{h_i} P_{\text{teacher}}(d|h_i) P(h_i)} \right)^\alpha
+\tag{6.3}
+\end{equation}
+\]</span></p>
+<p>How to solve this equation? In the paper, they use an iterative algorithm, that works like this:</p>
+<ol style="list-style-type: decimal">
+<li>Initialize <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using weak sampling.</li>
+<li>Iterate through the following steps until <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> stabilizes (doesn’t change from one iteration to the next):
+<ol style="list-style-type: decimal">
+<li>For each possible <span class="math inline">\(h\)</span> and <span class="math inline">\(d\)</span>, compute <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> using Equation <a href="sampling-assumptions.html#eq:plearner">(6.2)</a> and <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> values from the previous iteration.</li>
+<li>For each possible <span class="math inline">\(d\)</span> and <span class="math inline">\(h\)</span>, update <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> values from the previous step, where <span class="math inline">\(P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)\)</span> (Equation <a href="sampling-assumptions.html#eq:pedagogical">(6.1)</a>).</li>
+</ol>
+</li>
+</ol>
+<div id="the-rectangle-game" class="section level3" number="6.2.1">
+<h3>
+<span class="header-section-number">6.2.1</span> The rectangle game<a class="anchor" aria-label="anchor" href="#the-rectangle-game"><i class="fas fa-link"></i></a>
+</h3>
+<p>The researchers tested out their model in an experiment using a simple task called the rectangle game.</p>
+<p>In the game, concepts are rectangular boundaries in a two-dimensional space. The teacher knows the boundary and the learner has to figure it out from examples given by the teacher.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-50"></span>
+<img src="images/06/shafto_etal_expt1.png" alt="The rectangle game. From Shafto et al. (2014)." width="90%"><p class="caption">
+Figure 6.4: The rectangle game. From Shafto et al. (2014).
+</p>
+</div>
+<p>In one version, the teacher can only provide positive examples (“Here’s an example that’s inside the boundary”). In another version, the teacher can also provide negative examples (“Here’s an example that’s not inside the boundary”).</p>
+<p>In an experiment, they asked people to play the role of the learner in the rectangle game. There were three conditions:</p>
+<ol style="list-style-type: decimal">
+<li>
+<em>Teaching-pedagogical learning</em>: People first acted as teachers, then as learners.</li>
+<li>
+<em>Pedagogical learning</em>: People acted just as learners and were told the examples they saw were chosen by a teacher.</li>
+<li>
+<em>Non-pedagogical learning</em>: People acted just as learners and were told the examples they saw were not chosen by a teacher.</li>
+</ol>
+<p>After showing people examples, they asked them to draw a rectangle of their best guess about what the boundary was.</p>
+<p>One key prediction of the model is that the most informative locations for examples under pedagogical sampling are at the corners of the rectangles. To test whether the learners understood this, they measured the proportion of examples that ended up in the corners of the rectangles people drew. The results are shown below.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-51"></span>
+<img src="images/06/shafto_etal_expt1_results.png" alt="Results from Shafto et al.'s (2014) Experiment 1." width="95%"><p class="caption">
+Figure 6.5: Results from Shafto et al.’s (2014) Experiment 1.
+</p>
+</div>
+<p>As you can see, when people thought a knowledgeable teacher was providing the examples (the teaching-pedagogical and pedagogical learning conditions), they were much more likely to draw tight boundaries around the examples, compared to when they didn’t think a teacher was providing the examples (the non-pedagogical learning condition). This suggests that people were indeed sensitive to the process by which the data were generated and incorporated that understanding into their inferences.</p>
+<p>In the next chapter, we’ll work through one more application of people’s sensitivity to different sampling assumptions: understanding the pragmatics of speech.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></div>
+<div class="next"><a href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#sampling-assumptions"><span class="header-section-number">6</span> Sampling assumptions</a></li>
+<li><a class="nav-link" href="#word-learning"><span class="header-section-number">6.1</span> Word learning 💬</a></li>
+<li>
+<a class="nav-link" href="#pedagogical-sampling"><span class="header-section-number">6.2</span> Pedagogical sampling 🧑‍🏫</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-rectangle-game"><span class="header-section-number">6.2.1</span> The rectangle game</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Computational Psychology in Python</strong>" was written by Alan Jern. It was last built on 2022-04-10.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
