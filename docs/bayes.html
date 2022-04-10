@@ -50,7 +50,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="index.html">Welcome</a></li>
 <li><a class="" href="intro.html"><span class="header-section-number">1</span> Why computational modeling?</a></li>
 <li><a class="active" href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></li>
 <li><a class="" href="generalization.html"><span class="header-section-number">3</span> Generalization</a></li>
@@ -62,7 +62,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/alanjern/computational-psych-book">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -144,7 +144,7 @@ Figure 2.1: The duck-rabbit illusion.
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="bayes.html#cb8-1" aria-hidden="true" tabindex="-1"></a>ball_samples <span class="op">=</span> np.random.binomial(n <span class="op">=</span> np.repeat(<span class="dv">1</span>,<span class="bu">len</span>(p_black)),</span>
 <span id="cb8-2"><a href="bayes.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                                  p <span class="op">=</span> p_black)</span>
 <span id="cb8-3"><a href="bayes.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ball_samples[<span class="dv">0</span>:<span class="dv">9</span>])</span></code></pre></div>
-<pre><code>## [1 0 0 0 1 1 0 1 1]</code></pre>
+<pre><code>## [1 0 0 0 0 1 1 1 1]</code></pre>
 <p><code>ball_samples</code> is 1 for black and 0 for red. Once again, let’s plot all our samples.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="bayes.html#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb10-2"><a href="bayes.html#cb10-2" aria-hidden="true" tabindex="-1"></a>n, bins, patches <span class="op">=</span> ax.hist(ball_samples, bins<span class="op">=</span><span class="dv">2</span>)</span>
@@ -401,7 +401,8 @@ This sequence isn’t even possible under <span class="math inline">\(h_2\)</spa
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/alanjern/computational-psych-book/blob/main/02-bayes.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/alanjern/computational-psych-book/edit/main/02-bayes.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

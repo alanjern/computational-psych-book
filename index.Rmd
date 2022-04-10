@@ -14,7 +14,7 @@ link-citations: yes
 # github-repo: rstudio/bookdown-demo
 ---
 
-# Preface {-}
+# Welcome {-}
 
 <img src="images/marble.jpg" alt="Computational Psychology in Python" width="100%"/>
 
