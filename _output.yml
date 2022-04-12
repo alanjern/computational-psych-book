@@ -2,7 +2,7 @@ bookdown::bs4_book:
   includes:
     in_header: header.html
   theme:
-    primary: "#731f0a"
+    primary: "#801241"
   config:
     toc:
       before: |

@@ -184,7 +184,7 @@ ax.set_ylabel('Hypothesis')
 ```
 
 
-### How to avoid calculating P(d)
+### How to avoid calculating P(d) {#normalization}
 
 In practice, we generally do not need to calculate the $P(d)$ (the denominator in Bayes's rule) explicitly. I'll give you the general idea why in this section.
 

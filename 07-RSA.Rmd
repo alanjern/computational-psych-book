@@ -64,7 +64,7 @@ In formal terms, you're trying to send a signal such that the number you observe
 **Exercise**: Compute the surprisal of each of these two signals.
 
 
-## The Rational Speech Act model 🍪
+## The Rational Speech Act model 🍪 {#rsa-model}
 
 Let's apply the concept of surprisal to the following example. There were initially two cookies in a cookie jar, you may have eaten some, and you're telling your friend how many you had. You can say:
 
