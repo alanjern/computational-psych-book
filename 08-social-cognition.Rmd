@@ -280,7 +280,7 @@ samples_filtered = samples[samples["u"] < 50]
 
 fig, ax = plt.subplots(1,1)
 g = sb.displot(data=samples_filtered, x="u", hue="person", kind="kde")
-#g.set(xlim=(-20,30))
+
 plt.show()
 ```
 

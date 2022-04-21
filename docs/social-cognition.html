@@ -7,7 +7,7 @@
 <title>Chapter 8 Social cognition | Introduction to Computational Psychology</title>
 <meta name="author" content="Alan Jern">
 <meta name="description" content="Watch the video below. What do you see?  If you’re like most people, you see more than just lifeless shapes moving around. You see a whole drama play out involving characters with goals and...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Social cognition | Introduction to Computational Psychology">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://alanjern.github.io/computational-psych-book/social-cognition.html">
@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Chapter 8 Social cognition | Introduction to Computational Psychology">
 <meta name="twitter:description" content="Watch the video below. What do you see?  If you’re like most people, you see more than just lifeless shapes moving around. You see a whole drama play out involving characters with goals and...">
 <meta name="twitter:image" content="https://alanjern.github.io/computational-psych-book/images/cover/marble_notext.jpg">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
@@ -28,7 +28,10 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="msapplication-config" content="images/favicons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -254,10 +257,10 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <p>Let’s compare the probability of someone making <a href="social-cognition.html#inverting-the-choice-model">the choices that Rue and Jules made</a>.</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="social-cognition.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability: "</span> <span class="op">+</span> </span>
 <span id="cb91-2"><a href="social-cognition.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_rue, <span class="dv">2000</span>)))</span></code></pre></div>
-<pre><code>## Rue's choice probability: 0.9722285762133619</code></pre>
+<pre><code>## Rue's choice probability: 0.9722552429060991</code></pre>
 <div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="social-cognition.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability: "</span> <span class="op">+</span></span>
 <span id="cb93-2"><a href="social-cognition.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, <span class="dv">2000</span>)))</span></code></pre></div>
-<pre><code>## Jules's choice probability: 0.028341125970510916</code></pre>
+<pre><code>## Jules's choice probability: 0.028287781680500126</code></pre>
 <p>Unsurprisingly, Jules’s choice has a much higher baseline probability.</p>
 </div>
 <div id="putting-it-all-together" class="section level4" number="8.1.1.3">
@@ -267,7 +270,7 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <p>Now we’ll infer Rue’s and Jules’s preferences from their choices using Monte Carlo estimation again.</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="social-cognition.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random state for reproducibility</span></span>
 <span id="cb95-2"><a href="social-cognition.html#cb95-2" aria-hidden="true" tabindex="-1"></a>np.random.RandomState(<span class="dv">2022</span>) </span></code></pre></div>
-<pre><code>## RandomState(MT19937) at 0x137363940</code></pre>
+<pre><code>## RandomState(MT19937) at 0x20707B5F540</code></pre>
 <div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="social-cognition.html#cb97-1" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">2000</span> <span class="co"># number of Monte Carlo samples</span></span>
 <span id="cb97-2"><a href="social-cognition.html#cb97-2" aria-hidden="true" tabindex="-1"></a>n_attributes <span class="op">=</span> <span class="bu">len</span>(choice_rue[<span class="dv">0</span>])</span>
 <span id="cb97-3"><a href="social-cognition.html#cb97-3" aria-hidden="true" tabindex="-1"></a>peach <span class="op">=</span> <span class="dv">0</span></span>
@@ -306,7 +309,7 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <span id="cb98-11"><a href="social-cognition.html#cb98-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-12"><a href="social-cognition.html#cb98-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb98-13"><a href="social-cognition.html#cb98-13" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sb.displot(data<span class="op">=</span>samples_filtered, x<span class="op">=</span><span class="st">"u"</span>, hue<span class="op">=</span><span class="st">"person"</span>, kind<span class="op">=</span><span class="st">"kde"</span>)</span>
-<span id="cb98-14"><a href="social-cognition.html#cb98-14" aria-hidden="true" tabindex="-1"></a><span class="co">#g.set(xlim=(-20,30))</span></span>
+<span id="cb98-14"><a href="social-cognition.html#cb98-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-15"><a href="social-cognition.html#cb98-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-67-13.png" width="558"></div>
 <p>The model’s inferences here require some interpretation. The model is more certain about Rue having a preference for peach, but the distribution on the Jules’s preference for peach has a much longer tail.</p>
@@ -442,7 +445,7 @@ Figure 8.3: Partial results from Experiment 1b of Jara-Ettinger et al (2020).
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Introduction to Computational Psychology</strong>" was written by Alan Jern. It was last built on 2022-04-12.</p>
+    <p>"<strong>Introduction to Computational Psychology</strong>" was written by Alan Jern. It was last built on 2022-04-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
