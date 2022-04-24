@@ -21,6 +21,9 @@ fig:unnamed-chunk-68
 fig:unnamed-chunk-69
 eq:optimalpolicy
 fig:unnamed-chunk-70
+fig:unnamed-chunk-71
+fig:unnamed-chunk-72
+fig:unnamed-chunk-73
 intro
 representations
 homework-1-build-your-first-computational-model
@@ -91,3 +94,14 @@ markov-decision-processes
 inverting-the-mdp
 results-1
 iterated-learning
+markov-chains
+examples
+markov-exmaple1
+markov-example2
+markov-example3
+stationary-distributions
+hmms
+formal-definition
+inference
+cultural-transmission
+using-iterated-learning-to-identify-peoples-priors
