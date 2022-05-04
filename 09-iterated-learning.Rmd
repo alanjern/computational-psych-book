@@ -99,8 +99,8 @@ Using some algebra, we get the following expressions:
 
 $$
 \begin{eqnarray}
-\theta_1 = \frac{t_{12}}{t_{12}+t_{21}} \\
-\theta_2 = \frac{t_{21}}{t_{21}+t_{12}}
+\theta_1 = \frac{t_{21}}{t_{12}+t_{21}} \\
+\theta_2 = \frac{t_{12}}{t_{21}+t_{12}}
 \end{eqnarray}
 $$
 

@@ -1,8 +1,8 @@
-# Hierarchical generalization
+# Hierarchical generalization {#hierarchical-generalization}
 
 In [previous examples](#bayes), there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval [0,1].
 
-## The Beta-Binomial model 🪙
+## The Beta-Binomial model 🪙 {#beta-binomial}
 
 ```{r echo=FALSE, out.width='75%', fig.align='center', fig.cap='Photo by ZSun Fu on Unsplash.'}
 knitr::include_graphics("images/05/coin-in-hand.jpg")

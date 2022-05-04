@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 10 Causal inference | Introduction to Computational Psychology</title>
+<meta name="author" content="Alan Jern">
+<meta name="description" content="The world is full of weird and interesting relationships. Like this one.  Figure 10.1: Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com.  Which...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 10 Causal inference | Introduction to Computational Psychology">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://alanjern.github.io/computational-psych-book/causal-inference.html">
+<meta property="og:image" content="https://alanjern.github.io/computational-psych-book/images/cover/marble_notext.jpg">
+<meta property="og:description" content="The world is full of weird and interesting relationships. Like this one.  Figure 10.1: Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com.  Which...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 10 Causal inference | Introduction to Computational Psychology">
+<meta name="twitter:description" content="The world is full of weird and interesting relationships. Like this one.  Figure 10.1: Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com.  Which...">
+<meta name="twitter:image" content="https://alanjern.github.io/computational-psych-book/images/cover/marble_notext.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+<link rel="manifest" href="images/favicons/site.webmanifest">
+<link rel="shortcut icon" href="images/favicons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="images/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Introduction to Computational Psychology</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">1</span> Why computational modeling?</a></li>
+<li><a class="" href="bayes.html"><span class="header-section-number">2</span> Bayesian inference</a></li>
+<li><a class="" href="generalization.html"><span class="header-section-number">3</span> Generalization</a></li>
+<li><a class="" href="categorization.html"><span class="header-section-number">4</span> Categorization</a></li>
+<li><a class="" href="hierarchical-generalization.html"><span class="header-section-number">5</span> Hierarchical generalization</a></li>
+<li><a class="" href="sampling-assumptions.html"><span class="header-section-number">6</span> Sampling assumptions</a></li>
+<li><a class="" href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></li>
+<li><a class="" href="social-cognition.html"><span class="header-section-number">8</span> Social cognition</a></li>
+<li><a class="" href="iterated-learning.html"><span class="header-section-number">9</span> Iterated learning</a></li>
+<li><a class="active" href="causal-inference.html"><span class="header-section-number">10</span> Causal inference</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/alanjern/computational-psych-book">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="causal-inference" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Causal inference<a class="anchor" aria-label="anchor" href="#causal-inference"><i class="fas fa-link"></i></a>
+</h1>
+<p>The world is full of weird and interesting relationships. Like this one.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-74"></span>
+<img src="images/10/maine_divorce_rate.png" alt="Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com." width="100%"><p class="caption">
+Figure 10.1: Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com.
+</p>
+</div>
+<p>Which of these weird relationships are <em>causal</em> relationships and how can we tell? (Does cutting back on margarine reduce your chances of divorce? Probably not.)</p>
+<p>Causal inference is, in fact, a major area of research in statistics and machine learning. But we’ll just focus on the question of how people decide what causes what.</p>
+<p>We’ll use a computational framework for making optimal probabilistic causal judgments called Bayesian networks, or <strong>Bayes nets</strong> for short. Comparing people’s judgments to Bayes net predictions allows us to see how optimal (or not) people are. Additionally, as we’ll see, Bayes nets are well suited for <em>intervention</em>, which is one way that people learn about causes.</p>
+<div id="bayes-nets" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Bayes nets ➡️<a class="anchor" aria-label="anchor" href="#bayes-nets"><i class="fas fa-link"></i></a>
+</h2>
+<p>A Bayes net is a graph that describes the dependencies between all the variables in a situation.</p>
+<p>For example, let’s make a Bayes net for the problem in Chapter 5 of <a href="hierarchical-generalization.html#beta-binomial">inferring the bias of a coin</a>. In that problem, there were three key variables: the bias <span class="math inline">\(\theta\)</span>, the total number of flips <span class="math inline">\(n\)</span>, and the number of heads <span class="math inline">\(k\)</span>. We can represent this as a Bayes net.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-75"></span>
+<img src="images/10/beta_binomial_bayesnet1.png" alt="Bayes net representation of the coin bias problem." width="101"><p class="caption">
+Figure 10.2: Bayes net representation of the coin bias problem.
+</p>
+</div>
+<p>In Bayes nets, shaded notes represent variables that are known or observed, and unshaded nodes represent variables that are unknown. We know how many times the coin was flipped and came up heads, but we don’t directly know the bias <span class="math inline">\(\theta\)</span>.</p>
+<p>We could extend this Bayes net to capture the <em>generalization</em> problem of predicting the outcome of the next coin flip <span class="math inline">\(x\)</span>.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-76"></span>
+<img src="images/10/beta_binomial_bayesnet2.png" alt="Bayes net representation of the biased coin generalization problem." width="130"><p class="caption">
+Figure 10.3: Bayes net representation of the biased coin generalization problem.
+</p>
+</div>
+<p>A complete Bayes net also specifies a probability distribution for each variable. In the example above, <span class="math inline">\(k\)</span> is a function of <span class="math inline">\(\theta\)</span> and <span class="math inline">\(n\)</span>. As we learned in <a href="hierarchical-generalization.html#beta-binomial">Chapter 5</a>, this is a Binomial distribution. We also need to specify a prior probability over any unknown variables, like <span class="math inline">\(\theta\)</span>. Previously we assumed it was distributed according to a Beta distribution. <span class="math inline">\(x\)</span> is just a single coin flip – it’s a special case of a Binomial distribution called a Bernoulli distribution in which <span class="math inline">\(n = 1\)</span>. To sum up:</p>
+<ul>
+<li><span class="math inline">\(\theta \sim \text{Beta}(\alpha, \beta)\)</span></li>
+<li><span class="math inline">\(k \sim \text{Binomial}(n,\theta)\)</span></li>
+<li><span class="math inline">\(x \sim \text{Binomial}(n=1, \theta)\)</span></li>
+</ul>
+</div>
+<div id="causal-intervention" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Causal intervention 🪚<a class="anchor" aria-label="anchor" href="#causal-intervention"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consider the following two Bayes nets.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-77"></span>
+<img src="images/10/three_var_nets.png" alt="Two Bayes nets with three variables." width="243"><p class="caption">
+Figure 10.4: Two Bayes nets with three variables.
+</p>
+</div>
+<p>To be concrete, let’s say that variables <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span> represent levels of hormones sonin and xanthan, respectively. Variable <span class="math inline">\(z\)</span> is an unknown variable.</p>
+<p>The <em>common cause</em> network is so-called because sonin (<span class="math inline">\(s\)</span>) and xanthan (<span class="math inline">\(x\)</span>) are both causally dependent on <span class="math inline">\(z\)</span>. The <em>chain</em> network is so-called because all the variables form a causal chain from <span class="math inline">\(s\)</span> to <span class="math inline">\(x\)</span> to <span class="math inline">\(z\)</span>. (Note the directions of the arrows in the two Bayes nets.)</p>
+<p>Let’s see what kind of data these Bayes nets produce. Let’s assume that each root node of a network (<span class="math inline">\(z\)</span> in the common cause, <span class="math inline">\(x\)</span> in the chain) follows a normal distribution with mean 0 and SD 1. Each link in a network follows a normal distribution with mean equal to the value of its parent node and SD 1.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="causal-inference.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb100-2"><a href="causal-inference.html#cb100-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-3"><a href="causal-inference.html#cb100-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb100-4"><a href="causal-inference.html#cb100-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="causal-inference.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Common cause</span></span>
+<span id="cb100-6"><a href="causal-inference.html#cb100-6" aria-hidden="true" tabindex="-1"></a>z_mu <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb100-7"><a href="causal-inference.html#cb100-7" aria-hidden="true" tabindex="-1"></a>sd <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb100-8"><a href="causal-inference.html#cb100-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-9"><a href="causal-inference.html#cb100-9" aria-hidden="true" tabindex="-1"></a>z_samples_cc <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb100-10"><a href="causal-inference.html#cb100-10" aria-hidden="true" tabindex="-1"></a>s_samples_cc <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb100-11"><a href="causal-inference.html#cb100-11" aria-hidden="true" tabindex="-1"></a>x_samples_cc <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb100-12"><a href="causal-inference.html#cb100-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-13"><a href="causal-inference.html#cb100-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb100-14"><a href="causal-inference.html#cb100-14" aria-hidden="true" tabindex="-1"></a>  z_samples_cc[i] <span class="op">=</span> np.random.normal(z_mu, sd)</span>
+<span id="cb100-15"><a href="causal-inference.html#cb100-15" aria-hidden="true" tabindex="-1"></a>  s_samples_cc[i] <span class="op">=</span> np.random.normal(z_samples_cc[i], sd)</span>
+<span id="cb100-16"><a href="causal-inference.html#cb100-16" aria-hidden="true" tabindex="-1"></a>  x_samples_cc[i] <span class="op">=</span> np.random.normal(s_samples_cc[i], sd)</span>
+<span id="cb100-17"><a href="causal-inference.html#cb100-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-18"><a href="causal-inference.html#cb100-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Chain</span></span>
+<span id="cb100-19"><a href="causal-inference.html#cb100-19" aria-hidden="true" tabindex="-1"></a>x_mu <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb100-20"><a href="causal-inference.html#cb100-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-21"><a href="causal-inference.html#cb100-21" aria-hidden="true" tabindex="-1"></a>z_samples_chain <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb100-22"><a href="causal-inference.html#cb100-22" aria-hidden="true" tabindex="-1"></a>s_samples_chain <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb100-23"><a href="causal-inference.html#cb100-23" aria-hidden="true" tabindex="-1"></a>x_samples_chain <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb100-24"><a href="causal-inference.html#cb100-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-25"><a href="causal-inference.html#cb100-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb100-26"><a href="causal-inference.html#cb100-26" aria-hidden="true" tabindex="-1"></a>  x_samples_chain[i] <span class="op">=</span> np.random.normal(x_mu, sd)</span>
+<span id="cb100-27"><a href="causal-inference.html#cb100-27" aria-hidden="true" tabindex="-1"></a>  z_samples_chain[i] <span class="op">=</span> np.random.normal(x_samples_chain[i], sd)</span>
+<span id="cb100-28"><a href="causal-inference.html#cb100-28" aria-hidden="true" tabindex="-1"></a>  s_samples_chain[i] <span class="op">=</span> np.random.normal(z_samples_chain[i], sd)</span></code></pre></div>
+<p>Because <span class="math inline">\(z\)</span> represents an unknown variable, let’s plot just <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span>.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb101-1"><a href="causal-inference.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb101-2"><a href="causal-inference.html#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="causal-inference.html#cb101-3" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb101-4"><a href="causal-inference.html#cb101-4" aria-hidden="true" tabindex="-1"></a>ax1.scatter(s_samples_cc, x_samples_cc, alpha <span class="op">=</span> <span class="fl">0.1</span>)</span>
+<span id="cb101-5"><a href="causal-inference.html#cb101-5" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"s"</span>)</span>
+<span id="cb101-6"><a href="causal-inference.html#cb101-6" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"x"</span>)</span>
+<span id="cb101-7"><a href="causal-inference.html#cb101-7" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Common cause"</span>)</span>
+<span id="cb101-8"><a href="causal-inference.html#cb101-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-9"><a href="causal-inference.html#cb101-9" aria-hidden="true" tabindex="-1"></a>ax2.scatter(s_samples_chain, x_samples_chain, alpha <span class="op">=</span> <span class="fl">0.1</span>)</span>
+<span id="cb101-10"><a href="causal-inference.html#cb101-10" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"s"</span>)</span>
+<span id="cb101-11"><a href="causal-inference.html#cb101-11" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Chain"</span>)</span>
+<span id="cb101-12"><a href="causal-inference.html#cb101-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-13"><a href="causal-inference.html#cb101-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="672"></div>
+<p>Clearly, the data isn’t identical in the two cases, but data generated by both Bayes nets results in a strong positive correlation between <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span>.</p>
+<p>Imagine you didn’t know how this data was generated and you just got one of these plots. Could you use it to tell whether it was produced by a common cause structure or a chain structure?</p>
+<p>Sorry, but no. 😔 Just knowing the data are positively correlated doesn’t give you enough information to figure out how <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span> are causally related.</p>
+<p>But what if you could manipulate the variables? That is, what if you could <em>intervene</em> on sonin levels and see what effect it had on xanthan levels?</p>
+<ul>
+<li>If you increase the sonin levels 📈 and the xanthan levels also increase 📈, then the causal structure must be a chain.</li>
+<li>If you increase the sonin levels 📈 and the xanthan levels don’t change ❌, then the causal structure can’t be a chain (and therefore must be a common cause, because that’s the only other option we’re considering).</li>
+</ul>
+<div id="graph-surgery" class="section level3" number="10.2.1">
+<h3>
+<span class="header-section-number">10.2.1</span> Graph surgery<a class="anchor" aria-label="anchor" href="#graph-surgery"><i class="fas fa-link"></i></a>
+</h3>
+<p>This intuition can be illustrated visually on the Bayes nets by performing “surgery” on the graphs. It works like this:</p>
+<ol style="list-style-type: decimal">
+<li>Remove all incoming connections to the variable you’re intervening on.</li>
+<li>If there’s still a path between the variable you intervened on and another variable, then you should still expect those variables to be related.</li>
+</ol>
+<p>Let’s apply this idea to our common cause and chain Bayes nets.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-80"></span>
+<img src="images/10/graph_surgery.png" alt="Graph surgery applied to the common cause and chain Bayes nets. The invervention is indicated by the red arrow." width="260"><p class="caption">
+Figure 10.5: Graph surgery applied to the common cause and chain Bayes nets. The invervention is indicated by the red arrow.
+</p>
+</div>
+<p>After intervening on sonin levels (<span class="math inline">\(s\)</span>), we remove the connection to <span class="math inline">\(s\)</span> in the common cause network, but no connections in the chain network. The resulting Bayes nets show why we should expect to see a resulting change in xanthan for the chain, but not the common cause.</p>
+</div>
+<div id="do-people-intuitively-understand-the-logic-of-casual-intervention" class="section level3" number="10.2.2">
+<h3>
+<span class="header-section-number">10.2.2</span> Do people intuitively understand the logic of casual intervention?<a class="anchor" aria-label="anchor" href="#do-people-intuitively-understand-the-logic-of-casual-intervention"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="https://psycnet.apa.org/doi/10.1037/0278-7393.31.2.216">A study by Michael Waldmann and York Hagmayer</a> presented people with either the common cause or the chain structure. They were told that sonin and xanthan were hormone levels in chimps and they got some example data that allowed them to learn that the hormone levels were positively correlated.</p>
+<p>Then they were either assigned to a <em>doing</em> or <em>seeing</em> condition. People in the doing condition were asked to imagine that 20 chimps had their sonin levels raised (or lowered). They then predicted how many of the chimps would have elevated xanthan levels. People in the seeing condition got essentially the same information but just learned that the chimps’ sonin levels were high (not that it had been intentionally raised).</p>
+<p>Average results and model predictions are below.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-81"></span>
+<img src="images/10/waldmann_hagmayer_results.png" alt="Results from Waldmann &amp; Hagmayer (2005), Experiment 2." width="95%"><p class="caption">
+Figure 10.6: Results from Waldmann &amp; Hagmayer (2005), Experiment 2.
+</p>
+</div>
+<p>People’s judgments mostly followed those of the Bayes net model predictions. In the common cause case, when the sonin levels are artificially raised, the relationship between sonin and xanthan is decoupled, so the model reverts to a base rate prediction about xanthan levels (and so did people, for the most part). But when just observing elevated sonin levels, the model should expect the positive relationship to hold.</p>
+<p>In the chain case, the predictions are the same for seeing or doing, because intervening doesn’t change anything about the relationship between sonin and xanthan. People’s judgments indicate that they understood this.</p>
+</div>
+</div>
+<div id="structure-strength" class="section level2" number="10.3">
+<h2>
+<span class="header-section-number">10.3</span> Causal structure and strength 🏗💪<a class="anchor" aria-label="anchor" href="#structure-strength"><i class="fas fa-link"></i></a>
+</h2>
+<p>Bayes nets can also account for how people judge the strength of evidence for a causal relationship after seeing some data. This was the idea that Tom Griffiths and Josh Tenenbaum explored in <a href="https://cocosci.princeton.edu/tom/papers/causal4.pdf">a 2005 computational study</a>.</p>
+<p>Here’s the basic problem they considered. Suppose researchers perform an experiment with rats to test whether a drug causes a gene to be expressed. A control group of rats doesn’t get the injection and the experimental group does. They record the number of rats in each group that express the gene.</p>
+<p>Here are some possible results from an experiment with 8 rats in each group. The table shows how many rats in each group expressed the gene.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Control 🐀</th>
+<th>Experimental 🐀</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>6/8 🧬</td>
+<td>8/8 🧬</td>
+</tr>
+<tr class="even">
+<td>4/8 🧬</td>
+<td>6/8 🧬</td>
+</tr>
+<tr class="odd">
+<td>2/8 🧬</td>
+<td>4/8 🧬</td>
+</tr>
+<tr class="even">
+<td>0/8 🧬</td>
+<td>2/8 🧬</td>
+</tr>
+</tbody>
+</table></div>
+<p>In each of these hypothetical experiments, how strongly would you say that the drug causes the gene to be expressed?</p>
+<p>These are a few of the cases that were included in an experiment conducted by Marc Buehner and Patricia Cheng. Here’s the full set of averaged human results.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-82"></span>
+<img src="images/10/buehner_cheng_results.png" alt="Results from Buehner &amp; Cheng (1997), Experiment 1B, reproduced by Griffiths &amp; Tenenbaum (2005). p(e+|c+) is the probability of the effect being present (e.g., the gene being expressed) given that the cause is present (e.g., the drug was administered). p(e+|c-) means the probability of the effect being present given that the cause is absent." width="95%"><p class="caption">
+Figure 10.7: Results from Buehner &amp; Cheng (1997), Experiment 1B, reproduced by Griffiths &amp; Tenenbaum (2005). p(e+|c+) is the probability of the effect being present (e.g., the gene being expressed) given that the cause is present (e.g., the drug was administered). p(e+|c-) means the probability of the effect being present given that the cause is absent.
+</p>
+</div>
+<p>Focusing just on the cases in the table, on average, people judged that the drug was less likely to have a causal effect on the gene as the total number of rats expressing the gene decreased, even when the difference in number of rats expressing the gene between conditions was held constant.</p>
+<div id="the-causal-support-model" class="section level3" number="10.3.1">
+<h3>
+<span class="header-section-number">10.3.1</span> The causal support model<a class="anchor" aria-label="anchor" href="#the-causal-support-model"><i class="fas fa-link"></i></a>
+</h3>
+<p>Maybe people reason about these problems by performing a kind of model selection between the two Bayes nets below.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-83"></span>
+<img src="images/10/griffiths_tenenbaum_graphs.png" alt="Causal inference as model selection. In one model, there is a connection from the potential cause to the effect; in the other, the two variables are unconnected. (Image from Griffiths &amp; Tenenbaum (2005).)" width="443"><p class="caption">
+Figure 10.8: Causal inference as model selection. In one model, there is a connection from the potential cause to the effect; in the other, the two variables are unconnected. (Image from Griffiths &amp; Tenenbaum (2005).)
+</p>
+</div>
+<p>These Bayes nets each have three variables: an effect <span class="math inline">\(E\)</span>, a cause <span class="math inline">\(C\)</span>, and a background cause <span class="math inline">\(B\)</span>. For our problem, the effect and cause refer to the gene and the drug. The inclusion of the background cause is to account for unknown factors that might cause the gene to be expressed without the drug.</p>
+<p>The problem people are faced with is deciding which of these two models is best supported by the data <span class="math inline">\(D\)</span> – the number of times the effect occurred with and without the potential cause.</p>
+<p>This can be done with Bayesian inference:</p>
+<p><span class="math display">\[
+P(\text{Graph } i) \propto P(D|\text{Graph } i) P(\text{Graph } i)
+\]</span></p>
+<p>Because there are only two possible networks, we can compute the relative evidence for one Bayes net over the other as a ratio. We can then take the log of the expression to simplify it:</p>
+<p><span class="math display">\[
+\log \frac{P(\text{Graph } 1|D)}{P(\text{Graph } 0|D)} = \log \frac{P(D | \text{Graph } 1)}{P(D | \text{Graph } 0)} + \log \frac{P(\text{Graph } 1)}{P(\text{Graph } 0)}
+\]</span></p>
+<p>Regardless of what prior probabilities we assign to the two graphs, the relative evidence for one graph over the other is entirely determined by the log-likelihood ratio. This is defined as <strong>causal support</strong>: <span class="math inline">\(\log \frac{P(D | \text{Graph } 1)}{P(D | \text{Graph } 0)}\)</span>.</p>
+<p>Computing <span class="math inline">\(P(D | \text{Graph } 1)\)</span> requires fully specifying the Bayes net. We’ll assume that <span class="math inline">\(P(E|B) = w_0\)</span> and <span class="math inline">\(P(E|C) = w_1\)</span>. When both <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> are present, we’ll assume they contribute independently to causing <span class="math inline">\(E\)</span>, and therefore operate like a probabilistic OR function:</p>
+<p><span class="math display">\[
+P(e^+|b,c; w_o, w_1) = 1 - (1-w_0)^b (1-w_1)^c
+\]</span></p>
+<p>Here, when the B or C are present, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> are set to 1, and when they are absent, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> are set to 0.</p>
+<p>The likelihood for Graph 1 is therefore</p>
+<p><span class="math display">\[
+P(D | w_0, w_1, \text{Graph } 1) = \prod_{e,c} P(e|b^+,c; w_o, w_1)^{N(e,c)}
+\]</span></p>
+<p>where the product is over the possible settings of <span class="math inline">\(e\)</span> and <span class="math inline">\(c\)</span> (effect absent/cause absent, effect absent/cause present, …) and the <span class="math inline">\(N(e,c)\)</span> values are counts of times that these outcomes happened in the data <span class="math inline">\(D\)</span>.</p>
+<p>Here’s a function to compute this.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="causal-inference.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_likelihood(data, w0, w1, graph):</span>
+<span id="cb102-2"><a href="causal-inference.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns likelihood of data for a given graph</span></span>
+<span id="cb102-3"><a href="causal-inference.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb102-4"><a href="causal-inference.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
+<span id="cb102-5"><a href="causal-inference.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="co">       data (list): observation counts in this order:</span></span>
+<span id="cb102-6"><a href="causal-inference.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="co">         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
+<span id="cb102-7"><a href="causal-inference.html#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="co">       w0 (float): probability of background cause producing effect</span></span>
+<span id="cb102-8"><a href="causal-inference.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="co">       w1 (float): probability of cause of interest producing effect</span></span>
+<span id="cb102-9"><a href="causal-inference.html#cb102-9" aria-hidden="true" tabindex="-1"></a><span class="co">       graph (int): 0 (Graph 0) or 1 (Graph 1)</span></span>
+<span id="cb102-10"><a href="causal-inference.html#cb102-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-11"><a href="causal-inference.html#cb102-11" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
+<span id="cb102-12"><a href="causal-inference.html#cb102-12" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): probability of data</span></span>
+<span id="cb102-13"><a href="causal-inference.html#cb102-13" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb102-14"><a href="causal-inference.html#cb102-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb102-15"><a href="causal-inference.html#cb102-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> graph <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb102-16"><a href="causal-inference.html#cb102-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e-</span></span>
+<span id="cb102-17"><a href="causal-inference.html#cb102-17" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w0)<span class="op">**</span>(data[<span class="dv">0</span>]<span class="op">+</span>data[<span class="dv">2</span>])</span>
+<span id="cb102-18"><a href="causal-inference.html#cb102-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e+</span></span>
+<span id="cb102-19"><a href="causal-inference.html#cb102-19" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> w0<span class="op">**</span>(data[<span class="dv">1</span>]<span class="op">+</span>data[<span class="dv">3</span>])</span>
+<span id="cb102-20"><a href="causal-inference.html#cb102-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> graph <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb102-21"><a href="causal-inference.html#cb102-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c-, e-</span></span>
+<span id="cb102-22"><a href="causal-inference.html#cb102-22" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w0)<span class="op">**</span>data[<span class="dv">0</span>]</span>
+<span id="cb102-23"><a href="causal-inference.html#cb102-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c-, e+</span></span>
+<span id="cb102-24"><a href="causal-inference.html#cb102-24" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> w0<span class="op">**</span>data[<span class="dv">1</span>]</span>
+<span id="cb102-25"><a href="causal-inference.html#cb102-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c+, e-</span></span>
+<span id="cb102-26"><a href="causal-inference.html#cb102-26" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> (w0 <span class="op">+</span> w1 <span class="op">-</span> w0<span class="op">*</span>w1))<span class="op">**</span>data[<span class="dv">2</span>]</span>
+<span id="cb102-27"><a href="causal-inference.html#cb102-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c+, e+</span></span>
+<span id="cb102-28"><a href="causal-inference.html#cb102-28" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> (w0 <span class="op">+</span> w1 <span class="op">-</span> w0<span class="op">*</span>w1)<span class="op">**</span>data[<span class="dv">3</span>]</span>
+<span id="cb102-29"><a href="causal-inference.html#cb102-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb102-30"><a href="causal-inference.html#cb102-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># error!</span></span>
+<span id="cb102-31"><a href="causal-inference.html#cb102-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(<span class="dv">0</span>)</span>
+<span id="cb102-32"><a href="causal-inference.html#cb102-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb102-33"><a href="causal-inference.html#cb102-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(p)</span></code></pre></div>
+<p>Causal support doesn’t actually depend directly on the parameters <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span>. The reason is that we ultimately don’t care what the values of these parameters are because we just want to draw an inference at a higher level about the best-fitting Bayes net.</p>
+<p>Mathematically speaking, <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span> are averaged out of the model, an idea we first saw in <a href="generalization.html#generalizing">Chapter 3</a>. We can accomplish this using Monte Carlo approximation, introduced in <a href="social-cognition.html#monte-carlo">Chapter 8</a>.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="causal-inference.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> estimate_likelihood(graph_number, data): </span>
+<span id="cb103-2"><a href="causal-inference.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns an estimate of the probability of observing the data</span></span>
+<span id="cb103-3"><a href="causal-inference.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co">     under the specified graph using Monte Carlo estimation.</span></span>
+<span id="cb103-4"><a href="causal-inference.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb103-5"><a href="causal-inference.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
+<span id="cb103-6"><a href="causal-inference.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co">       graph_number (int): either 0 (Graph 0) or 1 (Graph 1)</span></span>
+<span id="cb103-7"><a href="causal-inference.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="co">       data (list): observation counts in this order:</span></span>
+<span id="cb103-8"><a href="causal-inference.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="co">         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
+<span id="cb103-9"><a href="causal-inference.html#cb103-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-10"><a href="causal-inference.html#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
+<span id="cb103-11"><a href="causal-inference.html#cb103-11" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): probability of observing data</span></span>
+<span id="cb103-12"><a href="causal-inference.html#cb103-12" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb103-13"><a href="causal-inference.html#cb103-13" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> numpy.random <span class="im">import</span> default_rng</span>
+<span id="cb103-14"><a href="causal-inference.html#cb103-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb103-15"><a href="causal-inference.html#cb103-15" aria-hidden="true" tabindex="-1"></a>  n_samples <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb103-16"><a href="causal-inference.html#cb103-16" aria-hidden="true" tabindex="-1"></a>  rng <span class="op">=</span> default_rng(<span class="dv">2022</span>)</span>
+<span id="cb103-17"><a href="causal-inference.html#cb103-17" aria-hidden="true" tabindex="-1"></a>  mc_samples <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb103-18"><a href="causal-inference.html#cb103-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb103-19"><a href="causal-inference.html#cb103-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb103-20"><a href="causal-inference.html#cb103-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample values for w0 and w1 from a uniform distribution</span></span>
+<span id="cb103-21"><a href="causal-inference.html#cb103-21" aria-hidden="true" tabindex="-1"></a>    w0 <span class="op">=</span> rng.random()</span>
+<span id="cb103-22"><a href="causal-inference.html#cb103-22" aria-hidden="true" tabindex="-1"></a>    w1 <span class="op">=</span> rng.random()</span>
+<span id="cb103-23"><a href="causal-inference.html#cb103-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb103-24"><a href="causal-inference.html#cb103-24" aria-hidden="true" tabindex="-1"></a>    mc_samples[i] <span class="op">=</span> compute_likelihood(data, w0, w1, graph_number)</span>
+<span id="cb103-25"><a href="causal-inference.html#cb103-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb103-26"><a href="causal-inference.html#cb103-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(<span class="dv">1</span><span class="op">/</span>n_samples <span class="op">*</span> np.<span class="bu">sum</span>(mc_samples))</span></code></pre></div>
+<p>Finally, let’s put it all together by writing a function that computes causal support.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb104-1"><a href="causal-inference.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> causal_support(data):</span>
+<span id="cb104-2"><a href="causal-inference.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns a causal support value for a given data set.</span></span>
+<span id="cb104-3"><a href="causal-inference.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">     Causal support is a measure of how strongly a data</span></span>
+<span id="cb104-4"><a href="causal-inference.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">     set indicates that there is evidence for a causal</span></span>
+<span id="cb104-5"><a href="causal-inference.html#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="co">     effect.</span></span>
+<span id="cb104-6"><a href="causal-inference.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb104-7"><a href="causal-inference.html#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
+<span id="cb104-8"><a href="causal-inference.html#cb104-8" aria-hidden="true" tabindex="-1"></a><span class="co">       data (list): observation counts in this order:</span></span>
+<span id="cb104-9"><a href="causal-inference.html#cb104-9" aria-hidden="true" tabindex="-1"></a><span class="co">         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
+<span id="cb104-10"><a href="causal-inference.html#cb104-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-11"><a href="causal-inference.html#cb104-11" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
+<span id="cb104-12"><a href="causal-inference.html#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): strength of evidence for causal relationship</span></span>
+<span id="cb104-13"><a href="causal-inference.html#cb104-13" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb104-14"><a href="causal-inference.html#cb104-14" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb104-15"><a href="causal-inference.html#cb104-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb104-16"><a href="causal-inference.html#cb104-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (np.log(estimate_likelihood(<span class="dv">1</span>,data<span class="op">=</span>data) <span class="op">/</span> </span>
+<span id="cb104-17"><a href="causal-inference.html#cb104-17" aria-hidden="true" tabindex="-1"></a>                 estimate_likelihood(<span class="dv">0</span>,data<span class="op">=</span>data)))</span></code></pre></div>
+<p>Now let’s see what the model predicts for the <a href="causal-inference.html#structure-strength">four cases we considered earlier</a>.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="causal-inference.html#cb105-1" aria-hidden="true" tabindex="-1"></a>causal_support_predictions <span class="op">=</span> [causal_support([<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">8</span>]),</span>
+<span id="cb105-2"><a href="causal-inference.html#cb105-2" aria-hidden="true" tabindex="-1"></a>                              causal_support([<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">6</span>]),</span>
+<span id="cb105-3"><a href="causal-inference.html#cb105-3" aria-hidden="true" tabindex="-1"></a>                              causal_support([<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>]),</span>
+<span id="cb105-4"><a href="causal-inference.html#cb105-4" aria-hidden="true" tabindex="-1"></a>                              causal_support([<span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">2</span>])]</span>
+<span id="cb105-5"><a href="causal-inference.html#cb105-5" aria-hidden="true" tabindex="-1"></a>                              </span>
+<span id="cb105-6"><a href="causal-inference.html#cb105-6" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"6/8, 8/8"</span>, <span class="st">"4/8, 6/8"</span>, <span class="st">"2/8, 4/8"</span>, <span class="st">"0/8, 2/8"</span>]</span>
+<span id="cb105-7"><a href="causal-inference.html#cb105-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb105-8"><a href="causal-inference.html#cb105-8" aria-hidden="true" tabindex="-1"></a>ax.bar(labels, causal_support_predictions)</span></code></pre></div>
+<pre><code>## &lt;BarContainer object of 4 artists&gt;</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="causal-inference.html#cb107-1" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Data"</span>)</span>
+<span id="cb107-2"><a href="causal-inference.html#cb107-2" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Model prediction"</span>)</span>
+<span id="cb107-3"><a href="causal-inference.html#cb107-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-4"><a href="causal-inference.html#cb107-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672"></div>
+<p>The labels on the x-axis indicate the control condition counts, followed by the experimental condition counts.</p>
+<p>You can see that the model’s predictions largely follow the <a href="causal-inference.html#structure-strength">pattern in the data from earlier</a>. The model favors Graph 1 in the two leftmost cases, is essentially uncertain in the third case, and begins to think the evidence favors no causal relationship in the rightmost case.</p>
+<p>The rest of the Griffiths &amp; Tenenbaum paper shows how causal support is able to capture some subtle aspects of people’s causal judgments that other models that don’t incorporate <em>both</em> structure and strength fail to capture.</p>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="iterated-learning.html"><span class="header-section-number">9</span> Iterated learning</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#causal-inference"><span class="header-section-number">10</span> Causal inference</a></li>
+<li><a class="nav-link" href="#bayes-nets"><span class="header-section-number">10.1</span> Bayes nets ➡️</a></li>
+<li>
+<a class="nav-link" href="#causal-intervention"><span class="header-section-number">10.2</span> Causal intervention 🪚</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#graph-surgery"><span class="header-section-number">10.2.1</span> Graph surgery</a></li>
+<li><a class="nav-link" href="#do-people-intuitively-understand-the-logic-of-casual-intervention"><span class="header-section-number">10.2.2</span> Do people intuitively understand the logic of casual intervention?</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#structure-strength"><span class="header-section-number">10.3</span> Causal structure and strength 🏗💪</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-causal-support-model"><span class="header-section-number">10.3.1</span> The causal support model</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/alanjern/computational-psych-book/blob/main/10-causal-inference.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/alanjern/computational-psych-book/edit/main/10-causal-inference.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Introduction to Computational Psychology</strong>" was written by Alan Jern. It was last built on 2022-05-04.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

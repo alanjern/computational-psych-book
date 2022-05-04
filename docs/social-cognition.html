@@ -60,6 +60,7 @@
 <li><a class="" href="pragmatics.html"><span class="header-section-number">7</span> Language pragmatics</a></li>
 <li><a class="active" href="social-cognition.html"><span class="header-section-number">8</span> Social cognition</a></li>
 <li><a class="" href="iterated-learning.html"><span class="header-section-number">9</span> Iterated learning</a></li>
+<li><a class="" href="causal-inference.html"><span class="header-section-number">10</span> Causal inference</a></li>
 </ul>
 
         <div class="book-extra">
@@ -254,10 +255,10 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <p>Let’s compare the probability of someone making <a href="social-cognition.html#inverting-the-choice-model">the choices that Rue and Jules made</a>.</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="social-cognition.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability: "</span> <span class="op">+</span> </span>
 <span id="cb92-2"><a href="social-cognition.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_rue, <span class="dv">2000</span>)))</span></code></pre></div>
-<pre><code>## Rue's choice probability: 0.9731471017378963</code></pre>
+<pre><code>## Rue's choice probability: 0.9718301762236088</code></pre>
 <div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="social-cognition.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability: "</span> <span class="op">+</span></span>
 <span id="cb94-2"><a href="social-cognition.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, <span class="dv">2000</span>)))</span></code></pre></div>
-<pre><code>## Jules's choice probability: 0.027225643482554775</code></pre>
+<pre><code>## Jules's choice probability: 0.028278654800973375</code></pre>
 <p>Unsurprisingly, Jules’s choice has a much higher baseline probability.</p>
 </div>
 <div id="putting-it-all-together" class="section level4" number="8.1.1.3">
@@ -267,7 +268,7 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <p>Now we’ll infer Rue’s and Jules’s preferences from their choices using Monte Carlo estimation again.</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="social-cognition.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random state for reproducibility</span></span>
 <span id="cb96-2"><a href="social-cognition.html#cb96-2" aria-hidden="true" tabindex="-1"></a>np.random.RandomState(<span class="dv">2022</span>) </span></code></pre></div>
-<pre><code>## RandomState(MT19937) at 0x12FA52640</code></pre>
+<pre><code>## RandomState(MT19937) at 0x1332DA640</code></pre>
 <div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="social-cognition.html#cb98-1" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">2000</span> <span class="co"># number of Monte Carlo samples</span></span>
 <span id="cb98-2"><a href="social-cognition.html#cb98-2" aria-hidden="true" tabindex="-1"></a>n_attributes <span class="op">=</span> <span class="bu">len</span>(choice_rue[<span class="dv">0</span>])</span>
 <span id="cb98-3"><a href="social-cognition.html#cb98-3" aria-hidden="true" tabindex="-1"></a>peach <span class="op">=</span> <span class="dv">0</span></span>
@@ -442,7 +443,7 @@ Figure 8.3: Partial results from Experiment 1b of Jara-Ettinger et al (2020).
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Introduction to Computational Psychology</strong>" was written by Alan Jern. It was last built on 2022-04-24.</p>
+    <p>"<strong>Introduction to Computational Psychology</strong>" was written by Alan Jern. It was last built on 2022-05-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

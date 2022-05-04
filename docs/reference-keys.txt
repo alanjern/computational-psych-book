@@ -24,6 +24,14 @@ fig:unnamed-chunk-70
 fig:unnamed-chunk-71
 fig:unnamed-chunk-72
 fig:unnamed-chunk-73
+fig:unnamed-chunk-74
+fig:unnamed-chunk-75
+fig:unnamed-chunk-76
+fig:unnamed-chunk-77
+fig:unnamed-chunk-80
+fig:unnamed-chunk-81
+fig:unnamed-chunk-82
+fig:unnamed-chunk-83
 intro
 representations
 homework-1-build-your-first-computational-model
@@ -34,7 +42,7 @@ sampling-from-the-generative-model
 bayesian-updating-learning-from-evidence
 applying-bayess-rule-to-the-bag-case
 normalization
-exercises
+bayes-exercises
 taxi-cabs
 flipping-coins
 solutions
@@ -64,7 +72,7 @@ the-generalized-context-model-gcm
 generating-model-predictions
 homework-3
 hierarchical-generalization
-the-beta-binomial-model
+beta-binomial
 conjugate-distributions
 parameter-estimation
 hypothesis-averaging
@@ -105,3 +113,10 @@ formal-definition
 inference
 cultural-transmission
 using-iterated-learning-to-identify-peoples-priors
+causal-inference
+bayes-nets
+causal-intervention
+graph-surgery
+do-people-intuitively-understand-the-logic-of-casual-intervention
+structure-strength
+the-causal-support-model

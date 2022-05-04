@@ -226,7 +226,7 @@ And that gives us the posterior without us having to explicitly calculate the ev
 The general idea is this. Because the denominator of Bayes's rule, for a fixed observation, is a constant, you can usually get away with computing $P(d|h) P(h)$ for every possible hypothesis $h$ and then "normalize" the resulting values so that they sum to 1 (remember that they have to in order for it to be a valid probability distribution).
 :::
 
-## Exercises 📝
+## Exercises 📝 {#bayes-exercises}
 
 ### Taxi cabs
 
