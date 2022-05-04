@@ -140,75 +140,75 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <p>Both Rue and Jules pick Option 1, which includes a peach 🍑. Based on their choices alone, who do you think likes peaches more? (Or, at least, which person’s choice would make you more confident they like peaches?)</p>
 <p>Let’s apply the inverse decision-making model to these two choices.</p>
 <p>We’ll start by encoding these choices using a binary encoding scheme in which each element in a list represents a fruit and this element is set to 1 if that fruit is present in the option.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="social-cognition.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb80-2"><a href="social-cognition.html#cb80-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-3"><a href="social-cognition.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fruit order:</span></span>
-<span id="cb80-4"><a href="social-cognition.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. peach</span></span>
-<span id="cb80-5"><a href="social-cognition.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. apple</span></span>
-<span id="cb80-6"><a href="social-cognition.html#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. orange</span></span>
-<span id="cb80-7"><a href="social-cognition.html#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. banana</span></span>
-<span id="cb80-8"><a href="social-cognition.html#cb80-8" aria-hidden="true" tabindex="-1"></a>choice_rue <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>],</span>
-<span id="cb80-9"><a href="social-cognition.html#cb80-9" aria-hidden="true" tabindex="-1"></a>                       [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>]])</span>
-<span id="cb80-10"><a href="social-cognition.html#cb80-10" aria-hidden="true" tabindex="-1"></a>choice_jules <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
-<span id="cb80-11"><a href="social-cognition.html#cb80-11" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="social-cognition.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb79-2"><a href="social-cognition.html#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="social-cognition.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fruit order:</span></span>
+<span id="cb79-4"><a href="social-cognition.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. peach</span></span>
+<span id="cb79-5"><a href="social-cognition.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. apple</span></span>
+<span id="cb79-6"><a href="social-cognition.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. orange</span></span>
+<span id="cb79-7"><a href="social-cognition.html#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. banana</span></span>
+<span id="cb79-8"><a href="social-cognition.html#cb79-8" aria-hidden="true" tabindex="-1"></a>choice_rue <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>],</span>
+<span id="cb79-9"><a href="social-cognition.html#cb79-9" aria-hidden="true" tabindex="-1"></a>                       [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>]])</span>
+<span id="cb79-10"><a href="social-cognition.html#cb79-10" aria-hidden="true" tabindex="-1"></a>choice_jules <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb79-11"><a href="social-cognition.html#cb79-11" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]])</span></code></pre></div>
 <p>Let’s define a function that calculates the choice probability in Equation <a href="social-cognition.html#eq:choicemodel">(8.1)</a>. This is our likelihood function.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb81-1"><a href="social-cognition.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_choice_prob(j, u, options): </span>
-<span id="cb81-2"><a href="social-cognition.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns the probability of choosing option j</span></span>
-<span id="cb81-3"><a href="social-cognition.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="co">     from the set options.</span></span>
-<span id="cb81-4"><a href="social-cognition.html#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb81-5"><a href="social-cognition.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
-<span id="cb81-6"><a href="social-cognition.html#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="co">       j (int): the chosen option</span></span>
-<span id="cb81-7"><a href="social-cognition.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="co">       u (array): a vector of utilities assigned to the</span></span>
-<span id="cb81-8"><a href="social-cognition.html#cb81-8" aria-hidden="true" tabindex="-1"></a><span class="co">         attributes in the options</span></span>
-<span id="cb81-9"><a href="social-cognition.html#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="co">       options (array): a matrix in which each row is an</span></span>
-<span id="cb81-10"><a href="social-cognition.html#cb81-10" aria-hidden="true" tabindex="-1"></a><span class="co">         option, and each option is a binary array of the </span></span>
-<span id="cb81-11"><a href="social-cognition.html#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="co">         attributes in that option</span></span>
-<span id="cb81-12"><a href="social-cognition.html#cb81-12" aria-hidden="true" tabindex="-1"></a><span class="co">         </span></span>
-<span id="cb81-13"><a href="social-cognition.html#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
-<span id="cb81-14"><a href="social-cognition.html#cb81-14" aria-hidden="true" tabindex="-1"></a><span class="co">       p (float): probability of choosing option j</span></span>
-<span id="cb81-15"><a href="social-cognition.html#cb81-15" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
-<span id="cb81-16"><a href="social-cognition.html#cb81-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb81-17"><a href="social-cognition.html#cb81-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the total utility of each option</span></span>
-<span id="cb81-18"><a href="social-cognition.html#cb81-18" aria-hidden="true" tabindex="-1"></a>  total_u <span class="op">=</span> np.<span class="bu">sum</span>(u<span class="op">*</span>options, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb81-19"><a href="social-cognition.html#cb81-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb81-20"><a href="social-cognition.html#cb81-20" aria-hidden="true" tabindex="-1"></a>  p <span class="op">=</span> np.exp(total_u[j]) <span class="op">/</span> np.<span class="bu">sum</span>(np.exp(total_u))</span>
-<span id="cb81-21"><a href="social-cognition.html#cb81-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(p)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="social-cognition.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_choice_prob(j, u, options): </span>
+<span id="cb80-2"><a href="social-cognition.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns the probability of choosing option j</span></span>
+<span id="cb80-3"><a href="social-cognition.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co">     from the set options.</span></span>
+<span id="cb80-4"><a href="social-cognition.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb80-5"><a href="social-cognition.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
+<span id="cb80-6"><a href="social-cognition.html#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="co">       j (int): the chosen option</span></span>
+<span id="cb80-7"><a href="social-cognition.html#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="co">       u (array): a vector of utilities assigned to the</span></span>
+<span id="cb80-8"><a href="social-cognition.html#cb80-8" aria-hidden="true" tabindex="-1"></a><span class="co">         attributes in the options</span></span>
+<span id="cb80-9"><a href="social-cognition.html#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="co">       options (array): a matrix in which each row is an</span></span>
+<span id="cb80-10"><a href="social-cognition.html#cb80-10" aria-hidden="true" tabindex="-1"></a><span class="co">         option, and each option is a binary array of the </span></span>
+<span id="cb80-11"><a href="social-cognition.html#cb80-11" aria-hidden="true" tabindex="-1"></a><span class="co">         attributes in that option</span></span>
+<span id="cb80-12"><a href="social-cognition.html#cb80-12" aria-hidden="true" tabindex="-1"></a><span class="co">         </span></span>
+<span id="cb80-13"><a href="social-cognition.html#cb80-13" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
+<span id="cb80-14"><a href="social-cognition.html#cb80-14" aria-hidden="true" tabindex="-1"></a><span class="co">       p (float): probability of choosing option j</span></span>
+<span id="cb80-15"><a href="social-cognition.html#cb80-15" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb80-16"><a href="social-cognition.html#cb80-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-17"><a href="social-cognition.html#cb80-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the total utility of each option</span></span>
+<span id="cb80-18"><a href="social-cognition.html#cb80-18" aria-hidden="true" tabindex="-1"></a>  total_u <span class="op">=</span> np.<span class="bu">sum</span>(u<span class="op">*</span>options, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb80-19"><a href="social-cognition.html#cb80-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-20"><a href="social-cognition.html#cb80-20" aria-hidden="true" tabindex="-1"></a>  p <span class="op">=</span> np.exp(total_u[j]) <span class="op">/</span> np.<span class="bu">sum</span>(np.exp(total_u))</span>
+<span id="cb80-21"><a href="social-cognition.html#cb80-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(p)</span></code></pre></div>
 <p>Let’s first assume they both like all fruits equally (they get a utility of 1 from any fruit). What is the probability of Rue and Jules making these choices?</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb82-1"><a href="social-cognition.html#cb82-1" aria-hidden="true" tabindex="-1"></a>utilities <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span>
-<span id="cb82-2"><a href="social-cognition.html#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb82-3"><a href="social-cognition.html#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability:"</span> <span class="op">+</span> </span>
-<span id="cb82-4"><a href="social-cognition.html#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_rue)))</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb81-1"><a href="social-cognition.html#cb81-1" aria-hidden="true" tabindex="-1"></a>utilities <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb81-2"><a href="social-cognition.html#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="social-cognition.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability:"</span> <span class="op">+</span> </span>
+<span id="cb81-4"><a href="social-cognition.html#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_rue)))</span></code></pre></div>
 <pre><code>## Rue's choice probability:0.8807970779778824</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="social-cognition.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability:"</span> <span class="op">+</span> </span>
-<span id="cb84-2"><a href="social-cognition.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_jules)))</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="social-cognition.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability:"</span> <span class="op">+</span> </span>
+<span id="cb83-2"><a href="social-cognition.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_jules)))</span></code></pre></div>
 <pre><code>## Jules's choice probability:0.11920292202211755</code></pre>
 <p>Unsurprisingly, Rue’s choice is much more probable. What if they like peaches four times as much as other fruits?</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="social-cognition.html#cb86-1" aria-hidden="true" tabindex="-1"></a>utilities <span class="op">=</span> np.array([<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span>
-<span id="cb86-2"><a href="social-cognition.html#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-3"><a href="social-cognition.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability:"</span> <span class="op">+</span> </span>
-<span id="cb86-4"><a href="social-cognition.html#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_rue)))</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb85-1"><a href="social-cognition.html#cb85-1" aria-hidden="true" tabindex="-1"></a>utilities <span class="op">=</span> np.array([<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb85-2"><a href="social-cognition.html#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="social-cognition.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability:"</span> <span class="op">+</span> </span>
+<span id="cb85-4"><a href="social-cognition.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_rue)))</span></code></pre></div>
 <pre><code>## Rue's choice probability:0.9933071490757152</code></pre>
-<div class="sourceCode" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="social-cognition.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability:"</span> <span class="op">+</span> </span>
-<span id="cb88-2"><a href="social-cognition.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_jules)))</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="social-cognition.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability:"</span> <span class="op">+</span> </span>
+<span id="cb87-2"><a href="social-cognition.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(compute_choice_prob(<span class="dv">0</span>, utilities, choice_jules)))</span></code></pre></div>
 <pre><code>## Jules's choice probability:0.7310585786300048</code></pre>
 <p>This increases Rue’s choice probability by just over 10%, but it increases Jules’s choice probability by over 60%.</p>
 <p>To invert the model, we also need to specify the prior probability, <span class="math inline">\(p(\mathbf{u})\)</span>. We’ll assume that people generally like fruit, but they are likely to disagree about how much they like different fruits, and there’s a possibility that some people will dislike like certain fruits.</p>
 <p>We can capture this idea by assuming that utilities for fruits are normally distributed with a positive mean. Let’s say that they have a mean of 2 and a standard deviation of 0.5:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="social-cognition.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb90-2"><a href="social-cognition.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb90-3"><a href="social-cognition.html#cb90-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-4"><a href="social-cognition.html#cb90-4" aria-hidden="true" tabindex="-1"></a>u_mean <span class="op">=</span> <span class="dv">2</span></span>
-<span id="cb90-5"><a href="social-cognition.html#cb90-5" aria-hidden="true" tabindex="-1"></a>u_sd <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb90-6"><a href="social-cognition.html#cb90-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-7"><a href="social-cognition.html#cb90-7" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1000</span>)</span>
-<span id="cb90-8"><a href="social-cognition.html#cb90-8" aria-hidden="true" tabindex="-1"></a>pu <span class="op">=</span> norm.pdf(u,u_mean,u_sd)</span>
-<span id="cb90-9"><a href="social-cognition.html#cb90-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-10"><a href="social-cognition.html#cb90-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb90-11"><a href="social-cognition.html#cb90-11" aria-hidden="true" tabindex="-1"></a>ax.plot(u, pu)</span>
-<span id="cb90-12"><a href="social-cognition.html#cb90-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"u"</span>)</span>
-<span id="cb90-13"><a href="social-cognition.html#cb90-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Prior probability of u"</span>)</span>
-<span id="cb90-14"><a href="social-cognition.html#cb90-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-15"><a href="social-cognition.html#cb90-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="social-cognition.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb89-2"><a href="social-cognition.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb89-3"><a href="social-cognition.html#cb89-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-4"><a href="social-cognition.html#cb89-4" aria-hidden="true" tabindex="-1"></a>u_mean <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb89-5"><a href="social-cognition.html#cb89-5" aria-hidden="true" tabindex="-1"></a>u_sd <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb89-6"><a href="social-cognition.html#cb89-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-7"><a href="social-cognition.html#cb89-7" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1000</span>)</span>
+<span id="cb89-8"><a href="social-cognition.html#cb89-8" aria-hidden="true" tabindex="-1"></a>pu <span class="op">=</span> norm.pdf(u,u_mean,u_sd)</span>
+<span id="cb89-9"><a href="social-cognition.html#cb89-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-10"><a href="social-cognition.html#cb89-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb89-11"><a href="social-cognition.html#cb89-11" aria-hidden="true" tabindex="-1"></a>ax.plot(u, pu)</span>
+<span id="cb89-12"><a href="social-cognition.html#cb89-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"u"</span>)</span>
+<span id="cb89-13"><a href="social-cognition.html#cb89-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Prior probability of u"</span>)</span>
+<span id="cb89-14"><a href="social-cognition.html#cb89-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-15"><a href="social-cognition.html#cb89-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-63-11.png" width="672"></div>
 <p>Additionally, we’ll make the simplifying assumption that utilities for different fruits are <em>independent</em>. This means that knowing someone likes pineapples doesn’t tell you anything about how much they’ll like grapefruits.</p>
 <p>Finally, we need a way to compute <span class="math inline">\(p(c|\mathbf{A})\)</span>. In other words, after seeing Rue make a choice, what was the probability of <em>anyone</em> with <em>any preferences</em> making that choice?</p>
@@ -227,38 +227,38 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <li>Calculate the mean choice probability of all trials.</li>
 </ol>
 <p>Let’s write a function to do this.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="social-cognition.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> estimate_marginal_likelihood(j, options, n_samples): </span>
-<span id="cb91-2"><a href="social-cognition.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns an estimate of the probability of choosing option j</span></span>
-<span id="cb91-3"><a href="social-cognition.html#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="co">     from the set options using Monte Carlo estimation.</span></span>
-<span id="cb91-4"><a href="social-cognition.html#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb91-5"><a href="social-cognition.html#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
-<span id="cb91-6"><a href="social-cognition.html#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="co">       j (int): the chosen option</span></span>
-<span id="cb91-7"><a href="social-cognition.html#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="co">       options (array): a matrix in which each row is an</span></span>
-<span id="cb91-8"><a href="social-cognition.html#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="co">         option, and each option is a binary array of the </span></span>
-<span id="cb91-9"><a href="social-cognition.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="co">         attributes in that option</span></span>
-<span id="cb91-10"><a href="social-cognition.html#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="co">       n_samples (int): number of Monte Carlo samples to</span></span>
-<span id="cb91-11"><a href="social-cognition.html#cb91-11" aria-hidden="true" tabindex="-1"></a><span class="co">         collect</span></span>
-<span id="cb91-12"><a href="social-cognition.html#cb91-12" aria-hidden="true" tabindex="-1"></a><span class="co">         </span></span>
-<span id="cb91-13"><a href="social-cognition.html#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
-<span id="cb91-14"><a href="social-cognition.html#cb91-14" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): probability of choosing option j</span></span>
-<span id="cb91-15"><a href="social-cognition.html#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
-<span id="cb91-16"><a href="social-cognition.html#cb91-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb91-17"><a href="social-cognition.html#cb91-17" aria-hidden="true" tabindex="-1"></a>  n_attributes <span class="op">=</span> <span class="bu">len</span>(options[<span class="dv">0</span>])</span>
-<span id="cb91-18"><a href="social-cognition.html#cb91-18" aria-hidden="true" tabindex="-1"></a>  mc_samples <span class="op">=</span> np.zeros(n_samples)</span>
-<span id="cb91-19"><a href="social-cognition.html#cb91-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb91-20"><a href="social-cognition.html#cb91-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
-<span id="cb91-21"><a href="social-cognition.html#cb91-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw random u sample</span></span>
-<span id="cb91-22"><a href="social-cognition.html#cb91-22" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> np.random.normal(u_mean,u_sd,n_attributes)</span>
-<span id="cb91-23"><a href="social-cognition.html#cb91-23" aria-hidden="true" tabindex="-1"></a>    mc_samples[i] <span class="op">=</span> compute_choice_prob(j, u, options)</span>
-<span id="cb91-24"><a href="social-cognition.html#cb91-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb91-25"><a href="social-cognition.html#cb91-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(np.mean(mc_samples))</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="social-cognition.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> estimate_marginal_likelihood(j, options, n_samples): </span>
+<span id="cb90-2"><a href="social-cognition.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns an estimate of the probability of choosing option j</span></span>
+<span id="cb90-3"><a href="social-cognition.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co">     from the set options using Monte Carlo estimation.</span></span>
+<span id="cb90-4"><a href="social-cognition.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb90-5"><a href="social-cognition.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
+<span id="cb90-6"><a href="social-cognition.html#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="co">       j (int): the chosen option</span></span>
+<span id="cb90-7"><a href="social-cognition.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="co">       options (array): a matrix in which each row is an</span></span>
+<span id="cb90-8"><a href="social-cognition.html#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="co">         option, and each option is a binary array of the </span></span>
+<span id="cb90-9"><a href="social-cognition.html#cb90-9" aria-hidden="true" tabindex="-1"></a><span class="co">         attributes in that option</span></span>
+<span id="cb90-10"><a href="social-cognition.html#cb90-10" aria-hidden="true" tabindex="-1"></a><span class="co">       n_samples (int): number of Monte Carlo samples to</span></span>
+<span id="cb90-11"><a href="social-cognition.html#cb90-11" aria-hidden="true" tabindex="-1"></a><span class="co">         collect</span></span>
+<span id="cb90-12"><a href="social-cognition.html#cb90-12" aria-hidden="true" tabindex="-1"></a><span class="co">         </span></span>
+<span id="cb90-13"><a href="social-cognition.html#cb90-13" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
+<span id="cb90-14"><a href="social-cognition.html#cb90-14" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): probability of choosing option j</span></span>
+<span id="cb90-15"><a href="social-cognition.html#cb90-15" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb90-16"><a href="social-cognition.html#cb90-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb90-17"><a href="social-cognition.html#cb90-17" aria-hidden="true" tabindex="-1"></a>  n_attributes <span class="op">=</span> <span class="bu">len</span>(options[<span class="dv">0</span>])</span>
+<span id="cb90-18"><a href="social-cognition.html#cb90-18" aria-hidden="true" tabindex="-1"></a>  mc_samples <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb90-19"><a href="social-cognition.html#cb90-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb90-20"><a href="social-cognition.html#cb90-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb90-21"><a href="social-cognition.html#cb90-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw random u sample</span></span>
+<span id="cb90-22"><a href="social-cognition.html#cb90-22" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> np.random.normal(u_mean,u_sd,n_attributes)</span>
+<span id="cb90-23"><a href="social-cognition.html#cb90-23" aria-hidden="true" tabindex="-1"></a>    mc_samples[i] <span class="op">=</span> compute_choice_prob(j, u, options)</span>
+<span id="cb90-24"><a href="social-cognition.html#cb90-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb90-25"><a href="social-cognition.html#cb90-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(np.mean(mc_samples))</span></code></pre></div>
 <p>Let’s compare the probability of someone making <a href="social-cognition.html#inverting-the-choice-model">the choices that Rue and Jules made</a>.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="social-cognition.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability: "</span> <span class="op">+</span> </span>
-<span id="cb92-2"><a href="social-cognition.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_rue, <span class="dv">2000</span>)))</span></code></pre></div>
-<pre><code>## Rue's choice probability: 0.9718301762236088</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="social-cognition.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability: "</span> <span class="op">+</span></span>
-<span id="cb94-2"><a href="social-cognition.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, <span class="dv">2000</span>)))</span></code></pre></div>
-<pre><code>## Jules's choice probability: 0.028278654800973375</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb91-1"><a href="social-cognition.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Rue's choice probability: "</span> <span class="op">+</span> </span>
+<span id="cb91-2"><a href="social-cognition.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_rue, <span class="dv">2000</span>)))</span></code></pre></div>
+<pre><code>## Rue's choice probability: 0.9714736193915378</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="social-cognition.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability: "</span> <span class="op">+</span></span>
+<span id="cb93-2"><a href="social-cognition.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, <span class="dv">2000</span>)))</span></code></pre></div>
+<pre><code>## Jules's choice probability: 0.029788364556330958</code></pre>
 <p>Unsurprisingly, Jules’s choice has a much higher baseline probability.</p>
 </div>
 <div id="putting-it-all-together" class="section level4" number="8.1.1.3">
@@ -266,49 +266,49 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <span class="header-section-number">8.1.1.3</span> Putting it all together<a class="anchor" aria-label="anchor" href="#putting-it-all-together"><i class="fas fa-link"></i></a>
 </h4>
 <p>Now we’ll infer Rue’s and Jules’s preferences from their choices using Monte Carlo estimation again.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="social-cognition.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random state for reproducibility</span></span>
-<span id="cb96-2"><a href="social-cognition.html#cb96-2" aria-hidden="true" tabindex="-1"></a>np.random.RandomState(<span class="dv">2022</span>) </span></code></pre></div>
-<pre><code>## RandomState(MT19937) at 0x1332DA640</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="social-cognition.html#cb98-1" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">2000</span> <span class="co"># number of Monte Carlo samples</span></span>
-<span id="cb98-2"><a href="social-cognition.html#cb98-2" aria-hidden="true" tabindex="-1"></a>n_attributes <span class="op">=</span> <span class="bu">len</span>(choice_rue[<span class="dv">0</span>])</span>
-<span id="cb98-3"><a href="social-cognition.html#cb98-3" aria-hidden="true" tabindex="-1"></a>peach <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb98-4"><a href="social-cognition.html#cb98-4" aria-hidden="true" tabindex="-1"></a>banana <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb98-5"><a href="social-cognition.html#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-6"><a href="social-cognition.html#cb98-6" aria-hidden="true" tabindex="-1"></a>marginal_likelihood_rue <span class="op">=</span> estimate_marginal_likelihood(<span class="dv">0</span>, choice_rue, n_samples)</span>
-<span id="cb98-7"><a href="social-cognition.html#cb98-7" aria-hidden="true" tabindex="-1"></a>marginal_likelihood_jules <span class="op">=</span> estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, n_samples)</span>
-<span id="cb98-8"><a href="social-cognition.html#cb98-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-9"><a href="social-cognition.html#cb98-9" aria-hidden="true" tabindex="-1"></a>mc_samples_rue <span class="op">=</span> np.zeros(n_samples)</span>
-<span id="cb98-10"><a href="social-cognition.html#cb98-10" aria-hidden="true" tabindex="-1"></a>mc_samples_jules <span class="op">=</span> np.zeros(n_samples)</span>
-<span id="cb98-11"><a href="social-cognition.html#cb98-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-12"><a href="social-cognition.html#cb98-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
-<span id="cb98-13"><a href="social-cognition.html#cb98-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Draw u samples for Rue and Jules</span></span>
-<span id="cb98-14"><a href="social-cognition.html#cb98-14" aria-hidden="true" tabindex="-1"></a>  u_rue <span class="op">=</span> np.random.normal(u_mean,u_sd,n_attributes)</span>
-<span id="cb98-15"><a href="social-cognition.html#cb98-15" aria-hidden="true" tabindex="-1"></a>  u_jules <span class="op">=</span> np.random.normal(u_mean,u_sd,n_attributes)</span>
-<span id="cb98-16"><a href="social-cognition.html#cb98-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb98-17"><a href="social-cognition.html#cb98-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute posterior for peach utility for each person</span></span>
-<span id="cb98-18"><a href="social-cognition.html#cb98-18" aria-hidden="true" tabindex="-1"></a>  pu_rue <span class="op">=</span> ((compute_choice_prob(<span class="dv">0</span>, u_rue, choice_rue) <span class="op">*</span> u_rue) <span class="op">/</span> </span>
-<span id="cb98-19"><a href="social-cognition.html#cb98-19" aria-hidden="true" tabindex="-1"></a>    marginal_likelihood_rue)</span>
-<span id="cb98-20"><a href="social-cognition.html#cb98-20" aria-hidden="true" tabindex="-1"></a>  pu_jules <span class="op">=</span> ((compute_choice_prob(<span class="dv">0</span>, u_jules, choice_jules) <span class="op">*</span> u_jules) <span class="op">/</span></span>
-<span id="cb98-21"><a href="social-cognition.html#cb98-21" aria-hidden="true" tabindex="-1"></a>    marginal_likelihood_jules)</span>
-<span id="cb98-22"><a href="social-cognition.html#cb98-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-23"><a href="social-cognition.html#cb98-23" aria-hidden="true" tabindex="-1"></a>  mc_samples_rue[i] <span class="op">=</span> pu_rue[peach]</span>
-<span id="cb98-24"><a href="social-cognition.html#cb98-24" aria-hidden="true" tabindex="-1"></a>  mc_samples_jules[i] <span class="op">=</span> pu_jules[peach]</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="social-cognition.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random state for reproducibility</span></span>
+<span id="cb95-2"><a href="social-cognition.html#cb95-2" aria-hidden="true" tabindex="-1"></a>np.random.RandomState(<span class="dv">2022</span>) </span></code></pre></div>
+<pre><code>## RandomState(MT19937) at 0x134F4DE40</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="social-cognition.html#cb97-1" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">2000</span> <span class="co"># number of Monte Carlo samples</span></span>
+<span id="cb97-2"><a href="social-cognition.html#cb97-2" aria-hidden="true" tabindex="-1"></a>n_attributes <span class="op">=</span> <span class="bu">len</span>(choice_rue[<span class="dv">0</span>])</span>
+<span id="cb97-3"><a href="social-cognition.html#cb97-3" aria-hidden="true" tabindex="-1"></a>peach <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb97-4"><a href="social-cognition.html#cb97-4" aria-hidden="true" tabindex="-1"></a>banana <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb97-5"><a href="social-cognition.html#cb97-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-6"><a href="social-cognition.html#cb97-6" aria-hidden="true" tabindex="-1"></a>marginal_likelihood_rue <span class="op">=</span> estimate_marginal_likelihood(<span class="dv">0</span>, choice_rue, n_samples)</span>
+<span id="cb97-7"><a href="social-cognition.html#cb97-7" aria-hidden="true" tabindex="-1"></a>marginal_likelihood_jules <span class="op">=</span> estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, n_samples)</span>
+<span id="cb97-8"><a href="social-cognition.html#cb97-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-9"><a href="social-cognition.html#cb97-9" aria-hidden="true" tabindex="-1"></a>mc_samples_rue <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb97-10"><a href="social-cognition.html#cb97-10" aria-hidden="true" tabindex="-1"></a>mc_samples_jules <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb97-11"><a href="social-cognition.html#cb97-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-12"><a href="social-cognition.html#cb97-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb97-13"><a href="social-cognition.html#cb97-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Draw u samples for Rue and Jules</span></span>
+<span id="cb97-14"><a href="social-cognition.html#cb97-14" aria-hidden="true" tabindex="-1"></a>  u_rue <span class="op">=</span> np.random.normal(u_mean,u_sd,n_attributes)</span>
+<span id="cb97-15"><a href="social-cognition.html#cb97-15" aria-hidden="true" tabindex="-1"></a>  u_jules <span class="op">=</span> np.random.normal(u_mean,u_sd,n_attributes)</span>
+<span id="cb97-16"><a href="social-cognition.html#cb97-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-17"><a href="social-cognition.html#cb97-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute posterior for peach utility for each person</span></span>
+<span id="cb97-18"><a href="social-cognition.html#cb97-18" aria-hidden="true" tabindex="-1"></a>  pu_rue <span class="op">=</span> ((compute_choice_prob(<span class="dv">0</span>, u_rue, choice_rue) <span class="op">*</span> u_rue) <span class="op">/</span> </span>
+<span id="cb97-19"><a href="social-cognition.html#cb97-19" aria-hidden="true" tabindex="-1"></a>    marginal_likelihood_rue)</span>
+<span id="cb97-20"><a href="social-cognition.html#cb97-20" aria-hidden="true" tabindex="-1"></a>  pu_jules <span class="op">=</span> ((compute_choice_prob(<span class="dv">0</span>, u_jules, choice_jules) <span class="op">*</span> u_jules) <span class="op">/</span></span>
+<span id="cb97-21"><a href="social-cognition.html#cb97-21" aria-hidden="true" tabindex="-1"></a>    marginal_likelihood_jules)</span>
+<span id="cb97-22"><a href="social-cognition.html#cb97-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-23"><a href="social-cognition.html#cb97-23" aria-hidden="true" tabindex="-1"></a>  mc_samples_rue[i] <span class="op">=</span> pu_rue[peach]</span>
+<span id="cb97-24"><a href="social-cognition.html#cb97-24" aria-hidden="true" tabindex="-1"></a>  mc_samples_jules[i] <span class="op">=</span> pu_jules[peach]</span></code></pre></div>
 <p>Let’s look at the results.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="social-cognition.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb99-2"><a href="social-cognition.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sb</span>
-<span id="cb99-3"><a href="social-cognition.html#cb99-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-4"><a href="social-cognition.html#cb99-4" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> {<span class="st">'Rue'</span>: mc_samples_rue,</span>
-<span id="cb99-5"><a href="social-cognition.html#cb99-5" aria-hidden="true" tabindex="-1"></a>                               <span class="st">'Jules'</span>: mc_samples_jules})</span>
-<span id="cb99-6"><a href="social-cognition.html#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="co"># reorganize the data</span></span>
-<span id="cb99-7"><a href="social-cognition.html#cb99-7" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> samples.melt(value_vars<span class="op">=</span>[<span class="st">"Jules"</span>,<span class="st">"Rue"</span>], </span>
-<span id="cb99-8"><a href="social-cognition.html#cb99-8" aria-hidden="true" tabindex="-1"></a>  var_name<span class="op">=</span><span class="st">"person"</span>, value_name<span class="op">=</span><span class="st">"u"</span>)</span>
-<span id="cb99-9"><a href="social-cognition.html#cb99-9" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out extreme samples</span></span>
-<span id="cb99-10"><a href="social-cognition.html#cb99-10" aria-hidden="true" tabindex="-1"></a>samples_filtered <span class="op">=</span> samples[samples[<span class="st">"u"</span>] <span class="op">&lt;</span> <span class="dv">50</span>]</span>
-<span id="cb99-11"><a href="social-cognition.html#cb99-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-12"><a href="social-cognition.html#cb99-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb99-13"><a href="social-cognition.html#cb99-13" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sb.displot(data<span class="op">=</span>samples_filtered, x<span class="op">=</span><span class="st">"u"</span>, hue<span class="op">=</span><span class="st">"person"</span>, kind<span class="op">=</span><span class="st">"kde"</span>)</span>
-<span id="cb99-14"><a href="social-cognition.html#cb99-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-15"><a href="social-cognition.html#cb99-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="social-cognition.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb98-2"><a href="social-cognition.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sb</span>
+<span id="cb98-3"><a href="social-cognition.html#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="social-cognition.html#cb98-4" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> pd.DataFrame(data <span class="op">=</span> {<span class="st">'Rue'</span>: mc_samples_rue,</span>
+<span id="cb98-5"><a href="social-cognition.html#cb98-5" aria-hidden="true" tabindex="-1"></a>                               <span class="st">'Jules'</span>: mc_samples_jules})</span>
+<span id="cb98-6"><a href="social-cognition.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="co"># reorganize the data</span></span>
+<span id="cb98-7"><a href="social-cognition.html#cb98-7" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> samples.melt(value_vars<span class="op">=</span>[<span class="st">"Jules"</span>,<span class="st">"Rue"</span>], </span>
+<span id="cb98-8"><a href="social-cognition.html#cb98-8" aria-hidden="true" tabindex="-1"></a>  var_name<span class="op">=</span><span class="st">"person"</span>, value_name<span class="op">=</span><span class="st">"u"</span>)</span>
+<span id="cb98-9"><a href="social-cognition.html#cb98-9" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out extreme samples</span></span>
+<span id="cb98-10"><a href="social-cognition.html#cb98-10" aria-hidden="true" tabindex="-1"></a>samples_filtered <span class="op">=</span> samples[samples[<span class="st">"u"</span>] <span class="op">&lt;</span> <span class="dv">50</span>]</span>
+<span id="cb98-11"><a href="social-cognition.html#cb98-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-12"><a href="social-cognition.html#cb98-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb98-13"><a href="social-cognition.html#cb98-13" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sb.displot(data<span class="op">=</span>samples_filtered, x<span class="op">=</span><span class="st">"u"</span>, hue<span class="op">=</span><span class="st">"person"</span>, kind<span class="op">=</span><span class="st">"kde"</span>)</span>
+<span id="cb98-14"><a href="social-cognition.html#cb98-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-15"><a href="social-cognition.html#cb98-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-67-13.png" width="558"></div>
 <p>The model’s inferences here require some interpretation. The model is more certain about Rue having a preference for peach, but the distribution on the Jules’s preference for peach has a much longer tail.</p>
 <p>This makes some sense. Because of our mostly positive prior distribution, it’s reasonable to assume by default that Rue likes peaches.</p>
