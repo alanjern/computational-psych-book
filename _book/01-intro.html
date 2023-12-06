@@ -6,11 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Alan Jern">
-<meta name="dcterms.date" content="2023-12-06">
 <meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>Introduction to Computational Psychology</title>
+<title>Introduction to Computational Psychology - 1&nbsp; Why computational modeling?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-intro.html" rel="next">
+<link href="./02-bayes.html" rel="next">
+<link href="./index.html" rel="prev">
 <link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -77,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -107,13 +106,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
   </div>
 </li>
@@ -181,44 +180,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a>
-  <ul class="collapse">
-  <li><a href="#thanks" id="toc-thanks" class="nav-link" data-scroll-target="#thanks">Thanks</a></li>
-  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
-  </ul></li>
+  <li><a href="#representations" id="toc-representations" class="nav-link active" data-scroll-target="#representations"><span class="header-section-number">1.1</span> Representations 🔸</a></li>
+  <li><a href="#homework-1-build-your-first-computational-model" id="toc-homework-1-build-your-first-computational-model" class="nav-link" data-scroll-target="#homework-1-build-your-first-computational-model"><span class="header-section-number">1.2</span> Homework 1: Build your first computational model 💻</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://alanjern.github.io/computational-psych-book/blob/main/index.qmd" class="toc-action">View source</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://alanjern.github.io/computational-psych-book/blob/main/01-intro.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction to Computational Psychology</h1>
+<h1 class="title"><span id="intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.</p>
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Alan Jern </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 6, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -226,26 +205,55 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="welcome" class="level1 unnumbered">
-<h1 class="unnumbered">Welcome</h1>
-<p><img src="images/cover/marble_cover.jpg" alt="Introduction to Computational Psychology cover image" width="100%"></p>
-<section id="thanks" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="thanks">Thanks</h2>
-<p>This book borrows inspiration and content (especially Chapters <a href="#bayes">2</a> and <a href="#pragmatics">7</a>) from Fausto Carcassi’s <a href="https://thelogicalgrammar.github.io/cognitive-modelling-book/index.html">Introduction to Cognitive Modelling in R</a> book and I am tremendously grateful to him for sharing his book publicly. Hopefully this resource will be equally helpful to others.</p>
-<p>A number of the modeling examples and homework assignments are adapted from code written by Danielle Navarro from previous iterations of her <a href="https://compcogsci-3016.djnavarro.net/">Computational Cognitive Science course</a> with Andy Perfors. I am very grateful to both of them for making all of their materials public (and well documented).</p>
-<p>Your <a href="mailto:jern@rose-hulman.edu">feedback</a> is welcome and encouraged.</p>
-</section>
-<section id="license" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="license">License</h2>
+<p>The field of psychology is full of theories. But this book is focused on a specific type of theory: the type that can be formalized as a computational model.</p>
+<p>What advantage does a computational (or mathematical) theory have over one that can’t be expressed in computational terms? The biggest advantage is precision. For example, suppose you say that attention is like a spotlight 🔦: you can attend to things that are currently within the light, and you can control where the light is shining, but things outside of the light are outside of our awareness. This is a kind of theory – an analogy-based one – and it’s a good start for making some general <em>qualitative</em> predictions about how attention works.</p>
+<p>But you’ll quickly run into problems if you want to make precise <em>quantitative</em> predictions about attention. How big is the spotlight? Does the size expand and contract? How quickly does it move around? Is attention completely absent outside of the spotlight or does it ramp down as you get near the edge of the light? In other words, if you wanted to build a computer model of this theory, a simple analogy doesn’t cut it.</p>
+<p><em>Computational models, if nothing else, force us to be explicit about all of our assumptions.</em></p>
+<section id="representations" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="representations"><span class="header-section-number">1.1</span> Representations 🔸</h2>
+<p>We don’t perceive the world as it truly is. As one example, the visible spectrum that our eyes can detect is just a fraction of the full electromagnetic spectrum. Similarly, we can only hear a narrow range of audible sound frequencies. In other words, we perceive an incomplete picture of the surrounding world.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="images/badges/cc-by-nc.png" class="img-fluid figure-img"></a></p>
+<p><img src="images/01/range_of_sensation.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Source: Abstruse Goose.</figcaption>
 </figure>
 </div>
-<p>Anyone is free to reuse and adapt this book for their own non-commercial purposes, with attribution. If you do use this book in any way, <a href="mailto:jern@rose-hulman.edu">please tell me about it</a>.</p>
-
-
+<p>Similarly, we are constantly making assumptions about the things we see and hear and using those assumptions to fill in gaps.</p>
+<p>What we have in our heads is a kind of model of the world around us – what cognitive scientists call a mental representation. These representations help us to reach rapid conclusions about things involving language, causes and effects, concepts, mental states, and many other aspects of cognition.</p>
+<p>Some of the key questions for cognitive scientists who use computational models are:</p>
+<ol type="1">
+<li>What mental representations do we rely on?</li>
+<li>How do our minds use these representations to learn when we get new information?</li>
+<li>What kind of information do we get and how do our expectations about the kind of information we’re getting to affect how we use it?</li>
+</ol>
+<p>This book will elaborate, with examples, on each of these questions.</p>
 </section>
+<section id="homework-1-build-your-first-computational-model" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="homework-1-build-your-first-computational-model"><span class="header-section-number">1.2</span> Homework 1: Build your first computational model 💻</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://colab.research.google.com/drive/1MEiil0swXHERwJ38rVGZPTndyetHJPYQ?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>To get some initial experience with computational modeling, you’ll build and experiment with a simple model of classical conditioning developed by Robert Rescorla and Allan Wagner – now called the Rescorla-Wagner model.</p>
+<p>All homework assignments for this book will be done in Google Colab. Click the button above at the top of this section view Homework 1.</p>
+<p>If you’re unfamiliar with Colab (or Jupyter Notebooks), watch this brief introduction video.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/inN8seMm7UI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You’ll have to make a copy of the notebook saved to your own Drive in order to edit it.</p>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -484,10 +492,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02-bayes.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

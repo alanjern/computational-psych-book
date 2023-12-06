@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Alan Jern">
-<meta name="dcterms.date" content="2023-12-06">
-<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>Introduction to Computational Psychology</title>
+<title>sampling-assumptions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27,14 +24,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-intro.html" rel="next">
-<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -65,186 +59,130 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body class="nav-sidebar floating">
+<body>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">Introduction to Computational Psychology</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://alanjern.github.io/computational-psych-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Welcome</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a>
-  <ul class="collapse">
-  <li><a href="#thanks" id="toc-thanks" class="nav-link" data-scroll-target="#thanks">Thanks</a></li>
-  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://alanjern.github.io/computational-psych-book/blob/main/index.qmd" class="toc-action">View source</a></p></div></div></nav>
-    </div>
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="06-sampling-assumptions.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Introduction to Computational Psychology</h1>
-</div>
-
-<div>
-  <div class="description">
-    <p>An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.</p>
-  </div>
-</div>
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Alan Jern </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 6, 2023</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="welcome" class="level1 unnumbered">
-<h1 class="unnumbered">Welcome</h1>
-<p><img src="images/cover/marble_cover.jpg" alt="Introduction to Computational Psychology cover image" width="100%"></p>
-<section id="thanks" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="thanks">Thanks</h2>
-<p>This book borrows inspiration and content (especially Chapters <a href="#bayes">2</a> and <a href="#pragmatics">7</a>) from Fausto Carcassi’s <a href="https://thelogicalgrammar.github.io/cognitive-modelling-book/index.html">Introduction to Cognitive Modelling in R</a> book and I am tremendously grateful to him for sharing his book publicly. Hopefully this resource will be equally helpful to others.</p>
-<p>A number of the modeling examples and homework assignments are adapted from code written by Danielle Navarro from previous iterations of her <a href="https://compcogsci-3016.djnavarro.net/">Computational Cognitive Science course</a> with Andy Perfors. I am very grateful to both of them for making all of their materials public (and well documented).</p>
-<p>Your <a href="mailto:jern@rose-hulman.edu">feedback</a> is welcome and encouraged.</p>
-</section>
-<section id="license" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="license">License</h2>
+<section id="sampling-assumptions" class="level1">
+<h1>Sampling assumptions</h1>
+<p>So far, we’ve seen where <a href="#weak-strong-sampling">strong sampling</a> was a logical assumption to make. But it isn’t always.</p>
+<p>For example, consider <a href="#hormones">the hormone problem from Chapter 3</a>. If you were randomly testing people’s hormone levels and every person just happened to be healthy, clearly strong sampling wouldn’t be appropriate, because we were sampling from the full population of both healthy and unhealthy people.</p>
+<p>This raises a question: Are people sensitive to the process by which data are generated?</p>
+<p><em>Spoiler alert: Yes.</em></p>
+<section id="word-learning" class="level2">
+<h2 class="anchored" data-anchor-id="word-learning">Word learning 💬</h2>
+<p>Suppose you see the following collection of objects on a table.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="images/badges/cc-by-nc.png" class="img-fluid figure-img"></a></p>
+<p><img src="images/06/xu_tenenbaum_objects.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">From Xu &amp; Tenenbaum (2007).</figcaption>
 </figure>
 </div>
-<p>Anyone is free to reuse and adapt this book for their own non-commercial purposes, with attribution. If you do use this book in any way, <a href="mailto:jern@rose-hulman.edu">please tell me about it</a>.</p>
+<p>Now consider the following situation:</p>
+<blockquote class="blockquote">
+<p>A teacher picks three blue circles from the pile and calls them “wugs”.</p>
+</blockquote>
+<p><strong>What is a wug?</strong> Are all circles wugs? Or just blue circles?</p>
+<p>Consider a different situation:</p>
+<blockquote class="blockquote">
+<p>A teacher picks one blue circle from the pile and calls it a “wug”. The teacher then asks a child to choose two more (the child picks two blue circles). The teacher confirms that they are also wugs.</p>
+</blockquote>
+<p><strong>What is a wug?</strong> Are all circles wugs? Or just blue circles?</p>
+<p>In both situations, the observed data is the same: three blue circles labeled as wugs. What’s different is the process by which the data was generated. In one case, a knowledgeable teacher picked all the wugs; in the other, the teacher only picked one example and a (probably not knowledgeable) child picked the others.</p>
+<p>To use some terms we’ve seen before, the teacher is using strong sampling. The child is using something closer to weak sampling.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/06/xu_tenenbaum_hierarchy.png" class="img-fluid figure-img" style="width:65.0%"></p>
+<figcaption class="figure-caption">The hierarchy of objects. From Xu &amp; Tenenbaum (2007).</figcaption>
+</figure>
+</div>
+<p>This is based on an <a href="http://web.mit.edu/cocosci/archive/Papers/devsci07_xu_tenenbaum.pdf">actual study</a> by Fei Xu and Josh Tenenbaum, who also developed a model of the task. They asked whether children and adults would generalize the word “wug” to the basic-level category (circles with lines in them) or the subordinate category (blue circles with lines in them). Here are their results:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/06/xu_tenenbaum_results.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Experimental results from Xu &amp; Tenenbaum (2007).</figcaption>
+</figure>
+</div>
+<p>People clearly distinguished between the teacher-driven situation and the child-driven (learner-driven) situation, and were much more likely to generalize “wugs” to the subordinate category when the teacher picked the objects.</p>
+</section>
+<section id="pedagogical-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="pedagogical-sampling">Pedagogical sampling 🧑‍🏫</h2>
+<p>The teacher choosing wugs could be said to be using <em>pedagogical sampling</em>. The teacher deliberately used knowledge of the wug concept to select informative examples to help the child learn the concept as quickly as possible.</p>
+<p>This is an idea <a href="http://shaftolab.com/assets/papers/shaftogg14.pdf">explored</a> by Patrick Shafto, Noah Goodman, and Thomas Griffiths (as well as Elizabeth Bonawitz and other researchers in related work). To put it in formal terms:</p>
+<p><span id="eq-pedagogical"><span class="math display">\[
+\begin{equation}
+P_{\text{teacher}}(d|h) \propto (P_{\text{learner}}(h|d))^\alpha
+\end{equation}
+\tag{1}\]</span></span></p>
+<p>Here, <span class="math inline">\(\alpha\)</span> is a parameter that controls how optimized the teacher’s choices are. As <span class="math inline">\(\alpha \rightarrow \infty\)</span>, the teacher will choose examples <span class="math inline">\(d\)</span> that maximize the learner’s posterior probability.</p>
+<p>This means we can figure out how the learner will update their beliefs about a concept by directly applying Bayes rule:</p>
+<p><span id="eq-plearner"><span class="math display">\[
+\begin{equation}
+  P_{\text{learner}}(h|d) = \frac{P_{\text{teacher}}(d|h)P(h)}{\sum_{h_i} P_{\text{teacher}}(d|h_i)P(h_i)}
+\end{equation}
+\tag{2}\]</span></span></p>
+<p>This equation makes it clear that the teacher and learner are inextricably linked: The teacher chooses examples to maximize the learner’s understanding, and the learner updates beliefs based on expectations of how the teacher is choosing examples. The model is <em>recursive</em>.</p>
+<p>As the researchers explain in their paper, the two equations above are a system of equations that can be rearranged to create the following equation defining how the teacher should choose examples:</p>
+<p><span id="eq-pteacher"><span class="math display">\[
+\begin{equation}
+  P_{\text{teacher}}(d|h) \propto \left( \frac{P_{\text{teacher}}(d|h) P(h)}{\sum_{h_i} P_{\text{teacher}}(d|h_i) P(h_i)} \right)^\alpha
+\end{equation}
+\tag{3}\]</span></span></p>
+<p>How to solve this equation? In the paper, they use an iterative algorithm, that works like this:</p>
+<ol type="1">
+<li>Initialize <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using weak sampling.</li>
+<li>Iterate through the following steps until <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> stabilizes (doesn’t change from one iteration to the next):
+<ol type="1">
+<li>For each possible <span class="math inline">\(h\)</span> and <span class="math inline">\(d\)</span>, compute <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> using Equation <a href="#eq-plearner">Equation&nbsp;2</a> and <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> values from the previous iteration.</li>
+<li>For each possible <span class="math inline">\(d\)</span> and <span class="math inline">\(h\)</span>, update <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> values from the previous step, where <span class="math inline">\(P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)\)</span> (Equation <a href="#eq-pedagogical">Equation&nbsp;1</a>).</li>
+</ol></li>
+</ol>
+<section id="the-rectangle-game" class="level3">
+<h3 class="anchored" data-anchor-id="the-rectangle-game">The rectangle game</h3>
+<p>The researchers tested out their model in an experiment using a simple task called the rectangle game.</p>
+<p>In the game, concepts are rectangular boundaries in a two-dimensional space. The teacher knows the boundary and the learner has to figure it out from examples given by the teacher.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/06/shafto_etal_expt1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">The rectangle game. From Shafto et al.&nbsp;(2014).</figcaption>
+</figure>
+</div>
+<p>In one version, the teacher can only provide positive examples (“Here’s an example that’s inside the boundary”). In another version, the teacher can also provide negative examples (“Here’s an example that’s not inside the boundary”).</p>
+<p>In an experiment, they asked people to play the role of the learner in the rectangle game. There were three conditions:</p>
+<ol type="1">
+<li><em>Teaching-pedagogical learning</em>: People first acted as teachers, then as learners.</li>
+<li><em>Pedagogical learning</em>: People acted just as learners and were told the examples they saw were chosen by a teacher.</li>
+<li><em>Non-pedagogical learning</em>: People acted just as learners and were told the examples they saw were not chosen by a teacher.</li>
+</ol>
+<p>After showing people examples, they asked them to draw a rectangle of their best guess about what the boundary was.</p>
+<p>One key prediction of the model is that the most informative locations for examples under pedagogical sampling are at the corners of the rectangles. To test whether the learners understood this, they measured the proportion of examples that ended up in the corners of the rectangles people drew. The results are shown below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/06/shafto_etal_expt1_results.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Results from Shafto et al.’s (2014) Experiment 1.</figcaption>
+</figure>
+</div>
+<p>As you can see, when people thought a knowledgeable teacher was providing the examples (the teaching-pedagogical and pedagogical learning conditions), they were much more likely to draw tight boundaries around the examples, compared to when they didn’t think a teacher was providing the examples (the non-pedagogical learning condition). This suggests that people were indeed sensitive to the process by which the data were generated and incorporated that understanding into their inferences.</p>
+<p>In the next chapter, we’ll work through one more application of people’s sensitivity to different sampling assumptions: understanding the pragmatics of speech.</p>
 
 
+</section>
 </section>
 </section>
 
@@ -482,15 +420,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./01-intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

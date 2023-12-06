@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>iterated-learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="09-iterated-learning.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="iterated-learning" class="level1">
+<h1>Iterated learning</h1>
+<p>If someone told you they defecated their water before drinking it, you probably wouldn’t be too impressed. Unless you lived in the 1600s, when “defecate” <a href="https://www.mentalfloss.com/article/54770/15-words-dont-mean-what-they-used">meant “to purify something”</a>.</p>
+<p>Language changes. Words change. Concepts change. Is there any way to predict the conceptual drift that is always happening in our culture?</p>
+<p>Yeah, maybe, kinda! But first, some math.</p>
+<section id="markov-chains" class="level2">
+<h2 class="anchored" data-anchor-id="markov-chains">Markov chains 🔗</h2>
+<p>Words and concepts change over <em>time</em>. <strong>Markov chains</strong> provide a useful modeling framework for time-dependent data.</p>
+<p>As the name suggests, a Markov chain is a chain, specifically of states. At each time step, it moves to a new state. A Markov chain meets the following conditions:</p>
+<ol type="1">
+<li>A system can be in a finite number of states.</li>
+<li>The state at each step of the chain depends only on the previous state. (This dependence can be probabilistic.)</li>
+</ol>
+<p>For example, consider the game Telephone, where one person whispers a word to the next person, they whisper what they hear to the next person, and so on. The set of possible words are the states (finite but admittedly large).</p>
+<p>The word that Person <span class="math inline">\(n+1\)</span> hears clearly only depends on the word that Person <span class="math inline">\(n\)</span> whispered. But there might be some miscommunication: the probability that Person <span class="math inline">\(n+1\)</span> accurately hears the word is probably less than 1, with similar-sounding words getting higher probability than dissimilar words.</p>
+<section id="examples" class="level3">
+<h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<p>Consider a very simple chain of colors that are either red or blue. Here, the state space <span class="math inline">\(S = \{ \text{red, blue} \}\)</span>. To specify this Markov chain, we need to define the <em>transition probabilities</em>: the probabilities of moving from each state to every other state.</p>
+<p>Let <span class="math inline">\(t_{ij}\)</span> be the probability of transitioning from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span>. For example, if <span class="math inline">\(t_{RB} = 0.3\)</span> then the probability of transitioning from the red state to the blue state is 0.3. We can then write the transition probabilities in a matrix.</p>
+<section id="markov-exmaple1" class="level4">
+<h4 class="anchored" data-anchor-id="markov-exmaple1">Example 1</h4>
+<p>Here’s our transition probability matrix.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>R</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>In this example, <span class="math inline">\(t_{RB} = t_{BR} = 1\)</span>. This means that the chain will deterministically alternate between red and blue. Note that the rows of the transition matrix must sum to 1 because they represent all the possible states that the chain might transition to given a current state. Although the columns also sum to 1 in this example, this is not a requirement.</p>
+<p><em>Example sequence</em>: <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> …</p>
+</section>
+<section id="markov-example2" class="level4">
+<h4 class="anchored" data-anchor-id="markov-example2">Example 2</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>R</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R</td>
+<td>0.25</td>
+<td>0.75</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>0.75</td>
+<td>0.25</td>
+</tr>
+</tbody>
+</table>
+<p>In this example, we’d expect to the sequence to flip back and forth between red and blue, but not deterministically. At every step, the sequence is more likely to flip than to stay in the current color.</p>
+<p><em>Example sequence</em>: <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> …</p>
+</section>
+<section id="markov-example3" class="level4">
+<h4 class="anchored" data-anchor-id="markov-example3">Example 3</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>R</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R</td>
+<td>0.75</td>
+<td>0.25</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>0.75</td>
+<td>0.25</td>
+</tr>
+</tbody>
+</table>
+<p>In this example, no matter what state we’re in, there is a 0.75 probability of moving to red and a 0.25 probability of moving to blue. Therefore, in this example, we’d expect the chain to spend about 3/4 of its time in the red state and 1/4 of its time in the blue state. This example makes clear that the columns do not need to sum to 1.</p>
+<p><em>Example sequence</em>: <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: red;">R</span> …</p>
+</section>
+</section>
+<section id="stationary-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="stationary-distributions">Stationary distributions</h3>
+<p>A common question for a given Markov chain is what is its so-called <em>stationary distribution</em>, the proportion of time the chain will spend in each state if it runs for a very long time. For Markov chains a small number of states, computing the stationary distribution is easy to do with some algebra. Consider the following example.</p>
+<p>Let’s define a transition matrix for Markov chain with two states, <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>:</p>
+<p><span class="math display">\[
+\begin{equation}
+T = \left(
+\begin{matrix}
+t_{11} &amp; t_{12} \\
+t_{21} &amp; t_{22}
+\end{matrix} \right)
+\end{equation}
+\]</span></p>
+<p>The stationary distribution corresponds to the probability of the chain being in state <span class="math inline">\(s_1\)</span> versus <span class="math inline">\(s_2\)</span>. We will define <span class="math inline">\(\theta_1\)</span> as the probability of the chain being in state <span class="math inline">\(s_1\)</span> and <span class="math inline">\(\theta_2\)</span> as the probability of the chain being in state <span class="math inline">\(s_2\)</span>. We can define <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span> recursively as follows:</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+\theta_1 = t_{11} \theta_1 + t_{21} \theta_2 \\
+\theta_2 = t_{22} \theta_2 + t_{12} \theta_1 \\
+\end{eqnarray}
+\]</span></p>
+<p>These equations essentially say that the probability of being in a state is the probability of being in that state and staying in that state plus the probability of being in the other state and switching states. We will then use the following facts to solve for the <span class="math inline">\(\theta\)</span>s:</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+\theta_1 + \theta_2 = 1 \\
+t_{11} + t_{12} = 1 \\
+t_{21} + t_{22} = 1
+\end{eqnarray}
+\]</span></p>
+<p>Using some algebra, we get the following expressions:</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+\theta_1 = \frac{t_{21}}{t_{12}+t_{21}} \\
+\theta_2 = \frac{t_{12}}{t_{21}+t_{12}}
+\end{eqnarray}
+\]</span></p>
+<p>We can see that these expressions give sensible results by applying them to the red-blue examples above.</p>
+<p>In <a href="#markov-example1">Example 1</a>, unsurprisingly, <span class="math inline">\(\theta_R = \theta_B = 0.5\)</span>. Because the sequence alternates, it will be red half the time and blue half the time. In <a href="#markov-example2">Example 2</a>, again <span class="math inline">\(\theta_R = \theta_B = 0.5\)</span>. Even though the alternating is not deterministic, no matter what state the sequence is in, there is an equal probability that it will switch to the other state. In <a href="#markov-example3">Example 3</a>, <span class="math inline">\(\theta_R = 0.75\)</span> and <span class="math inline">\(\theta_B = 0.25\)</span>.</p>
+</section>
+</section>
+<section id="hmms" class="level2">
+<h2 class="anchored" data-anchor-id="hmms">Hidden Markov models 🙈</h2>
+<p>Now let’s consider a more complicated situation in which each step in a Markov chain generates an observation. A learner gets to see the observations, but not the states themselves. In this situation, we say that the states are “hidden”, hence the name <strong>hidden Markov model</strong>.</p>
+<p>Hidden Markov models are sometimes used to model language production, where the hidden states are the parts of speech (like noun, verb, adjective, or more complex things like noun phrases, objects, and subjects). What we actually get to observe as readers and listeners, however, are words (like “dog”, “eats”, and “play”). In English, many words are ambiguous and can potentially belong to different parts of speech. “Play”, for example could be a noun (“The actors performed in a play”) or a verb (“The children play in the sand”). We are constantly decoding the language we observe to infer the parts of speech of the words.</p>
+<section id="formal-definition" class="level3">
+<h3 class="anchored" data-anchor-id="formal-definition">Formal definition</h3>
+<p>A hidden Markov model includes the following pieces:</p>
+<ol type="1">
+<li>A set of states <span class="math inline">\(S = \{s_1, \ldots, s_N\}\)</span></li>
+<li>A set of observations <span class="math inline">\(O = \{o_1, \ldots, o_M\}\)</span></li>
+<li>A set of initial state probabilities <span class="math inline">\(\Pi = \{\pi_1, \ldots, \pi_N\}\)</span>, where <span class="math inline">\(\pi_i\)</span> is the probability of state <span class="math inline">\(i\)</span> begin the first state in the sequence</li>
+<li>A matrix of state transition probabilities <span class="math inline">\(T\)</span>, where <span class="math inline">\(t_{ij}\)</span> in the matrix is the probability of transitioning from state <span class="math inline">\(s_i\)</span> to state <span class="math inline">\(s_j\)</span></li>
+<li>A matrix of “emission” probabilities <span class="math inline">\(B\)</span>, where <span class="math inline">\(b_{ik}\)</span> in the matrix is the probability of producing observation <span class="math inline">\(o_k\)</span> while in state <span class="math inline">\(s_i\)</span></li>
+<li>An observation sequence <span class="math inline">\(Y = (y_1, \ldots, y_T)\)</span>, where <span class="math inline">\(T\)</span> is the length of the observed sequence of data</li>
+<li>An state sequence that is not observed <span class="math inline">\(X = (x_1, \ldots, x_T)\)</span></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/09/hmm.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption class="figure-caption">A hidden Markov model. Source: Wikipedia (public domain).</figcaption>
+</figure>
+</div>
+</section>
+<section id="inference" class="level3">
+<h3 class="anchored" data-anchor-id="inference">Inference</h3>
+<p>Usually the purpose of using an HMM is to infer <span class="math inline">\(X\)</span> from <span class="math inline">\(Y\)</span>. There is a standard algorithm for doing this called <a href="https://en.wikipedia.org/wiki/Viterbi_algorithm">the Viterbi algorithm</a>, the details of which are beyond the scope of this book.</p>
+<p>There are many existing programming packages available for working with HMMs. On Python package is <a href="https://github.com/hmmlearn/hmmlearn">hmmlearn</a>, which includes a <a href="https://hmmlearn.readthedocs.io/en/stable/api.html#hmmlearn.base.BaseHMM.predict"><code>predict()</code></a> function, which will predict the most probable sequence of hidden states <span class="math inline">\(X\)</span>, given a sequence of observations <span class="math inline">\(Y\)</span> and a fully specified Hidden Markov model. Note that this function will not always be correct. If the model is probabilistic and there are some observations that can be produced in more than one state (for example, the word “play” could be produced by either the noun or verb state), there will be some cases where it is impossible to be certain which state an observation came from.</p>
+</section>
+</section>
+<section id="cultural-transmission" class="level2">
+<h2 class="anchored" data-anchor-id="cultural-transmission">Cultural transmission 🗣</h2>
+<p>So what does all this have to do with “defecate” changing meaning over time?</p>
+<p>Well you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?</p>
+<p>This is the subject of a line research in computational cognitive science. The basic model combines some assumptions we’ve seen before with some assumptions of hidden Markov models you just learned about in this chapter.</p>
+<p>First, assume that people are trying to learn some concept by seeing an example <span class="math inline">\(x_i\)</span> and getting a label for it <span class="math inline">\(y_i\)</span> and then trying to generalize that label to other instances by forming a hypothesis <span class="math inline">\(h\)</span> about what other things <span class="math inline">\(y_i\)</span> applies to. This is the problem we encountered in the <a href="#generalization">generalization chapter</a>, and we can assume that each person forms their beliefs about <span class="math inline">\(h\)</span> using Bayesian inference.</p>
+<p>Now let’s add in the communication factor. Each person <span class="math inline">\(n+1\)</span> gets a label <span class="math inline">\(y_n\)</span> from someone else Person <span class="math inline">\(n\)</span>, forms their own hypothesis <span class="math inline">\(h_{n+1}\)</span> then labels a new object <span class="math inline">\(x_{n+1}\)</span> for the next person. This process repeats, creating a Markov chain.</p>
+<p>To simplify this chain, what we end up with is a sequence of states where each state is a hypothesis about the concept.</p>
+<p><em>What will this chain converge to?</em></p>
+<p><strong>It turns out that the stationary distribution of this chain is the prior</strong> <span class="math inline">\(P(h)\)</span>. Because people make mistakes and communication is noisy, over time, the labels <span class="math inline">\(y_n\)</span> become virtually useless and people will converge to their shared prior beliefs.</p>
+<section id="using-iterated-learning-to-identify-peoples-priors" class="level3">
+<h3 class="anchored" data-anchor-id="using-iterated-learning-to-identify-peoples-priors">Using iterated learning to identify people’s priors</h3>
+<p>For this reason, we can use a kind of Telephone game as a way to find out what people’s shared prior beliefs are.</p>
+<p><a href="https://link.springer.com/content/pdf/10.3758/BF03194066.pdf">A study lead by Michael Kalish</a> tested this idea for function learning: learning to predict <span class="math inline">\(y\)</span> values from <span class="math inline">\(x\)</span> values.</p>
+<p>In the task, people were given <span class="math inline">\(x\)</span> values and had to predict the corresponding <span class="math inline">\(y\)</span> values using a slider. They got feedback on 50 training examples. Then they did an additional 25 trials without feedback.</p>
+<p>Those 25 test trials were doubled and used as the 50 training examples for the next person, and so on. What functions would people eventually learn?</p>
+<p>The figure below shows several representative chains. The researchers found that regardless of what the initial training data was, the chains usually converged to a linear increasing function, suggesting that this is what most people were expecting.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/09/kalishetal_functionlearning_results.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Iterated function learning results from Kalish et al.&nbsp;(2007).</figcaption>
+</figure>
+</div>
+<p>This same method has been applied in other domains as well. For example, in <a href="https://suchow.io/assets/docs/suchow2016dzp.pdf">a study lead by Jordan Suchow</a>, people had to reproduce as accurately as possible the positions of characters in a word. The initial positions were randomly positioned, and what each person reproduced would be passed to the next person in the chain.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/09/suchowetal_letterspacing.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Iterated typesetting results from Suchow et al.&nbsp;(2016).</figcaption>
+</figure>
+</div>
+<p>The researchers found that, over time, people drifted much closer to equal spaced letters, which was much more legible. Moreover, if they averaged the responses across all chains (DZP<sub>2</sub> in the figure), they found that people’s responses were even better than equal spacing, getting closer to Linotype, recommended by designers.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

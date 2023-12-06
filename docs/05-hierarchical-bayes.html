@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>hierarchical-bayes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="05-hierarchical-bayes.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Hierarchical generalization</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In <a href="#bayes">previous examples</a>, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval [0,1].</p>
+<section id="beta-binomial" class="level2">
+<h2 class="anchored" data-anchor-id="beta-binomial">The Beta-Binomial model 🪙</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/05/coin-in-hand.jpg" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Photo by ZSun Fu on Unsplash.</figcaption>
+</figure>
+</div>
+<p>We can answer this question with a model called the Beta-Binomial model, named for the probability distributions it uses. First, let’s set up the basic assumptions of the model.</p>
+<p>Let <span class="math inline">\(P(\text{heads}) = \theta\)</span>. We don’t know what <span class="math inline">\(\theta\)</span> is. After observing a sequence of coin flips <span class="math inline">\(D\)</span>, we want to estimate <span class="math inline">\(\theta\)</span>. This can be accomplished by directly applying Bayes’s rule:</p>
+<p><span class="math display">\[
+P(\theta|D) = \frac{P(D|\theta) P(\theta)}{P(D)}
+\]</span></p>
+<p>The data <span class="math inline">\(D\)</span> in this case corresponds to the number of <span class="math inline">\(k\)</span> heads out of <span class="math inline">\(n\)</span> total flips. This follows a <a href="https://en.wikipedia.org/wiki/Binomial_distribution">Binomial distribution</a>, which describes the probability of getting <span class="math inline">\(k\)</span> successes out of <span class="math inline">\(n\)</span> trials, when the probability of success on each trial is <span class="math inline">\(\theta\)</span>. We will define heads as a “success”.</p>
+<p><span class="math display">\[
+\begin{align}
+P(D|\theta) = P(k|\theta,n) &amp;= \text{Bin}(k; n, \theta) \\
+&amp;= \binom{n}{k} \theta^{k} (1-\theta)^{n-k}
+\end{align}
+\]</span></p>
+<p>The notation for the <span class="math inline">\(\text{Bin}(\cdot)\)</span> function indicates that this is a distribution over <span class="math inline">\(k\)</span> (number of successes) and the distribution has the parameters <span class="math inline">\(n\)</span> (the total number of trials) and <span class="math inline">\(\theta\)</span> (the probability of a success on each trial).</p>
+<p>We can define the prior, <span class="math inline">\(P(\theta)\)</span>, however we like. Because <span class="math inline">\(\theta\)</span> is a random variable that can take on any value from 0 to 1, we cannot just say <span class="math inline">\(P(\theta) = 0.5\)</span> like we could in earlier examples. Instead, <span class="math inline">\(P(\theta)\)</span> must be a probability distribution that assigns probabilities to any value from 0 to 1. If we know nothing about <span class="math inline">\(\theta\)</span>, we could use a Uniform(<span class="math inline">\([0,1]\)</span>) or non-informative prior that assigns equal probability to all values of <span class="math inline">\(\theta\)</span>.</p>
+<p>Alternatively, a convenient choice (for reasons explained below) for <span class="math inline">\(P(\theta)\)</span> is the Beta distribution:</p>
+<p><span class="math display">\[
+P(\theta) = \text{Beta}(\theta;\alpha,\beta)
+\]</span></p>
+<p>The <a href="https://en.wikipedia.org/wiki/Beta_distribution">Beta distribution</a> has two parameters: <span class="math inline">\(\alpha &gt; 0\)</span> and <span class="math inline">\(\beta &gt; 0\)</span>. Let’s create a function that will allow us to visualize the Beta distribution.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_beta(a, b):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">1</span>,num<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  px <span class="op">=</span> stats.beta.pdf(x, a, b)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  ax.plot(x, px)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>plot_beta</code> takes two arguments: <code>a</code> (<span class="math inline">\(\alpha\)</span>), and <code>b</code>(<span class="math inline">\(\beta\)</span>) and plots a Beta distribution with those parameter values.</p>
+<p>Let’s see what it looks like with a few different values.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-3-output-1.png" width="590" height="418"></p>
+</div>
+</div>
+<p>When <span class="math inline">\(\alpha = \beta = 1\)</span>, the Beta distribution is identical to a Uniform(<span class="math inline">\([0,1]\)</span>) distribution.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">3</span>,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-4-output-1.png" width="579" height="404"></p>
+</div>
+</div>
+<p>When <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are greater than 1 and equal, we get a distribution with a peak around 0.5. If we had strong prior expectations that the coin was unbiased, we could increase the parameters even more:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">50</span>,<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-5-output-1.png" width="558" height="404"></p>
+</div>
+</div>
+<p>What about when <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are not equal?</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">4</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-6-output-1.png" width="571" height="404"></p>
+</div>
+</div>
+<p>This allows us to capture skewed priors, perhaps capturing a belief that the coin has a specific bias.</p>
+<p>Now, what if <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are less than 1?</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="fl">0.5</span>,<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-7-output-1.png" width="558" height="404"></p>
+</div>
+</div>
+<p>This might capture the belief that the coin is strongly biased, but we aren’t sure in which direction.</p>
+<section id="conjugate-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="conjugate-distributions">Conjugate distributions</h3>
+<p>The Beta distribution is the <em>conjugate distribution</em> for the Binomial distribution. This means that when the likelihood is a Binomial distribution and the prior is a Beta distribution, then the posterior is also a Beta distribution. Specifically, after making these assumptions,</p>
+<p><span class="math display">\[
+P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
+\]</span></p>
+<p>The parameters of the posterior distribution are (1) the sum of <span class="math inline">\(\alpha\)</span> from the prior and the number of observed heads and (2) the sum of <span class="math inline">\(\beta\)</span> from the prior and the number of observed tails. This means that the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of the Beta prior have a natural interpretation as “virtual flips”. For example, the larger <span class="math inline">\(\alpha\)</span> is compared to <span class="math inline">\(\beta\)</span>, the more biased toward heads we expect <span class="math inline">\(\theta\)</span> to be. Additionally, the larger <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are, the more certain (less diffuse) the prior is.</p>
+</section>
+<section id="parameter-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-estimation">Parameter estimation</h3>
+<p>Because we used a conjugate distribution, we can use our same <code>plot_beta</code> function to generate posterior probability distributions after some coin flips.</p>
+<p>Suppose we start with a fairly strong belief that a coin is fair, represented by this distribution:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span>,<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-8-output-1.png" width="558" height="404"></p>
+</div>
+</div>
+<p>Now, suppose you flip a coin 20 times and it comes up heads every time. What should you think about the bias of the coin now? According to our model:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-9-output-1.png" width="558" height="404"></p>
+</div>
+</div>
+<p>As you can see, this should cause you to shift your beliefs somewhat.</p>
+<p>This wasn’t totally realistic, though. If you picked a coin off the ground, your prior beliefs about it being biased would probably look more like this:</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span>,<span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-10-output-1.png" width="566" height="404"></p>
+</div>
+</div>
+<p>What happens if we <em>now</em> flipped this coin 20 times and it came up heads every time?</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-11-output-1.png" width="566" height="404"></p>
+</div>
+</div>
+<p>You might be mildly surprised, but those 20 flips wouldn’t be enough to budge your estimate about the bias of the coin by much.</p>
+<p>Finally, let’s imagine a situation in which you had a weak prior belief that a coin was biased:</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-12-output-1.png" width="558" height="404"></p>
+</div>
+</div>
+<p>Now you flip the coin 100 times and it comes up heads 48 times. What should your updated beliefs be?</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span><span class="op">+</span><span class="dv">48</span>,<span class="dv">1</span><span class="op">+</span><span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-13-output-1.png" width="558" height="404"></p>
+</div>
+</div>
+<p>As you can see, the posterior distribution shows that you should think this coin is probably fair now. This illustrates how sufficient evidence can override prior beliefs.</p>
+</section>
+<section id="hypothesis-averaging" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-averaging">Hypothesis averaging</h3>
+<p><a href="#generalizing">In Chapter 3</a>, we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.</p>
+<p>Suppose we want to know the probability of the next flip coming up heads. In other words, we want to know <span class="math inline">\(P(\text{heads}|D)\)</span>. We can do that by averaging over all possible values of <span class="math inline">\(\theta\)</span>:</p>
+<p><span class="math display">\[
+P(\text{heads}|D) = \int_\theta P(\text{heads}|\theta) \cdot P(\theta|D) d\theta = \int_\theta \theta \cdot P(\theta|D) d\theta
+\]</span></p>
+</section>
+</section>
+<section id="overhypotheses" class="level2">
+<h2 class="anchored" data-anchor-id="overhypotheses">Overhypotheses 🙆</h2>
+<p>Now consider a slightly different situation. You flip 19 different coins in a row, each one time, and they all come up heads. Now you pick up a 20th coin from the same bag as the previous 19 coins. What do you think is the probability of that 20th coin coming up heads? Is it higher than 0.5?</p>
+<p>If you answered yes, it’s probably because you formed an <em>overhypothesis</em> about the bias of the coins. After flipping all those coins, you may have concluded that this particular set of coins is more likely than usual to be biased. As a result, your estimate about the probability of the 20th coin coming up heads was higher than it otherwise would be.</p>
+<section id="the-shape-bias" class="level3">
+<h3 class="anchored" data-anchor-id="the-shape-bias">The shape bias</h3>
+<p>This coins example is pretty artificial, but the notion of overhypotheses is one that you find in language learning. A phenomenon known as <a href="https://doi.org/10.1016/0885-2014(88)90014-7">the shape bias</a> refers to the fact that even young children are more likely to generalize a new word based on its shape rather than other properties like color or texture.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/05/shape_bias.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A common task used to test for the shape bias.</figcaption>
+</figure>
+</div>
+<p>This makes sense because objects tend to have common shapes and are less likely to have common colors or textures.</p>
+</section>
+<section id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="level3">
+<h3 class="anchored" data-anchor-id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning">Modeling the learning of overhypotheses through hierarchical Bayesian learning</h3>
+<p>Charles Kemp, Andy Perfors, and Josh Tenenbaum developed <a href="http://www.charleskemp.com/papers/KempPTDevSci.pdf">a model</a> of this kind of learning. They focused on bags of black and white marbles rather than flipping coins. They imagine a problem in which you have many bags of marbles that you draw from. After drawing from many bags, you draw a single marble from a new bag and make a prediction about the proportion of black and white marbles in that bag.</p>
+<p>The details of the model are outside the scope of this book. But the basic idea is that the model learns at two levels simultaneously. At the higher level, the model learns the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of a Beta distribution that characterizes the proportion of black and white marbles in each bag. As we saw above, a Beta distribution can have a peak around a particular proportion, or it can be peaked around both 0 and 1, meaning that each bag is likely to be nearly all black or all white.</p>
+<p>At the lower level, the model learns the specific distribution of marbles within a bag. If you draw 20 marbles and 5 of them are black, you may have some uncertainty about the overall proportion in the bag, but your best estimate will be around 5/20 or 1/4.</p>
+<p>Where the model excels is being able to draw inferences <em>across</em> bags. If you see many bags that are full of <em>only</em> black or <em>only</em> white marbles, and then you draw a single black marble out of a new bag, you are likely to be very confident that the rest of the marbles in that bag are black.</p>
+<p>But if you see many bags that have mixed proportions of black and white marbles, and then you draw a single black marble out of a new bag, you will be far less confident about the proportion of black marbles in that bag. A model that doesn’t make inferences at multiple levels would struggle to draw this distinction.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

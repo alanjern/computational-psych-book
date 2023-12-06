@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>generalization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="03-generalization.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Generalization</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In the last chapter, you learned that much of cognition is about making inferences. A common inference we’re faced with involves generalizing examples of things to new cases.</p>
+<ul>
+<li>A child hears a brand new word and they have to figure out which objects to apply that word to.</li>
+<li>You eat one candy from an assorted box and then try to guess what the others might taste like.</li>
+<li>You remember that your friend liked doing crosswords during a weekend trip at the cabin one time, so you guess they might like a book of puzzles as a gift (generalizing their interests).</li>
+</ul>
+<p>How can we apply Bayesian inference to these kinds of problems?</p>
+<section id="hormones" class="level2">
+<h2 class="anchored" data-anchor-id="hormones">Healthy hormone levels 💉</h2>
+<p>This example comes from a <a href="https://cocosci.princeton.edu/tom/papers/TGbbs.pdf">2001 paper by Josh Tenenbaum and Thomas Griffiths</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><strong>The basic problem</strong>: You learn the value of a healthy hormone level (say, 60) that varies on a scale from 1 to 100 (integers only). What is the probability that another value (say, 70) is also healthy?</p>
+<section id="setting-up-a-model" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-a-model">Setting up a model</h3>
+<section id="the-hypothesis-space" class="level4">
+<h4 class="anchored" data-anchor-id="the-hypothesis-space">The hypothesis space</h4>
+<p>To start with, we’ll assume that healthy values lie in a contiguous interval. Using the term from the paper, this interval is the <em>consequential region</em> <span class="math inline">\(C\)</span>.</p>
+<p>The hypothesis space consists of all possible consequential regions. For example, [0,100], [10,19], and [44,45], are all valid hypotheses. The full hypothesis space is every valid interval between 0 and 100.</p>
+</section>
+<section id="prior" class="level4">
+<h4 class="anchored" data-anchor-id="prior">Prior</h4>
+<p>How much weight should we assign to each hypothesis? We might have reason to favor shorter intervals over longer ones, for example. In the paper, they use an <a href="https://en.wikipedia.org/wiki/Erlang_distribution">Erlang prior</a>. Alternatively, for simplicity of calculation, we could again assume a uniform prior distribution, placing equal weight on all hypotheses, like we did in the previous chapter. This is tantamount to making no prior assumptions about which intervals are most probable.</p>
+</section>
+<section id="likelihood" class="level4">
+<h4 class="anchored" data-anchor-id="likelihood">Likelihood</h4>
+<p>Suppose you learn that a healthy patient has a hormone level of 60. What was the likelihood of observing this value, assuming we know which hypothesis is correct? That is, what is <span class="math inline">\(P(x = 60 | h)\)</span>. It depends on how we assume the patient was chosen.</p>
+<section id="weak-strong-sampling" class="level5">
+<h5 class="anchored" data-anchor-id="weak-strong-sampling">Weak vs.&nbsp;strong sampling</h5>
+<p>Under <em>weak sampling</em>, we assume that each observation was sampled from the full range of possibilities, and it was just a coincidence that we happened to get one from the consequential region (a healthy patient). If that’s true, then the probability of getting any particular value doesn’t depend on which hypothesis is true:</p>
+<p><span class="math display">\[
+P(x|h) = \frac{1}{L}
+\]</span></p>
+<p>where <span class="math inline">\(L\)</span> is the length of the range of possible values (100 in our case).</p>
+<p>Under <em>strong sampling</em>, we assume that each observation was specifically chosen as an example of the consequential region <span class="math inline">\(C\)</span>. In other words, someone chose a healthy person and tested their hormone levels as an example for you. In this case, the probability of seeing a particular value depends on the size of the region:</p>
+<p><span class="math display">\[
+P(x|h) = \begin{cases}
+  \frac{1}{|h|} &amp; \text{if } x \in h \\
+  0 &amp; \text{otherwise}
+  \end{cases}
+\]</span> where <span class="math inline">\(|h|\)</span> is the <em>size</em> of <span class="math inline">\(h\)</span>, i.e., the number of values contained in <span class="math inline">\(h\)</span>. If you have multiple observations <span class="math inline">\(X = \{x_1, x_2, \ldots, x_n \}\)</span>, then <span class="math inline">\(P(X|h) = (1/|h|)^n\)</span>. This is because we will assume each sample is independent like a coin flip.</p>
+<p>The result of the strong sampling assumption is the <em>size principle</em>: among hypotheses that include all of the observed examples, those that are smallest will receive higher posterior probability because they will have higher likelihoods.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/03/hypotheses.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">Sample hypotheses. The thickness of the lines indicates their likelihood, depicting the size principle. Image from Griffiths &amp; Tenenbaum (2001).</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="posterior" class="level4">
+<h4 class="anchored" data-anchor-id="posterior">Posterior</h4>
+<p>We can now simply apply Bayes’s rule to compute the probability of each hypothesis, given an observation (or set of observations).</p>
+<p><span class="math display">\[
+P(h|X) = \frac{P(X|h) P(h)}{\sum_{h_i} P(X|h_i) P(h_i)}
+\]</span></p>
+</section>
+</section>
+<section id="generalizing" class="level3">
+<h3 class="anchored" data-anchor-id="generalizing">Generalizing</h3>
+<p>We aren’t quite finished. Remember that we really want to know the probability of some new value <span class="math inline">\(y\)</span> also being a healthy hormone level. But at this point all we have done is assigned a probability to each <em>interval</em> being the consequential region.</p>
+<p>What we want to do is essentially a two-step process:</p>
+<ol type="1">
+<li>For each hypothesis <span class="math inline">\(h\)</span>, check to see if <span class="math inline">\(y\)</span> is in it.</li>
+<li>If it is, check how probable it is that <span class="math inline">\(h\)</span> is the consequential region <span class="math inline">\(C\)</span>, given our observations <span class="math inline">\(X\)</span>.</li>
+</ol>
+<p>This basic idea is sometimes known as hypothesis averaging because we don’t actually care which hypothesis is the right one, so we’ll just average over <em>all</em> hypotheses, weighted by how probable they are. Specifically, we’ll compute:</p>
+<p><span class="math display">\[
+P(y \in C|X) = \sum_h P(y \in C | h) P(h | X)
+\]</span> The second term on the right is what we computed earlier using Bayes’s rule.</p>
+<p>What about the first term? This time, we’ll assume <em>weak sampling</em> because there’s no reason to assume that this new value <span class="math inline">\(y\)</span> was chosen to be a healthy value or not.</p>
+</section>
+<section id="homework-2-finish-the-details" class="level3">
+<h3 class="anchored" data-anchor-id="homework-2-finish-the-details">Homework 2: Finish the details</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://colab.research.google.com/drive/1PQMz6W9d1VoRi471NLdxCsV-XGp4Rs-j?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>I haven’t provided all the details for this model because your assignment is to finish the implementation yourself, run some simulations, and collect a small amount of real data to compare the model to.</p>
+</section>
+</section>
+<section id="the-number-game" class="level2">
+<h2 class="anchored" data-anchor-id="the-number-game">The number game 🔢</h2>
+<p>In most domains, requiring concepts to be restricted to contiguous intervals is not realistic. Numbers are one example. Consider the space of possible number concepts you could make up for integers between 1 to 100. In addition to concepts like “numbers between 20 and 50”, there are many other plausible concepts like “multiples of 10”, “even numbers”, or “powers of 3”.</p>
+<p>Consider the following problem: You are given one or more examples <span class="math inline">\(X\)</span> of numbers that fit some rule and you want to know how probable it is that a new number <span class="math inline">\(y\)</span> also fits the rule.</p>
+<p>The model we discussed before can be naturally extended to this problem. For the likelihood, we can make the same <a href="#weak-strong-sampling">strong sampling</a> assumption as before.</p>
+<p>The prior is where things get a little trickier. Intuitively some concepts like “even numbers” seem more probable even before seeing any examples than concepts like “multiples of 7”. This now becomes a psychological question: Which rules will people find to be more intuitively plausible? There is no single way to decide this, but we could run a survey to find out: Give people a long list of rules and ask them to judge how intuitively natural they seem. We could then construct a prior probability distribution using this data.</p>
+<p>Alternatively, we could come up with some definition of “complexity” in hypotheses and assume that less complex hypotheses will receive higher prior probability.</p>
+<p>Once we have chosen a prior probability distribution <span class="math inline">\(P(h)\)</span>, we can now proceed just as we did before.</p>
+</section>
+<section id="inductive-generalizations-about-animal-properties" class="level2">
+<h2 class="anchored" data-anchor-id="inductive-generalizations-about-animal-properties">Inductive generalizations about animal properties 🐴</h2>
+<p>Now let’s consider an even more complex generalization problem, based on a <a href="http://sanjanalab.org/reprints/Sanjana_NIPS_2002.pdf">2002 paper by Neville Sanjana and Josh Tenenbaum</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This is the problem of generalizing properties from a set of example animals to other animals. The paper uses the following example:</p>
+<pre><code>Chimps have blicketitis
+Squirrels have blicketitis
+--------------------------
+Horses have blicketitis</code></pre>
+<p>The way to read this is as follows: The premises state that <strong>chimps and squirrels have blicketitis</strong>. The conclusion is that <strong>horses have blicketitis</strong>. The inductive generalization question is how probable is the conclusion given the premises? Intuitively, the conclusion in this example seems more plausible than the conclusion in the following example:</p>
+<pre><code>Chimps have blicketitis
+Gorillas have blicketitis
+--------------------------
+Horses have blicketitis</code></pre>
+<p>The interesting psychological question is why is it that some generalizations seem more intuitively plausible than others?</p>
+<section id="hypothesis-space" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-space">Hypothesis space</h3>
+<p>This problem is conceptually similar to the ones we’ve already been discussing. You want to infer what animals have blicketitis after seeing some examples of animals that blicketitis. The first question to answer is what is the analogue of a consequential region for this problem. Animals don’t naturally fall on a one-dimensional interval so we’ll need to define a different hypothesis space. One possibility is a hierarchy, which naturally captures the knowledge people have about animals.</p>
+<section id="clustering" class="level4">
+<h4 class="anchored" data-anchor-id="clustering">Clustering</h4>
+<p>The paper first creates a hierarchy of eight animals using similarity data collected from people. Specifically, they asked people to judge how similar all pairs of eight animals were and then calculated the average similarity judgment for each animal.</p>
+<p>These similarity judgments can be used to construct a tree using a simple clustering algorithm. The algorithm works as follows:</p>
+<ol type="1">
+<li>Put all animals in their own cluster.</li>
+<li>Where there is more than one cluster that hasn’t been placed in a group, do the following:
+<ol type="1">
+<li>Identify the pair of clusters with the greatest similarity between them.</li>
+<li>Group those clusters into their own new cluster.</li>
+</ol></li>
+</ol>
+<p>There are several approaches for computing the similarity between two clusters that contain multiple animals. For example, you might use the maximum similarity between any pair of individual animals in the two clusters.</p>
+<p>The results of this algorithm can be represented as a tree, shown below. Each node in the tree represents a cluster. The hypotheses we will consider will be any combination of 1, 2, or 3 of the clusters determined using the clustering algorithm.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/03/animal_clusters.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">The tree of animal species. Image from Sanjana &amp; Tenenbaum (2002).</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="the-model" class="level3">
+<h3 class="anchored" data-anchor-id="the-model">The model</h3>
+<p>We can now define the model. First, let’s define <span class="math inline">\(P(h)\)</span> where <span class="math inline">\(h\)</span> is a set of clusters. The authors make an assumption analogous to the following:</p>
+<p><span class="math display">\[
+P(h) \propto \frac{1}{\phi^k}
+\]</span> where <span class="math inline">\(k\)</span> is the number of clusters in <span class="math inline">\(h\)</span>. <span class="math inline">\(\phi\)</span> is a parameter that we can choose. As long as <span class="math inline">\(\phi &gt; 1\)</span>, <span class="math inline">\(P(h)\)</span> will be smaller for hypotheses consisting of more clusters. This has the effect of assigning higher weight to “simpler” hypotheses.</p>
+<p>Once again, we will make the <a href="#sampling-assumptions">strong sampling assumption</a> for the likelihood. This time, <span class="math inline">\(|h|\)</span> is the number of animal species in <span class="math inline">\(h\)</span> and <span class="math inline">\(n\)</span> is the number of examples in the premises.</p>
+<p>A consequence of both of these assumptions is something like <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam’s razor</a> which says that the simplest explanation should be preferred. This model will assign 0 likelihood to any hypotheses that don’t include <span class="math inline">\(X\)</span>, thus narrowing the hypothesis space down to just hypotheses that are possible. Of those, it will favor hypotheses with fewer clusters and with fewer animals. In other words, it will favor the simplest hypotheses that are consistent with the examples we’ve seen.</p>
+</section>
+<section id="try-out-the-model-yourself" class="level3">
+<h3 class="anchored" data-anchor-id="try-out-the-model-yourself">Try out the model yourself</h3>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> comb</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> animalGeneralization(premises, phi<span class="op">=</span><span class="dv">20</span>): </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># - premises is a list of animal names.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># - phi is a number that describes the strength of the simplicity</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   bias in the prior (default = 20). This function uses a slightly simpler</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   version of the prior than the one in the original paper.</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plots the generalization values and returns them</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  animals <span class="op">=</span> [<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"elephant"</span>, <span class="st">"rhino"</span>, <span class="st">"chimp"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gorilla"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>, <span class="st">"dolphin"</span>, <span class="st">"seal"</span>]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We'll hard-code the clusters from the tree structure. Here, each column in the</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># matrix. Each row is a cluster. A 1 means the animal is present in the cluster</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  animal_clusters <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>], <span class="co"># The singleton clusters</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>],</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>],</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                              </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>], <span class="co"># The pair clusters</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>],</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                              </span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>], <span class="co"># The bigger clusters</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                              [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                              ],</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>                              dtype <span class="op">=</span> <span class="st">"int"</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  animal_clusters_df <span class="op">=</span> pd.DataFrame(animal_clusters, columns <span class="op">=</span> animals)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  n_clusters <span class="op">=</span> animal_clusters_df.shape[<span class="dv">0</span>]</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  n_animals <span class="op">=</span> <span class="bu">len</span>(animals)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  n_hypotheses <span class="op">=</span> <span class="bu">int</span>(<span class="bu">sum</span>(comb(n_clusters,np.arange(<span class="dv">1</span>,<span class="dv">4</span>))))</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize a hypothesis space of all possible clusters</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  hypotheses <span class="op">=</span> pd.DataFrame(np.zeros((n_hypotheses, n_animals)), </span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  columns <span class="op">=</span> animals)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  priors <span class="op">=</span> np.zeros(n_hypotheses)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The first order hypotheses are just the 19 clusters defined by the tree</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  hypotheses[<span class="dv">0</span>:n_clusters] <span class="op">=</span> animal_clusters_df</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  priors[<span class="dv">0</span>:n_clusters] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>phi</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The second order hypotheses are the unique pairs of clusters in the tree</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  i <span class="op">=</span> n_clusters</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> a <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n_clusters<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(a<span class="op">+</span><span class="dv">1</span>, n_clusters):</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Take the logical "or" of the two clusters from the tree</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>      hypotheses[i:i<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> (np.array(animal_clusters_df[a:a<span class="op">+</span><span class="dv">1</span>], dtype<span class="op">=</span><span class="st">"int"</span>) <span class="op">|</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>      np.array(animal_clusters_df[b:b<span class="op">+</span><span class="dv">1</span>], dtype<span class="op">=</span><span class="st">"int"</span>))</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Update the prior</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>      priors[i] <span class="op">=</span> (<span class="dv">1</span><span class="op">/</span>phi)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>      i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The third order hypotheses are the unique triples of clusters in the tree</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> a <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n_clusters<span class="op">-</span><span class="dv">2</span>):</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(a<span class="op">+</span><span class="dv">1</span>, n_clusters<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(b<span class="op">+</span><span class="dv">1</span>, n_clusters):</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Take the logical "or" of the three clusters from the tree</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        hypotheses[i:i<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> (np.array(animal_clusters_df[a:a<span class="op">+</span><span class="dv">1</span>], dtype<span class="op">=</span><span class="st">"int"</span>) <span class="op">|</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        np.array(animal_clusters_df[b:b<span class="op">+</span><span class="dv">1</span>], dtype<span class="op">=</span><span class="st">"int"</span>) <span class="op">|</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        np.array(animal_clusters_df[c:c<span class="op">+</span><span class="dv">1</span>], dtype<span class="op">=</span><span class="st">"int"</span>))</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the prior</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>        priors[i] <span class="op">=</span> (<span class="dv">1</span><span class="op">/</span>phi)<span class="op">**</span><span class="dv">3</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now we need to remove the duplicate hypotheses. For example, there's a</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>  <span class="co"># {horse} cluster and a {cow} cluster, and there's also a {horse, cow}</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cluster. So in our second order hypotheses, there's no need to include</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>  <span class="co"># {horse}+{cow}, because it's already included as a first order</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hypothesis.</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>  <span class="co"># To solve this problem, we'll remove the duplicate rows from our</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hypothesis matrix (data frame).</span></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The pandas functions duplicated and drop_duplicates will handle this for us</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>  duplicates <span class="op">=</span> hypotheses.duplicated()</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>  duplicate_indices <span class="op">=</span> np.logical_not(duplicates)[np.logical_not(duplicates)].index</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  hypotheses <span class="op">=</span> hypotheses.drop_duplicates(ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  priors <span class="op">=</span> priors[duplicate_indices]</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>  priors <span class="op">=</span> priors <span class="op">/</span> <span class="bu">sum</span>(priors) <span class="co"># normalize the prior prob. distribution</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>  n_hypotheses <span class="op">=</span> <span class="bu">len</span>(priors) <span class="co"># update number of hypotheses to be more accurate</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create the likelihoods</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>  likelihood <span class="op">=</span> pd.DataFrame(np.zeros((n_hypotheses, n_animals)), </span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  columns <span class="op">=</span> animals)</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n_hypotheses):</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set the likelihood equal to 1 over the number of animal species</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># in the hypothesis. If the animal isn't in the hypothesis, just ignore</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>    <span class="co"># it and leave the likelihood at 0.</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>    likelihood.loc[i, hypotheses.loc[i,:]<span class="op">==</span><span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="bu">sum</span>(hypotheses.loc[i,:])</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Show the model the premises</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> p <span class="kw">in</span> premises:</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>    priors <span class="op">=</span> priors <span class="op">*</span> np.array(likelihood[p])</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>  priors <span class="op">=</span> priors <span class="op">/</span> <span class="bu">sum</span>(priors)</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now compute the generealization probilities by computing a </span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>  <span class="co"># matrix multiplication of the belief vector and the hypothesis</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>  <span class="co"># matrix</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>  generalizations <span class="op">=</span> np.matmul(priors, np.array(hypotheses))</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the results</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  y_pos <span class="op">=</span> np.arange(<span class="bu">len</span>(animals))</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>  ax.barh(animals, generalizations, align<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>  ax.set_xlabel(<span class="st">"Generalization probability"</span>)</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>  ax.set_title(<span class="st">"Premises: "</span> <span class="op">+</span> <span class="st">" "</span>.join(premises))</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(generalizations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can try out a running version of the model by making a copy of the <a href="https://colab.research.google.com/drive/1QIhYLYMcNXjrRQBXKRz9CZ4xMirzqcsp?usp=sharing">code here</a>. Here, let’s look at how the model handles a few specific cases.</p>
+<p>Let’s start with a single example: horses can get blicketitis.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-3-output-1.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>array([1.        , 0.52984834, 0.30628906, 0.30628906, 0.19579428,
+       0.19579428, 0.12893614, 0.12893614, 0.0842413 , 0.0842413 ])</code></pre>
+</div>
+</div>
+<p>Here, we see a standard generalization curve. Now, let’s add a few more animals.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-4-output-1.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([1.        , 1.        , 0.57379051, 0.57379051, 0.47852518,
+       0.47852518, 1.        , 0.60980466, 0.1707609 , 0.1707609 ])</code></pre>
+</div>
+</div>
+<p>Now the model has increased probability for most other animals. This makes sense because there is more reason to think blicketitis might affect lots of different animals.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-5-output-1.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([1.        , 1.        , 0.64983602, 0.64983602, 0.58531333,
+       0.58531333, 1.        , 1.        , 0.18405475, 0.18405475])</code></pre>
+</div>
+</div>
+<p>Adding a squirrel further supported this idea. But what if we add additional examples of animals we’ve already seen?</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>, <span class="st">"horse"</span>, <span class="st">"squirrel"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-6-output-1.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([1.        , 1.        , 0.32551484, 0.32551484, 0.26938358,
+       0.26938358, 1.        , 1.        , 0.06883892, 0.06883892])</code></pre>
+</div>
+</div>
+<p>Now the probabilities for other animals drop, because it’s starting to look like maybe this disease only affects the four animals we’ve seen so far.</p>
+<p>To sum up, when we’ve seen a small number of examples, like a single horse, the model will generally prefer simpler hypotheses. But once we’ve seen more data, it will favor more complex hypotheses (like a group of animals from two separate evolutionary clusters) if the data support it.</p>
+<p>As one final example, let’s look at the specific impact of multiple examples of a single animal.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>])</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-7-output-1.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-7-output-2.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="03-generalization_files/figure-html/cell-7-output-3.png" width="608" height="442"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>array([0.01730482, 0.01730482, 0.01730482, 0.01730482, 0.1259028 ,
+       1.        , 0.01270155, 0.01270155, 0.01111944, 0.01111944])</code></pre>
+</div>
+</div>
+<p>Here, we see that the model becomes increasingly confident that the property is unique to gorillas. This makes intuitive sense and it’s something that people seem to exhibit in their judgments. But, as they point out in the paper, it’s not something that non-probabilistic models can easily explain.</p>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p>The results in the paper show that this model predicts people’s judgments quite well, better than alternative models that do not rely on Bayesian inference. These results suggest that the assumptions of the model are very similar to the assumptions that people make when making inductive generalizations.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/03/st_results.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">Comparison between model results and human judgments. Image from Sanjana &amp; Tenenbaum (2002).</figcaption>
+</figure>
+</div>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Tenenbaum, J. B. &amp; Griffiths, T. L. (2001). Generalization, similarity, and Bayesian inference. Behavioral and Brain Sciences, 24, 629-640.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Sanjana, N. &amp; Tenenbaum, J. (2002). Bayesian models of inductive generalization. Advances in Neural Information Processing Systems 15<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

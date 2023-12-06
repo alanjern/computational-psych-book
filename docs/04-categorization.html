@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>categorization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="04-categorization.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Categorization</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>The last chapter introduced the problem of inductive generalization. This chapter will focus on a specific case of generalization that is particular interest to psychologists, cognitive scientists, and people who use AI and machine learning: <em>classification</em> or <em>categorization</em>. Basically, assigning labels to things.</p>
+<p>People constantly classify things in the world into categories (chairs, cats, friends, enemies, edible things, and so on). Doing this helps us to communicate and function in novel situations.</p>
+<p>In machine learning, it’s often useful to classify inputs into different categories like whether a social media post violates community standards or not, whether an image contains a human face or not, or whether an MRI contains a tumor.</p>
+<p>Psychologists study how people form categories because it provides a window into how we organize our knowledge. But the basic problem is the same as the one studied in machine learning.</p>
+<p>I’m going to intrdouce a fairly simple psychological model of categorization introduced by Robert Nosofsky called the Generalized Context Model. It assumes that people make classification judgments using the following general algorithm:</p>
+<ol type="1">
+<li>Remember all the examples of categories you’ve seen before.</li>
+<li>When you want to classify a new instance, compare it to all previous examples of different categories and rate how similar it is to each one.</li>
+<li>Assign it to the category that has the highest average similarity.</li>
+</ol>
+<p>This model makes some outlandish assumptions (like the idea that people would remember every example they had seen before). But, to a first approximation, it does a decent job of predicting people’s classification judgments in a lot of situations. And for learning purposes, it has the advantage of being pretty easy to understand and implement.</p>
+<section id="a-typical-category-learning-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="a-typical-category-learning-experiment">A typical category learning experiment 🟢🟨</h2>
+<p>In psychology, category learning experiments have a pretty similar structure. People see some unfamiliar stimuli that differ on several dimensions and can be sorted into different categories. The task is to learn what distinguishes one category from another. The experiments usually consist of two phases: a training phase, and a testing phase.</p>
+<ul>
+<li><em>Training phase</em>: People see many examples of each category and have to classify them, often simply by guessing at first. They get feedback and gradually learn to tell the different categories apart.</li>
+<li><em>Testing phase</em>: People see more examples, usually some brand new ones, and have to classify them again. This time they don’t get feedback. The point of this phase is to test what people actually learned about the meaning of the categories.</li>
+</ul>
+<p>The stimuli could be abstract shapes, cartoon insects, race cars with different features, or anything else. What matters is that they have clearly distinguishable features.</p>
+</section>
+<section id="representing-stimuli-in-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="representing-stimuli-in-a-model">Representing stimuli in a model 🧩</h2>
+<p>For modeling purposes, all of these types of stimuli (with discrete-valued features) can be represented in a matrix, with the following properties:</p>
+<ol type="1">
+<li>Each dimension of the matrix represents a different feature of the stimuli.</li>
+<li>The length of each dimension represents how many different values that feature can have.</li>
+<li>A single item can then be represented by a binary matrix with 1s in the cells indicating which feature values it has and 0s everywhere else.</li>
+</ol>
+<p>For example, in Robert Nosofsky’s (1986) test of the GCM<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, the stimuli were semicircles with lines through them. The two feature dimensions were (1) circle size and (2) line orientation. Each feature had four possible values.</p>
+<p>Using our binary matrix representation, here is one possible stimulus from the Nosofsky experiment:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stimulus <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stimulus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[0 0 0 0]
+ [0 0 0 0]
+ [0 0 1 0]
+ [0 0 0 0]]</code></pre>
+</div>
+</div>
+<p>The Nosofksy stimuli are pretty simple: They can have exactly one value on each dimension, so this representation will always only have a single 1 in the matrix.</p>
+<p>If we wanted to know how many of each stimulus to present our model, it would be pretty cumbersome to maintain a long list of arrays like this one. So we could instead maintain a single matrix that stores counts of stimuli. That is, the values at each element will represent the number of stimuli observed with those feature values.</p>
+<p>For example, let’s consider the “dimensional” condition of Nosofsky’s experiment, in which subjects saw only the stimuli on the “diagonals” of the matrix. Let’s assume they saw each one 100 times (actually, they did a mind-numbing 1200 trials after 2600 practice trials 🥴). We could represent that like so:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>training_set <span class="op">=</span> np.array([[<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">100</span>],</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>],</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>],</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">100</span>]], dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(training_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[100   0   0 100]
+ [  0 100 100   0]
+ [  0 100 100   0]
+ [100   0   0 100]]</code></pre>
+</div>
+</div>
+<p>This still isn’t ideal though. Because it doesn’t represent the category labels that subjects got during their training. We don’t know which examples belonged to which categories.</p>
+<p>Thinking ahead to how the GCM works, let’s instead represent the training examples more like a list, so that we can iterate through them:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tDimensional <span class="op">=</span> np.zeros((<span class="dv">8</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">0</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">1</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">2</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">3</span>] <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">4</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">5</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">6</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>tDimensional[<span class="dv">7</span>] <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tDimensional)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1 1 1]
+ [1 2 2]
+ [1 3 2]
+ [1 4 1]
+ [2 1 4]
+ [2 2 3]
+ [2 3 3]
+ [2 4 4]]</code></pre>
+</div>
+</div>
+<p>In this format, each row of the matrix is an array with three elements. The first element is the category label: 1 or 2. The second two elements are the indices into the stimulus matrix. <strong>Note: Here I’ve deviated from Python norms to be consistent with the numbering in the table in the original Nosofsky paper, shown below. When working with the model, remember that indexing in Python starts with 0.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/04/dimensional_table.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Training examples from the dimensional condition. Image from Nosofsky (1986).</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-generalized-context-model-gcm" class="level2">
+<h2 class="anchored" data-anchor-id="the-generalized-context-model-gcm">The Generalized Context Model (GCM)</h2>
+<p>Here, I will describe a special case of the model here that applies to tasks (like the one in the paper) with only two categories. However, this model can easily be extended to any number of categories. The model is defined by two key equations.</p>
+<p>The first equation defines the probability of classifying Stimulus <span class="math inline">\(S_i\)</span> into Category <span class="math inline">\(C_1\)</span> (i.e., Category 1):</p>
+<p><span id="eq-gcm1"><span class="math display">\[
+\begin{equation}
+P(C_1|S_i) = \frac{b_1 \sum_{j \in C_1} \eta_{ij}}{b_1 \sum_{j \in C_1} \eta_{ij} + (1-b_1) \sum_{k \in C_2} \eta_{ik}}
+\end{equation}
+\tag{1}\]</span></span></p>
+<p>The sum <span class="math inline">\(\sum_{j \in C_1}\)</span> is a sum over all stimuli <span class="math inline">\(S_j\)</span> that belong to Category 1. The sum <span class="math inline">\(\sum_{j \in C_1}\)</span> is a sum over all stimuli <span class="math inline">\(S_k\)</span> that belong to Category 2.</p>
+<p>Equation <a href="#eq-gcm1">Equation&nbsp;1</a> has a parameter <span class="math inline">\(b_1\)</span> which is defined as the response bias for Category 1. <span class="math inline">\(b_1\)</span> can range from 0 to 1 and captures the possibility that a subject is biased to respond with one category or another. This is similar but not identical to a prior distribution. When <span class="math inline">\(b_1\)</span> is small, the model is biased toward Category 2; when <span class="math inline">\(b_1\)</span> is large, the model is biased toward Category 1. Note that when <span class="math inline">\(b = 0.5\)</span>, it cancels out of the equation.</p>
+<p>We could also include a response bias for Category 2, but the model assumes that <span class="math inline">\(\sum_i b_i = 1\)</span>. Therefore, when there are only two categories, <span class="math inline">\(b_2 = 1 - b_1\)</span> which is what you see in the second term of the denominator of Equation <a href="#eq-gcm1">Equation&nbsp;1</a>.</p>
+<p><span class="math inline">\(\eta_{ij}\)</span> is a function that defines how similar to <span class="math inline">\(S_i\)</span> and <span class="math inline">\(S_j\)</span> are. The GCM assumes that stimuli can be represented as points in a multi-dimensional space (in this case, a two-dimensional space) and the similarity is defined as a function of the distance between those two points:</p>
+<p><span class="math display">\[
+\eta_{ij} = e^{-c^2 \left[w_1 (f_{i1} - f_{j1})^2 + (1-w_1)(f_{i2} - f_{j2})^2 \right]}
+\]</span></p>
+<p>where <span class="math inline">\(f_{i1}\)</span> and <span class="math inline">\(f_{i2}\)</span> refer to the feature values on dimensions 1 and 2 of <span class="math inline">\(S_i\)</span>. This equation has two parameters: <span class="math inline">\(c\)</span> and <span class="math inline">\(w_1\)</span>. <span class="math inline">\(c\)</span> is a scaling parameter that affects how steeply the exponential curve is. This will allow us to account for how different people might have different ideas of how close two stimuli have must be to be called similar. <span class="math inline">\(w_1\)</span> is called the attentional weight for dimension 1. This parameter captures how much weight is placed on dimension 1 over dimension 2. Just like <span class="math inline">\(b_1\)</span>, <span class="math inline">\(w_1\)</span> can range from 0 to 1, and the larger it is, the more weight is placed on dimension 1. Similarly, we could add a <span class="math inline">\(w_2\)</span>, but the attention weights are constrained to sum to 1.</p>
+<section id="generating-model-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="generating-model-predictions">Generating model predictions</h3>
+<p>In order to generate predictions from this model, we need two things. First, we need to define what the training stimuli are, and what their feature values are. This is what will allow us to compute the sums in Equation <a href="#eq-gcm1">Equation&nbsp;1</a>.</p>
+<p>Next, we need to specify the values of the 3 parameters <span class="math inline">\(b_1\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(w_1\)</span>. Nosofsky does this by first collecting data from people in the experiment. That is, for every stimulus <span class="math inline">\(S_i\)</span> we can record the proportion of times people classified it as Category 1. In other words, we can collect empirical estimates of <span class="math inline">\(P(C_1|S_i)\)</span> for all values of <span class="math inline">\(S_i\)</span>.</p>
+<p>Then Nosofsky uses a maximum likelihood procedure for fitting the model to the data. Conceptually, the idea is to find the set of values of the three parameters that produce model predictions that are as close as possible to the empirical data. (This is exactly how linear regression works, where you have some data <span class="math inline">\((\bar{x},\bar{y})\)</span> and want to find the best-fitting values of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> for the function <span class="math inline">\(y = ax + b\)</span> that describes the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.)</p>
+<p>We can define model fit by mean squared error (MSE). MSE is defined as</p>
+<p><span class="math display">\[
+\frac{1}{n} \sum_i (y_i - x_i)^2
+\]</span></p>
+<p>where <span class="math inline">\(y\)</span> are the data and <span class="math inline">\(x\)</span> are the model predictions. A lower MSE means a better model fit. Finding the best values of the parameters can be achieved through an exhaustive search of all values. For example, we might consider all possible values of each parameter in increments of 0.1. We could then write a program that performs the following basic algorithm:</p>
+<ol type="1">
+<li>Set minimum MSE to <span class="math inline">\(\inf\)</span>.</li>
+<li>For all possible values of <span class="math inline">\(b_1\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(w_1\)</span>:
+<ol type="1">
+<li>Generate model predictions <span class="math inline">\(P(R_1|S_i)\)</span> for all <span class="math inline">\(S_i\)</span>.</li>
+<li>Compute MSE between the empirical data and model predictions generated in the previous step.</li>
+<li>If this MSE is smaller than minimum MSE, set minimum MSE to the current value and store the current values of <span class="math inline">\(b_1\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(w_1\)</span>.</li>
+</ol></li>
+<li>Return the stored values of <span class="math inline">\(b_1\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(w_1\)</span>.</li>
+</ol>
+</section>
+<section id="homework-3" class="level3">
+<h3 class="anchored" data-anchor-id="homework-3">Homework 3</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://colab.research.google.com/drive/166ptmuGWwqxLvRfbXaoZ7qI0B5326lh7?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>In your next homework you will implement the GCM described above. In the homework, you will have to encode training and test stimuli and implement the equations and model-fitting algorithm above. Additionally, to get some experience with the behavioral side of cognitive science, you will create a working version of a category learning experiment in order to collect some data that you can use to compare with the GCM’s predictions.</p>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Nosofsky, R. M. (1986). Attention, similarity, and the identification-categorization relationship. Journal of Experimental Psychology: General, 115(1), 39-57.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
