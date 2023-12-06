@@ -1,0 +1,20 @@
+{
+  "index.qmd": {
+    "index.html": "0fa03942"
+  },
+  "intro.qmd": {
+    "intro.html": "5920476c"
+  },
+  "summary.qmd": {
+    "summary.html": "2f8913b5"
+  },
+  "references.qmd": {
+    "references.html": "228ec902"
+  },
+  "01-intro.qmd": {
+    "01-intro.html": "867e8c41"
+  },
+  "02-bayes.qmd": {
+    "02-bayes.html": "fa5fb9d8"
+  }
+}

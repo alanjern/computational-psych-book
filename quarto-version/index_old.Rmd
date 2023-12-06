@@ -1,0 +1,43 @@
+--- 
+title: "Introduction to Computational Psychology"
+author: "Alan Jern"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+url: https://alanjern.github.io/computational-psych-book/
+cover-image: images/cover/marble_notext.jpg
+description: |
+  An introduction to computational cognitive science with a focus on 
+  probabilistic modeling. Code and exercises in Python.
+link-citations: yes
+---
+
+# Welcome {-}
+
+<img src="images/cover/marble_cover.jpg" alt="Introduction to Computational Psychology cover image" width="100%"/>
+
+This is the first version of digital book for my Computational Psychology course -- a cognitive modeling course. It includes homework assignments written in Python.
+
+## Thanks {-}
+
+This book borrows inspiration and content (especially Chapters [2](#bayes) and [7](#pragmatics)) from Fausto Carcassi's [Introduction to Cognitive Modelling in R](https://thelogicalgrammar.github.io/cognitive-modelling-book/index.html) book and I am tremendously grateful to him for sharing his book publicly. Hopefully this resource will be equally helpful to others. 
+
+A number of the modeling examples and homework assignments are adapted from code written by Danielle Navarro from previous iterations of her [Computational Cognitive Science course](https://compcogsci-3016.djnavarro.net/) with Andy Perfors. I am very grateful to both of them for making all of their materials public (and well documented).
+
+Your [feedback](mailto:jern@rose-hulman.edu) is welcome and encouraged.
+
+## License {-}
+
+[![](images/badges/cc-by-nc.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+Anyone is free to reuse and adapt this book for their own non-commercial purposes, with attribution. If you do use this book in any way, [please tell me about it](mailto:jern@rose-hulman.edu). I'd love to know!
+
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
