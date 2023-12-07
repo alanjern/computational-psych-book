@@ -1,0 +1,37 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Introduction to Computational Psychology"
+  description: |
+      An introduction to computational cognitive science with a focus on 
+      probabilistic modeling. Code and exercises in Python.
+  author: "Alan Jern"
+  date: last-modified
+  chapters:
+    - index.qmd
+    - 01-intro.qmd
+    - 02-bayes.qmd
+    - 03-generalization.qmd
+    - 04-categorization.qmd
+    - 05-hierarchical-bayes.qmd
+    - 06-sampling-assumptions.qmd
+    - 07-RSA.qmd
+    - 08-social-cognition.qmd
+    - 09-iterated-learning.qmd
+    - 10-causal-inference.qmd
+  repo-actions: source
+  repo-url: https://github.com/alanjern/computational-psych-book
+  favicon: "images/favicons/favicon-32x32.png"
+  twitter-card: 
+    image: "images/cover/marble_notext.jpg"
+
+format:
+  html:
+    theme: pulse
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

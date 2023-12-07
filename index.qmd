@@ -1,0 +1,17 @@
+# Welcome {.unnumbered}
+
+<img src="images/cover/marble_cover.jpg" alt="Introduction to Computational Psychology cover image" width="100%"/>
+
+## Thanks {.unnumbered}
+
+This book borrows inspiration and content (especially Chapters [2](#bayes) and [7](#pragmatics)) from Fausto Carcassi's [Introduction to Cognitive Modelling in R](https://thelogicalgrammar.github.io/cognitive-modelling-book/index.html) book and I am tremendously grateful to him for sharing his book publicly. Hopefully this resource will be equally helpful to others.
+
+A number of the modeling examples and homework assignments are adapted from code written by Danielle Navarro from previous iterations of her [Computational Cognitive Science course](https://compcogsci-3016.djnavarro.net/) with Andy Perfors. I am very grateful to both of them for making all of their materials public (and well documented).
+
+Your [feedback](mailto:jern@rose-hulman.edu) is welcome and encouraged.
+
+## License {.unnumbered}
+
+[![](images/badges/cc-by-nc.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+Anyone is free to reuse and adapt this book for their own non-commercial purposes, with attribution. If you do use this book in any way, [please tell me about it](mailto:jern@rose-hulman.edu).
