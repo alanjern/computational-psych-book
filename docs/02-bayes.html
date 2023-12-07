@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>bayes</title>
+<title>Introduction to Computational Psychology - 2&nbsp; Bayesian inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +59,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./03-generalization.html" rel="next">
+<link href="./01-intro.html" rel="prev">
+<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -96,24 +101,154 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<meta name="twitter:title" content="Introduction to Computational Psychology - 2&nbsp; Bayesian inference">
+<meta name="twitter:description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
+<meta name="twitter:image" content="images/cover/marble_notext.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-bayes.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Computational Psychology</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/alanjern/computational-psych-book" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="02-bayes.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#basic-probability" id="toc-basic-probability" class="nav-link active" data-scroll-target="#basic-probability"><span class="header-section-number">2.1</span> Basic probability 🎲</a></li>
+  <li><a href="#a-motivating-example-sampling-from-a-bag" id="toc-a-motivating-example-sampling-from-a-bag" class="nav-link" data-scroll-target="#a-motivating-example-sampling-from-a-bag"><span class="header-section-number">2.2</span> A motivating example: Sampling from a bag 👝</a>
+  <ul class="collapse">
+  <li><a href="#sampling-from-the-generative-model" id="toc-sampling-from-the-generative-model" class="nav-link" data-scroll-target="#sampling-from-the-generative-model"><span class="header-section-number">2.2.1</span> Sampling from the generative model</a></li>
+  </ul></li>
+  <li><a href="#bayesian-updating-learning-from-evidence" id="toc-bayesian-updating-learning-from-evidence" class="nav-link" data-scroll-target="#bayesian-updating-learning-from-evidence"><span class="header-section-number">2.3</span> Bayesian updating: Learning from evidence 🤔</a>
+  <ul class="collapse">
+  <li><a href="#applying-bayess-rule-to-the-bag-case" id="toc-applying-bayess-rule-to-the-bag-case" class="nav-link" data-scroll-target="#applying-bayess-rule-to-the-bag-case"><span class="header-section-number">2.3.1</span> Applying Bayes’s rule to the bag case</a></li>
+  <li><a href="#normalization" id="toc-normalization" class="nav-link" data-scroll-target="#normalization"><span class="header-section-number">2.3.2</span> How to avoid calculating P(d)</a></li>
+  </ul></li>
+  <li><a href="#bayes-exercises" id="toc-bayes-exercises" class="nav-link" data-scroll-target="#bayes-exercises"><span class="header-section-number">2.4</span> Exercises 📝</a>
+  <ul class="collapse">
+  <li><a href="#taxi-cabs" id="toc-taxi-cabs" class="nav-link" data-scroll-target="#taxi-cabs"><span class="header-section-number">2.4.1</span> Taxi cabs</a></li>
+  <li><a href="#flipping-coins" id="toc-flipping-coins" class="nav-link" data-scroll-target="#flipping-coins"><span class="header-section-number">2.4.2</span> Flipping coins</a></li>
+  </ul></li>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions"><span class="header-section-number">2.5</span> Solutions</a>
+  <ul class="collapse">
+  <li><a href="#taxi-cabs-1" id="toc-taxi-cabs-1" class="nav-link" data-scroll-target="#taxi-cabs-1"><span class="header-section-number">2.5.1</span> Taxi cabs</a></li>
+  <li><a href="#flipping-coins-1" id="toc-flipping-coins-1" class="nav-link" data-scroll-target="#flipping-coins-1"><span class="header-section-number">2.5.2</span> Flipping coins</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alanjern/computational-psych-book/blob/main/02-bayes.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bayesian inference</h1>
+<h1 class="title"><span id="bayes" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></h1>
 </div>
 
 
@@ -136,8 +271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>In all of these examples, there is more than one hypothesis about what we observed. Probability and Bayesian inference provide the tools for optimally determining how probable these different hypotheses are. One of the claims of this book is that when people are making inferences in situations like these, their inferences are often well predicted by the optimal inferences dictated by probability theory.</p>
-<section id="basic-probability" class="level2">
-<h2 class="anchored" data-anchor-id="basic-probability">Basic probability 🎲</h2>
+<section id="basic-probability" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="basic-probability"><span class="header-section-number">2.1</span> Basic probability 🎲</h2>
 <ul>
 <li>Conditional probability: <span class="math inline">\(P(b|a) = \frac{P(a,b)}{P(a)}\)</span></li>
 <li>Chain rule: <span class="math inline">\(P(a,b) = P(b|a)P(a)\)</span></li>
@@ -145,15 +280,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Bayes’s rule: <span class="math inline">\(P(h|d) = \frac{P(d|h) P(h)}{P(d)} = \frac{P(d|h) P(h)}{\sum_h P(d|h) P(h)}\)</span>. <span class="math inline">\(P(d|h)\)</span> is referred to as the <em>likelihood</em>, <span class="math inline">\(P(h)\)</span> is the <em>prior</em>, and <span class="math inline">\(P(h|d)\)</span> is the <em>posterior</em>.</li>
 </ul>
 </section>
-<section id="a-motivating-example-sampling-from-a-bag" class="level2">
-<h2 class="anchored" data-anchor-id="a-motivating-example-sampling-from-a-bag">A motivating example: Sampling from a bag 👝</h2>
+<section id="a-motivating-example-sampling-from-a-bag" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="a-motivating-example-sampling-from-a-bag"><span class="header-section-number">2.2</span> A motivating example: Sampling from a bag 👝</h2>
 <p>Suppose you have a bag full of black and red balls. You can’t see inside the bag and you don’t know how many black and red balls are inside, but you know that there are nine total balls in the bag.</p>
 <p>You want to know how many black balls and red balls there are. There are a finite number of hypotheses: {0 black balls, 1 black ball, 2 black balls, …, 9 black balls}. Let’s call these hypotheses <span class="math inline">\(B_0\)</span>, <span class="math inline">\(B_1\)</span>, etc., respectively.</p>
 <p>You don’t know which hypothesis is true, but you might have some idea which hypotheses are more likely than others. Therefore, it is natural to represent your uncertainty with a probability distribution over the possible unknown states that the world could be in – in this case, the 10 hypotheses. Each hypothesis gets assigned a probability, and the probabilities sum to 1.</p>
 <p>For simplicity, let’s assume that you <em>don’t</em> have any idea which hypotheses are more likely. In other words, you give every hypothesis the same probability: 1/10 = 0.1. This is also called a uniform distribution over hypotheses. This distribution is your prior.</p>
 <p>Now suppose you put your hand in the bag and pull out a ball at random. The possible observations are: <code>{black, red}</code>, Let’s call them <span class="math inline">\(B\)</span> and <span class="math inline">\(R\)</span>, respectively. The probability of observing each color depends on which hypothesis is true, i.e., how many balls of each color are in the bag. For instance, if <span class="math inline">\(B_0\)</span> is true (there are 0 black balls in the bag), then the probability of observing a red ball is 1 (<span class="math inline">\(P(R|B_0)=1\)</span>), and the probability of observing a black ball is 0 (<span class="math inline">\(P(B|B_0)=0\)</span>). These expressions that tell us how probable our observations are, given a specific hypothesis, are your likelihoods.</p>
-<section id="sampling-from-the-generative-model" class="level3">
-<h3 class="anchored" data-anchor-id="sampling-from-the-generative-model">Sampling from the generative model</h3>
+<section id="sampling-from-the-generative-model" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="sampling-from-the-generative-model"><span class="header-section-number">2.2.1</span> Sampling from the generative model</h3>
 <p>Now we have a distribution over hypotheses (a prior), <span class="math inline">\(P(h)\)</span>, and a distribution over observations given each hypothesis (a likelihood), <span class="math inline">\(P(d|h)\)</span>. These two things allow us to create a <em>generative model</em>, a model for sampling new data.</p>
 <p>How do we sample from the generative model? Note that which hypothesis <span class="math inline">\(h\)</span> is true does not depend on the data, while the data <span class="math inline">\(d\)</span> depends on which hypothesis is true. Therefore, we can sample from the generative model using the following two-step process:</p>
 <ol type="1">
@@ -196,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Text(0, 0.5, 'Number of samples')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-4-output-2.png" width="601" height="422"></p>
+<p><img src="02-bayes_files/figure-html/cell-4-output-2.png" width="602" height="429"></p>
 </div>
 </div>
 <p>Now for the next step. For each sample in <code>prior_samples</code>, we want to sample an observation. To do that, let’s pause for a second and think about the probability of pulling a black ball given that hypothesis <span class="math inline">\(B_3\)</span> is true, for example. This means that there are 3 black balls and 6 red balls in the bag. So the probability of pulling a black ball from the bag at random will be 3/9.</p>
@@ -227,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Text(0, 0.5, 'Number of samples')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-7-output-2.png" width="601" height="404"></p>
+<p><img src="02-bayes_files/figure-html/cell-7-output-2.png" width="602" height="411"></p>
 </div>
 </div>
 <p>You can think of this plot representing our overall beliefs about the number of red and black balls in the bag, averaged over all possible hypotheses.</p>
@@ -235,11 +370,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>How should our beliefs change after we pull a ball out of the bag? That is, how should we respond to evidence?</p>
 </section>
 </section>
-<section id="bayesian-updating-learning-from-evidence" class="level2">
-<h2 class="anchored" data-anchor-id="bayesian-updating-learning-from-evidence">Bayesian updating: Learning from evidence 🤔</h2>
+<section id="bayesian-updating-learning-from-evidence" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="bayesian-updating-learning-from-evidence"><span class="header-section-number">2.3</span> Bayesian updating: Learning from evidence 🤔</h2>
 <p>Let’s apply <a href="#basic-probability">Bayes’s rule</a> to see how to optimally incorporate new data into your beliefs.</p>
-<section id="applying-bayess-rule-to-the-bag-case" class="level3">
-<h3 class="anchored" data-anchor-id="applying-bayess-rule-to-the-bag-case">Applying Bayes’s rule to the bag case</h3>
+<section id="applying-bayess-rule-to-the-bag-case" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="applying-bayess-rule-to-the-bag-case"><span class="header-section-number">2.3.1</span> Applying Bayes’s rule to the bag case</h3>
 <p>Suppose you have a uniform prior distribution over the 10 hypotheses about balls in the bag. Now you pick a ball and it’s black. Given this observation <span class="math inline">\(B\)</span>, how should you change the probabilities you give to each hypothesis?</p>
 <p>Intuitively, you should now give a little bit more probability to those hypotheses that have more black balls than red balls, because those are the hypotheses that make your observations more likely. Moreover, you can safely exclude hypothesis <span class="math inline">\(B_0\)</span>, because your observation would be impossible if <span class="math inline">\(B_0\)</span> were true. Let’s calculate this with Bayes’s rule.</p>
 <p>The prior is the vector <code>h_priors</code> defined above. Given that we have observed <span class="math inline">\(B\)</span>, the likelihood should tell us, for each hypothesis, the probability of <span class="math inline">\(B\)</span> given that hypothesis. For example, for <span class="math inline">\(B_9\)</span>, the likelihood <span class="math inline">\(P(B|B_9) = 1\)</span>. For <span class="math inline">\(B_8\)</span>, <span class="math inline">\(P(B|B_8) = 8/9\)</span>, because 8 of the 9 balls are black.</p>
@@ -323,12 +458,12 @@ P(B9|B) = 0.2</code></pre>
 <pre><code>Text(0, 0.5, 'Hypothesis')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-12-output-2.png" width="585" height="422"></p>
+<p><img src="02-bayes_files/figure-html/cell-12-output-2.png" width="585" height="429"></p>
 </div>
 </div>
 </section>
-<section id="normalization" class="level3">
-<h3 class="anchored" data-anchor-id="normalization">How to avoid calculating P(d)</h3>
+<section id="normalization" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="normalization"><span class="header-section-number">2.3.2</span> How to avoid calculating P(d)</h3>
 <p>In practice, we generally do not need to calculate the <span class="math inline">\(P(d)\)</span> (the denominator in Bayes’s rule) explicitly. I’ll give you the general idea why in this section.</p>
 <p>First, we create a vector of prior probabilities, which has as many components as there are hypotheses. We’ll just reuse <code>h_priors</code>. Note that the probabilities sum to 1, as they should because it’s a probability distribution.</p>
 <div class="cell" data-execution_count="12">
@@ -408,14 +543,14 @@ Note
 </div>
 </section>
 </section>
-<section id="bayes-exercises" class="level2">
-<h2 class="anchored" data-anchor-id="bayes-exercises">Exercises 📝</h2>
-<section id="taxi-cabs" class="level3">
-<h3 class="anchored" data-anchor-id="taxi-cabs">Taxi cabs</h3>
+<section id="bayes-exercises" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="bayes-exercises"><span class="header-section-number">2.4</span> Exercises 📝</h2>
+<section id="taxi-cabs" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="taxi-cabs"><span class="header-section-number">2.4.1</span> Taxi cabs</h3>
 <p>80% of the taxi cabs in Simpletown are green and 20% are yellow. An hit-and-run accident happened at night involving a taxi. A witness claimed that the taxi was yellow. After extensive testing, it is determined that the witness can correctly identify the color of a taxi only 75% of the time under conditions like the ones present during the accident. What is the probability that the taxi was yellow?</p>
 </section>
-<section id="flipping-coins" class="level3">
-<h3 class="anchored" data-anchor-id="flipping-coins">Flipping coins</h3>
+<section id="flipping-coins" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="flipping-coins"><span class="header-section-number">2.4.2</span> Flipping coins</h3>
 <p>You observe a sequence of coin flips and want to determine if the coin is a trick coin (always comes up heads) or a normal coin. Let <span class="math inline">\(P(\text{heads}) = \theta\)</span>. Let <span class="math inline">\(h_1\)</span> be the hypothesis that <span class="math inline">\(\theta = 0.5\)</span> (fair coin). Let <span class="math inline">\(h_2\)</span> be the hypothesis that <span class="math inline">\(\theta = 1\)</span> (trick coin).</p>
 <p>For this problem, we will define something called prior odds, which is the ratio of prior probabilities assigned to two hypotheses: <span class="math inline">\(\frac{P(h_1)}{P(h_2)}\)</span>. Because most coins aren’t trick coins, we assume that <span class="math inline">\(\frac{P(h_1)}{P(h_2)} = 999\)</span>, indicating a very strong (999 to 1) prior probability in favor of fair coins. We can now compute the posterior odds, the ratio of posterior probabilities for the two hypotheses after observing some data <span class="math inline">\(d\)</span>: <span class="math inline">\(\frac{P(h_1|d)}{P(h_2|d)}\)</span>.</p>
 <p>Compute the posterior odds after observing the following sequences of coin flips:</p>
@@ -426,10 +561,10 @@ Note
 </ol>
 </section>
 </section>
-<section id="solutions" class="level2">
-<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
-<section id="taxi-cabs-1" class="level3">
-<h3 class="anchored" data-anchor-id="taxi-cabs-1">Taxi cabs</h3>
+<section id="solutions" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="solutions"><span class="header-section-number">2.5</span> Solutions</h2>
+<section id="taxi-cabs-1" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="taxi-cabs-1"><span class="header-section-number">2.5.1</span> Taxi cabs</h3>
 <p>Let <span class="math inline">\(h_1\)</span> be the hypothesis that the taxi is yellow. Let <span class="math inline">\(h_2\)</span> be the hypothesis that the taxi is green. Let data <span class="math inline">\(d\)</span> be the witness report that the taxi was yellow. Given the problem statement, <span class="math inline">\(P(h_1) = 0.2\)</span> and <span class="math inline">\(P(h_2) = 0.8\)</span>. The witness is only accurate 75% of the time, so <span class="math inline">\(P(d|h1) = 0.75\)</span> (the witness saw a yellow taxi and correctly identified it) and <span class="math inline">\(P(d|h2) = 0.25\)</span> (the witness saw a green taxi but identified it as yellow). Now we apply Bayes’s rule:</p>
 <p><span class="math display">\[\begin{align}
 P(h_1|d) &amp;= \frac{P(d|h_1) P(h_1)}{P(d)} \\
@@ -438,8 +573,8 @@ P(h_1|d) &amp;= \frac{P(d|h_1) P(h_1)}{P(d)} \\
 \end{align}\]</span></p>
 <p>Because yellow cabs are rare (have low prior probability), it is actually more probable that the cab was green, even though the witness is 75% accurate.</p>
 </section>
-<section id="flipping-coins-1" class="level3">
-<h3 class="anchored" data-anchor-id="flipping-coins-1">Flipping coins</h3>
+<section id="flipping-coins-1" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="flipping-coins-1"><span class="header-section-number">2.5.2</span> Flipping coins</h3>
 <section id="hhtht" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="hhtht">HHTHT</h4>
 <p><span class="math display">\[
@@ -708,6 +843,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-generalization.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

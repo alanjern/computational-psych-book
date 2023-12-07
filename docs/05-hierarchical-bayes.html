@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>hierarchical-bayes</title>
+<title>Introduction to Computational Psychology - 5&nbsp; Hierarchical generalization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +59,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./06-sampling-assumptions.html" rel="next">
+<link href="./04-categorization.html" rel="prev">
+<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -96,24 +101,145 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<meta name="twitter:title" content="Introduction to Computational Psychology - 5&nbsp; Hierarchical generalization">
+<meta name="twitter:description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
+<meta name="twitter:image" content="images/cover/marble_notext.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-hierarchical-bayes.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Computational Psychology</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/alanjern/computational-psych-book" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="05-hierarchical-bayes.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#beta-binomial" id="toc-beta-binomial" class="nav-link active" data-scroll-target="#beta-binomial"><span class="header-section-number">5.1</span> The Beta-Binomial model 🪙</a>
+  <ul class="collapse">
+  <li><a href="#conjugate-distributions" id="toc-conjugate-distributions" class="nav-link" data-scroll-target="#conjugate-distributions"><span class="header-section-number">5.1.1</span> Conjugate distributions</a></li>
+  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">5.1.2</span> Parameter estimation</a></li>
+  <li><a href="#hypothesis-averaging" id="toc-hypothesis-averaging" class="nav-link" data-scroll-target="#hypothesis-averaging"><span class="header-section-number">5.1.3</span> Hypothesis averaging</a></li>
+  </ul></li>
+  <li><a href="#overhypotheses" id="toc-overhypotheses" class="nav-link" data-scroll-target="#overhypotheses"><span class="header-section-number">5.2</span> Overhypotheses 🙆</a>
+  <ul class="collapse">
+  <li><a href="#the-shape-bias" id="toc-the-shape-bias" class="nav-link" data-scroll-target="#the-shape-bias"><span class="header-section-number">5.2.1</span> The shape bias</a></li>
+  <li><a href="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" id="toc-modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="nav-link" data-scroll-target="#modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><span class="header-section-number">5.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alanjern/computational-psych-book/blob/main/05-hierarchical-bayes.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Hierarchical generalization</h1>
+<h1 class="title"><span id="hierarchical-generalization" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></h1>
 </div>
 
 
@@ -128,9 +254,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In <a href="#bayes">previous examples</a>, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval [0,1].</p>
-<section id="beta-binomial" class="level2">
-<h2 class="anchored" data-anchor-id="beta-binomial">The Beta-Binomial model 🪙</h2>
+<p>In <a href="02-bayes.html">previous examples</a>, there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval [0,1].</p>
+<section id="beta-binomial" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="beta-binomial"><span class="header-section-number">5.1</span> The Beta-Binomial model 🪙</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/05/coin-in-hand.jpg" class="img-fluid figure-img" style="width:75.0%"></p>
@@ -174,28 +300,28 @@ P(\theta) = \text{Beta}(\theta;\alpha,\beta)
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-3-output-1.png" width="590" height="418"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-3-output-1.png" width="590" height="425"></p>
 </div>
 </div>
 <p>When <span class="math inline">\(\alpha = \beta = 1\)</span>, the Beta distribution is identical to a Uniform(<span class="math inline">\([0,1]\)</span>) distribution.</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">3</span>,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-4-output-1.png" width="579" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-4-output-1.png" width="579" height="411"></p>
 </div>
 </div>
 <p>When <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are greater than 1 and equal, we get a distribution with a peak around 0.5. If we had strong prior expectations that the coin was unbiased, we could increase the parameters even more:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">50</span>,<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-5-output-1.png" width="558" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-5-output-1.png" width="558" height="411"></p>
 </div>
 </div>
 <p>What about when <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are not equal?</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">4</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-6-output-1.png" width="571" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-6-output-1.png" width="571" height="411"></p>
 </div>
 </div>
 <p>This allows us to capture skewed priors, perhaps capturing a belief that the coin has a specific bias.</p>
@@ -203,33 +329,33 @@ P(\theta) = \text{Beta}(\theta;\alpha,\beta)
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="fl">0.5</span>,<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-7-output-1.png" width="558" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-7-output-1.png" width="558" height="411"></p>
 </div>
 </div>
 <p>This might capture the belief that the coin is strongly biased, but we aren’t sure in which direction.</p>
-<section id="conjugate-distributions" class="level3">
-<h3 class="anchored" data-anchor-id="conjugate-distributions">Conjugate distributions</h3>
+<section id="conjugate-distributions" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="conjugate-distributions"><span class="header-section-number">5.1.1</span> Conjugate distributions</h3>
 <p>The Beta distribution is the <em>conjugate distribution</em> for the Binomial distribution. This means that when the likelihood is a Binomial distribution and the prior is a Beta distribution, then the posterior is also a Beta distribution. Specifically, after making these assumptions,</p>
 <p><span class="math display">\[
 P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 \]</span></p>
 <p>The parameters of the posterior distribution are (1) the sum of <span class="math inline">\(\alpha\)</span> from the prior and the number of observed heads and (2) the sum of <span class="math inline">\(\beta\)</span> from the prior and the number of observed tails. This means that the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of the Beta prior have a natural interpretation as “virtual flips”. For example, the larger <span class="math inline">\(\alpha\)</span> is compared to <span class="math inline">\(\beta\)</span>, the more biased toward heads we expect <span class="math inline">\(\theta\)</span> to be. Additionally, the larger <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are, the more certain (less diffuse) the prior is.</p>
 </section>
-<section id="parameter-estimation" class="level3">
-<h3 class="anchored" data-anchor-id="parameter-estimation">Parameter estimation</h3>
+<section id="parameter-estimation" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">5.1.2</span> Parameter estimation</h3>
 <p>Because we used a conjugate distribution, we can use our same <code>plot_beta</code> function to generate posterior probability distributions after some coin flips.</p>
 <p>Suppose we start with a fairly strong belief that a coin is fair, represented by this distribution:</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span>,<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-8-output-1.png" width="558" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-8-output-1.png" width="558" height="411"></p>
 </div>
 </div>
 <p>Now, suppose you flip a coin 20 times and it comes up heads every time. What should you think about the bias of the coin now? According to our model:</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-9-output-1.png" width="558" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-9-output-1.png" width="558" height="411"></p>
 </div>
 </div>
 <p>As you can see, this should cause you to shift your beliefs somewhat.</p>
@@ -237,14 +363,14 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span>,<span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-10-output-1.png" width="566" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-10-output-1.png" width="566" height="411"></p>
 </div>
 </div>
 <p>What happens if we <em>now</em> flipped this coin 20 times and it came up heads every time?</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-11-output-1.png" width="566" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-11-output-1.png" width="566" height="411"></p>
 </div>
 </div>
 <p>You might be mildly surprised, but those 20 flips wouldn’t be enough to budge your estimate about the bias of the coin by much.</p>
@@ -252,33 +378,33 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-12-output-1.png" width="558" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-12-output-1.png" width="558" height="411"></p>
 </div>
 </div>
 <p>Now you flip the coin 100 times and it comes up heads 48 times. What should your updated beliefs be?</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span><span class="op">+</span><span class="dv">48</span>,<span class="dv">1</span><span class="op">+</span><span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-13-output-1.png" width="558" height="404"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-13-output-1.png" width="558" height="411"></p>
 </div>
 </div>
 <p>As you can see, the posterior distribution shows that you should think this coin is probably fair now. This illustrates how sufficient evidence can override prior beliefs.</p>
 </section>
-<section id="hypothesis-averaging" class="level3">
-<h3 class="anchored" data-anchor-id="hypothesis-averaging">Hypothesis averaging</h3>
-<p><a href="#generalizing">In Chapter 3</a>, we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.</p>
+<section id="hypothesis-averaging" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="hypothesis-averaging"><span class="header-section-number">5.1.3</span> Hypothesis averaging</h3>
+<p><a href="03-generalization.html#generalizing">In Chapter 3</a>, we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.</p>
 <p>Suppose we want to know the probability of the next flip coming up heads. In other words, we want to know <span class="math inline">\(P(\text{heads}|D)\)</span>. We can do that by averaging over all possible values of <span class="math inline">\(\theta\)</span>:</p>
 <p><span class="math display">\[
 P(\text{heads}|D) = \int_\theta P(\text{heads}|\theta) \cdot P(\theta|D) d\theta = \int_\theta \theta \cdot P(\theta|D) d\theta
 \]</span></p>
 </section>
 </section>
-<section id="overhypotheses" class="level2">
-<h2 class="anchored" data-anchor-id="overhypotheses">Overhypotheses 🙆</h2>
+<section id="overhypotheses" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="overhypotheses"><span class="header-section-number">5.2</span> Overhypotheses 🙆</h2>
 <p>Now consider a slightly different situation. You flip 19 different coins in a row, each one time, and they all come up heads. Now you pick up a 20th coin from the same bag as the previous 19 coins. What do you think is the probability of that 20th coin coming up heads? Is it higher than 0.5?</p>
 <p>If you answered yes, it’s probably because you formed an <em>overhypothesis</em> about the bias of the coins. After flipping all those coins, you may have concluded that this particular set of coins is more likely than usual to be biased. As a result, your estimate about the probability of the 20th coin coming up heads was higher than it otherwise would be.</p>
-<section id="the-shape-bias" class="level3">
-<h3 class="anchored" data-anchor-id="the-shape-bias">The shape bias</h3>
+<section id="the-shape-bias" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-shape-bias"><span class="header-section-number">5.2.1</span> The shape bias</h3>
 <p>This coins example is pretty artificial, but the notion of overhypotheses is one that you find in language learning. A phenomenon known as <a href="https://doi.org/10.1016/0885-2014(88)90014-7">the shape bias</a> refers to the fact that even young children are more likely to generalize a new word based on its shape rather than other properties like color or texture.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -288,8 +414,8 @@ P(\text{heads}|D) = \int_\theta P(\text{heads}|\theta) \cdot P(\theta|D) d\theta
 </div>
 <p>This makes sense because objects tend to have common shapes and are less likely to have common colors or textures.</p>
 </section>
-<section id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="level3">
-<h3 class="anchored" data-anchor-id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning">Modeling the learning of overhypotheses through hierarchical Bayesian learning</h3>
+<section id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning"><span class="header-section-number">5.2.2</span> Modeling the learning of overhypotheses through hierarchical Bayesian learning</h3>
 <p>Charles Kemp, Andy Perfors, and Josh Tenenbaum developed <a href="http://www.charleskemp.com/papers/KempPTDevSci.pdf">a model</a> of this kind of learning. They focused on bags of black and white marbles rather than flipping coins. They imagine a problem in which you have many bags of marbles that you draw from. After drawing from many bags, you draw a single marble from a new bag and make a prediction about the proportion of black and white marbles in that bag.</p>
 <p>The details of the model are outside the scope of this book. But the basic idea is that the model learns at two levels simultaneously. At the higher level, the model learns the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> of a Beta distribution that characterizes the proportion of black and white marbles in each bag. As we saw above, a Beta distribution can have a peak around a particular proportion, or it can be peaked around both 0 and 1, meaning that each bag is likely to be nearly all black or all white.</p>
 <p>At the lower level, the model learns the specific distribution of marbles within a bag. If you draw 20 marbles and 5 of them are black, you may have some uncertainty about the overall proportion in the bag, but your best estimate will be around 5/20 or 1/4.</p>
@@ -534,6 +660,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04-categorization.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./06-sampling-assumptions.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

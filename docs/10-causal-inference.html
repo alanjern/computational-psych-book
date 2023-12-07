@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>causal-inference</title>
+<title>Introduction to Computational Psychology - 10&nbsp; Causal inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +59,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./09-iterated-learning.html" rel="prev">
+<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -96,24 +100,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<meta name="twitter:title" content="Introduction to Computational Psychology - 10&nbsp; Causal inference">
+<meta name="twitter:description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
+<meta name="twitter:image" content="images/cover/marble_notext.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-causal-inference.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Computational Psychology</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/alanjern/computational-psych-book" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="10-causal-inference.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bayes-nets" id="toc-bayes-nets" class="nav-link active" data-scroll-target="#bayes-nets"><span class="header-section-number">10.1</span> Bayes nets ➡️</a></li>
+  <li><a href="#causal-intervention" id="toc-causal-intervention" class="nav-link" data-scroll-target="#causal-intervention"><span class="header-section-number">10.2</span> Causal intervention 🪚</a>
+  <ul class="collapse">
+  <li><a href="#graph-surgery" id="toc-graph-surgery" class="nav-link" data-scroll-target="#graph-surgery"><span class="header-section-number">10.2.1</span> Graph surgery</a></li>
+  <li><a href="#do-people-intuitively-understand-the-logic-of-casual-intervention" id="toc-do-people-intuitively-understand-the-logic-of-casual-intervention" class="nav-link" data-scroll-target="#do-people-intuitively-understand-the-logic-of-casual-intervention"><span class="header-section-number">10.2.2</span> Do people intuitively understand the logic of casual intervention?</a></li>
+  </ul></li>
+  <li><a href="#structure-strength" id="toc-structure-strength" class="nav-link" data-scroll-target="#structure-strength"><span class="header-section-number">10.3</span> Causal structure and strength 🏗💪</a>
+  <ul class="collapse">
+  <li><a href="#the-causal-support-model" id="toc-the-causal-support-model" class="nav-link" data-scroll-target="#the-causal-support-model"><span class="header-section-number">10.3.1</span> The causal support model</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alanjern/computational-psych-book/blob/main/10-causal-inference.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Causal inference</h1>
+<h1 class="title"><span id="causal-inference" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></h1>
 </div>
 
 
@@ -138,10 +262,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Which of these weird relationships are <em>causal</em> relationships and how can we tell? (Does cutting back on margarine reduce your chances of divorce? Probably not.)</p>
 <p>Causal inference is, in fact, a major area of research in statistics and machine learning. But we’ll just focus on the question of how people decide what causes what.</p>
 <p>We’ll use a computational framework for making optimal probabilistic causal judgments called Bayesian networks, or <strong>Bayes nets</strong> for short. Comparing people’s judgments to Bayes net predictions allows us to see how optimal (or not) people are. Additionally, as we’ll see, Bayes nets are well suited for <em>intervention</em>, which is one way that people learn about causes.</p>
-<section id="bayes-nets" class="level2">
-<h2 class="anchored" data-anchor-id="bayes-nets">Bayes nets ➡️</h2>
+<section id="bayes-nets" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="bayes-nets"><span class="header-section-number">10.1</span> Bayes nets ➡️</h2>
 <p>A Bayes net is a graph that describes the dependencies between all the variables in a situation.</p>
-<p>For example, let’s make a Bayes net for the problem in Chapter 5 of <a href="#beta-binomial">inferring the bias of a coin</a>. In that problem, there were three key variables: the bias <span class="math inline">\(\theta\)</span>, the total number of flips <span class="math inline">\(n\)</span>, and the number of heads <span class="math inline">\(k\)</span>. We can represent this as a Bayes net.</p>
+<p>For example, let’s make a Bayes net for the problem in Chapter 5 of <a href="05-hierarchical-bayes.html#beta-binomial">inferring the bias of a coin</a>. In that problem, there were three key variables: the bias <span class="math inline">\(\theta\)</span>, the total number of flips <span class="math inline">\(n\)</span>, and the number of heads <span class="math inline">\(k\)</span>. We can represent this as a Bayes net.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/10/beta_binomial_bayesnet1.png" class="img-fluid figure-img"></p>
@@ -156,15 +280,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption class="figure-caption">Bayes net representation of the biased coin generalization problem.</figcaption>
 </figure>
 </div>
-<p>A complete Bayes net also specifies a probability distribution for each variable. In the example above, <span class="math inline">\(k\)</span> is a function of <span class="math inline">\(\theta\)</span> and <span class="math inline">\(n\)</span>. As we learned in <a href="#beta-binomial">Chapter 5</a>, this is a Binomial distribution. We also need to specify a prior probability over any unknown variables, like <span class="math inline">\(\theta\)</span>. Previously we assumed it was distributed according to a Beta distribution. <span class="math inline">\(x\)</span> is just a single coin flip – it’s a special case of a Binomial distribution called a Bernoulli distribution in which <span class="math inline">\(n = 1\)</span>. To sum up:</p>
+<p>A complete Bayes net also specifies a probability distribution for each variable. In the example above, <span class="math inline">\(k\)</span> is a function of <span class="math inline">\(\theta\)</span> and <span class="math inline">\(n\)</span>. As we learned in <a href="05-hierarchical-bayes.html#beta-binomial">Chapter 5</a>, this is a Binomial distribution. We also need to specify a prior probability over any unknown variables, like <span class="math inline">\(\theta\)</span>. Previously we assumed it was distributed according to a Beta distribution. <span class="math inline">\(x\)</span> is just a single coin flip – it’s a special case of a Binomial distribution called a Bernoulli distribution in which <span class="math inline">\(n = 1\)</span>. To sum up:</p>
 <ul>
 <li><span class="math inline">\(\theta \sim \text{Beta}(\alpha, \beta)\)</span></li>
 <li><span class="math inline">\(k \sim \text{Binomial}(n,\theta)\)</span></li>
 <li><span class="math inline">\(x \sim \text{Binomial}(n=1, \theta)\)</span></li>
 </ul>
 </section>
-<section id="causal-intervention" class="level2">
-<h2 class="anchored" data-anchor-id="causal-intervention">Causal intervention 🪚</h2>
+<section id="causal-intervention" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="causal-intervention"><span class="header-section-number">10.2</span> Causal intervention 🪚</h2>
 <p>Consider the following two Bayes nets.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -221,7 +345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="10-causal-inference_files/figure-html/cell-3-output-1.png" width="587" height="442"></p>
+<p><img src="10-causal-inference_files/figure-html/cell-3-output-1.png" width="587" height="449"></p>
 </div>
 </div>
 <p>Clearly, the data isn’t identical in the two cases, but data generated by both Bayes nets results in a strong positive correlation between <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span>.</p>
@@ -232,8 +356,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>If you increase the sonin levels 📈 and the xanthan levels also increase 📈, then the causal structure must be a chain.</li>
 <li>If you increase the sonin levels 📈 and the xanthan levels don’t change ❌, then the causal structure can’t be a chain (and therefore must be a common cause, because that’s the only other option we’re considering).</li>
 </ul>
-<section id="graph-surgery" class="level3">
-<h3 class="anchored" data-anchor-id="graph-surgery">Graph surgery</h3>
+<section id="graph-surgery" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="graph-surgery"><span class="header-section-number">10.2.1</span> Graph surgery</h3>
 <p>This intuition can be illustrated visually on the Bayes nets by performing “surgery” on the graphs. It works like this:</p>
 <ol type="1">
 <li>Remove all incoming connections to the variable you’re intervening on.</li>
@@ -248,8 +372,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>After intervening on sonin levels (<span class="math inline">\(s\)</span>), we remove the connection to <span class="math inline">\(s\)</span> in the common cause network, but no connections in the chain network. The resulting Bayes nets show why we should expect to see a resulting change in xanthan for the chain, but not the common cause.</p>
 </section>
-<section id="do-people-intuitively-understand-the-logic-of-casual-intervention" class="level3">
-<h3 class="anchored" data-anchor-id="do-people-intuitively-understand-the-logic-of-casual-intervention">Do people intuitively understand the logic of casual intervention?</h3>
+<section id="do-people-intuitively-understand-the-logic-of-casual-intervention" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="do-people-intuitively-understand-the-logic-of-casual-intervention"><span class="header-section-number">10.2.2</span> Do people intuitively understand the logic of casual intervention?</h3>
 <p><a href="https://psycnet.apa.org/doi/10.1037/0278-7393.31.2.216">A study by Michael Waldmann and York Hagmayer</a> presented people with either the common cause or the chain structure. They were told that sonin and xanthan were hormone levels in chimps and they got some example data that allowed them to learn that the hormone levels were positively correlated.</p>
 <p>Then they were either assigned to a <em>doing</em> or <em>seeing</em> condition. People in the doing condition were asked to imagine that 20 chimps had their sonin levels raised (or lowered). They then predicted how many of the chimps would have elevated xanthan levels. People in the seeing condition got essentially the same information but just learned that the chimps’ sonin levels were high (not that it had been intentionally raised).</p>
 <p>Average results and model predictions are below.</p>
@@ -263,8 +387,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the chain case, the predictions are the same for seeing or doing, because intervening doesn’t change anything about the relationship between sonin and xanthan. People’s judgments indicate that they understood this.</p>
 </section>
 </section>
-<section id="structure-strength" class="level2">
-<h2 class="anchored" data-anchor-id="structure-strength">Causal structure and strength 🏗💪</h2>
+<section id="structure-strength" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="structure-strength"><span class="header-section-number">10.3</span> Causal structure and strength 🏗💪</h2>
 <p>Bayes nets can also account for how people judge the strength of evidence for a causal relationship after seeing some data. This was the idea that Tom Griffiths and Josh Tenenbaum explored in <a href="https://cocosci.princeton.edu/tom/papers/causal4.pdf">a 2005 computational study</a>.</p>
 <p>Here’s the basic problem they considered. Suppose researchers perform an experiment with rats to test whether a drug causes a gene to be expressed. A control group of rats doesn’t get the injection and the experimental group does. They record the number of rats in each group that express the gene.</p>
 <p>Here are some possible results from an experiment with 8 rats in each group. The table shows how many rats in each group expressed the gene.</p>
@@ -303,8 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Focusing just on the cases in the table, on average, people judged that the drug was less likely to have a causal effect on the gene as the total number of rats expressing the gene decreased, even when the difference in number of rats expressing the gene between conditions was held constant.</p>
-<section id="the-causal-support-model" class="level3">
-<h3 class="anchored" data-anchor-id="the-causal-support-model">The causal support model</h3>
+<section id="the-causal-support-model" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="the-causal-support-model"><span class="header-section-number">10.3.1</span> The causal support model</h3>
 <p>Maybe people reason about these problems by performing a kind of model selection between the two Bayes nets below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -370,7 +494,7 @@ P(D | w_0, w_1, \text{Graph } 1) = \prod_{e,c} P(e|b^+,c; w_o, w_1)^{N(e,c)}
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Causal support doesn’t actually depend directly on the parameters <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span>. The reason is that we ultimately don’t care what the values of these parameters are because we just want to draw an inference at a higher level about the best-fitting Bayes net.</p>
-<p>Mathematically speaking, <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span> are averaged out of the model, an idea we first saw in <a href="#generalizing">Chapter 3</a>. We can accomplish this using Monte Carlo approximation, introduced in <a href="#monte-carlo">Chapter 8</a>.</p>
+<p>Mathematically speaking, <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span> are averaged out of the model, an idea we first saw in <a href="03-generalization.html#generalizing">Chapter 3</a>. We can accomplish this using Monte Carlo approximation, introduced in <a href="08-social-cognition.html#monte-carlo">Chapter 8</a>.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> estimate_likelihood(graph_number, data): </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns an estimate of the probability of observing the data</span></span>
@@ -434,7 +558,7 @@ P(D | w_0, w_1, \text{Graph } 1) = \prod_{e,c} P(e|b^+,c; w_o, w_1)^{N(e,c)}
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="10-causal-inference_files/figure-html/cell-7-output-1.png" width="589" height="422"></p>
+<p><img src="10-causal-inference_files/figure-html/cell-7-output-1.png" width="589" height="429"></p>
 </div>
 </div>
 <p>The labels on the x-axis indicate the control condition counts, followed by the experimental condition counts.</p>
@@ -679,6 +803,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-iterated-learning.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

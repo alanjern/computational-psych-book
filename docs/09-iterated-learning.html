@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>iterated-learning</title>
+<title>Introduction to Computational Psychology - 9&nbsp; Iterated learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,11 +25,15 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./10-causal-inference.html" rel="next">
+<link href="./08-social-cognition.html" rel="prev">
+<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -62,30 +67,167 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<meta name="twitter:title" content="Introduction to Computational Psychology - 9&nbsp; Iterated learning">
+<meta name="twitter:description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
+<meta name="twitter:image" content="images/cover/marble_notext.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-iterated-learning.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Computational Psychology</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/alanjern/computational-psych-book" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="09-iterated-learning.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#markov-chains" id="toc-markov-chains" class="nav-link active" data-scroll-target="#markov-chains"><span class="header-section-number">9.1</span> Markov chains 🔗</a>
+  <ul class="collapse">
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">9.1.1</span> Examples</a></li>
+  <li><a href="#stationary-distributions" id="toc-stationary-distributions" class="nav-link" data-scroll-target="#stationary-distributions"><span class="header-section-number">9.1.2</span> Stationary distributions</a></li>
+  </ul></li>
+  <li><a href="#hmms" id="toc-hmms" class="nav-link" data-scroll-target="#hmms"><span class="header-section-number">9.2</span> Hidden Markov models 🙈</a>
+  <ul class="collapse">
+  <li><a href="#formal-definition" id="toc-formal-definition" class="nav-link" data-scroll-target="#formal-definition"><span class="header-section-number">9.2.1</span> Formal definition</a></li>
+  <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference"><span class="header-section-number">9.2.2</span> Inference</a></li>
+  </ul></li>
+  <li><a href="#cultural-transmission" id="toc-cultural-transmission" class="nav-link" data-scroll-target="#cultural-transmission"><span class="header-section-number">9.3</span> Cultural transmission 🗣</a>
+  <ul class="collapse">
+  <li><a href="#using-iterated-learning-to-identify-peoples-priors" id="toc-using-iterated-learning-to-identify-peoples-priors" class="nav-link" data-scroll-target="#using-iterated-learning-to-identify-peoples-priors"><span class="header-section-number">9.3.1</span> Using iterated learning to identify people’s priors</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alanjern/computational-psych-book/blob/main/09-iterated-learning.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="iterated-learning" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></h1>
+</div>
 
 
-<section id="iterated-learning" class="level1">
-<h1>Iterated learning</h1>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
 <p>If someone told you they defecated their water before drinking it, you probably wouldn’t be too impressed. Unless you lived in the 1600s, when “defecate” <a href="https://www.mentalfloss.com/article/54770/15-words-dont-mean-what-they-used">meant “to purify something”</a>.</p>
 <p>Language changes. Words change. Concepts change. Is there any way to predict the conceptual drift that is always happening in our culture?</p>
 <p>Yeah, maybe, kinda! But first, some math.</p>
-<section id="markov-chains" class="level2">
-<h2 class="anchored" data-anchor-id="markov-chains">Markov chains 🔗</h2>
+<section id="markov-chains" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="markov-chains"><span class="header-section-number">9.1</span> Markov chains 🔗</h2>
 <p>Words and concepts change over <em>time</em>. <strong>Markov chains</strong> provide a useful modeling framework for time-dependent data.</p>
 <p>As the name suggests, a Markov chain is a chain, specifically of states. At each time step, it moves to a new state. A Markov chain meets the following conditions:</p>
 <ol type="1">
@@ -94,12 +236,12 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>For example, consider the game Telephone, where one person whispers a word to the next person, they whisper what they hear to the next person, and so on. The set of possible words are the states (finite but admittedly large).</p>
 <p>The word that Person <span class="math inline">\(n+1\)</span> hears clearly only depends on the word that Person <span class="math inline">\(n\)</span> whispered. But there might be some miscommunication: the probability that Person <span class="math inline">\(n+1\)</span> accurately hears the word is probably less than 1, with similar-sounding words getting higher probability than dissimilar words.</p>
-<section id="examples" class="level3">
-<h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<section id="examples" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">9.1.1</span> Examples</h3>
 <p>Consider a very simple chain of colors that are either red or blue. Here, the state space <span class="math inline">\(S = \{ \text{red, blue} \}\)</span>. To specify this Markov chain, we need to define the <em>transition probabilities</em>: the probabilities of moving from each state to every other state.</p>
 <p>Let <span class="math inline">\(t_{ij}\)</span> be the probability of transitioning from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span>. For example, if <span class="math inline">\(t_{RB} = 0.3\)</span> then the probability of transitioning from the red state to the blue state is 0.3. We can then write the transition probabilities in a matrix.</p>
-<section id="markov-exmaple1" class="level4">
-<h4 class="anchored" data-anchor-id="markov-exmaple1">Example 1</h4>
+<section id="markov-exmaple1" class="level4" data-number="9.1.1.1">
+<h4 data-number="9.1.1.1" class="anchored" data-anchor-id="markov-exmaple1"><span class="header-section-number">9.1.1.1</span> Example 1</h4>
 <p>Here’s our transition probability matrix.</p>
 <table class="table">
 <thead>
@@ -125,8 +267,8 @@ ul.task-list li input[type="checkbox"] {
 <p>In this example, <span class="math inline">\(t_{RB} = t_{BR} = 1\)</span>. This means that the chain will deterministically alternate between red and blue. Note that the rows of the transition matrix must sum to 1 because they represent all the possible states that the chain might transition to given a current state. Although the columns also sum to 1 in this example, this is not a requirement.</p>
 <p><em>Example sequence</em>: <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> …</p>
 </section>
-<section id="markov-example2" class="level4">
-<h4 class="anchored" data-anchor-id="markov-example2">Example 2</h4>
+<section id="markov-example2" class="level4" data-number="9.1.1.2">
+<h4 data-number="9.1.1.2" class="anchored" data-anchor-id="markov-example2"><span class="header-section-number">9.1.1.2</span> Example 2</h4>
 <table class="table">
 <thead>
 <tr class="header">
@@ -151,8 +293,8 @@ ul.task-list li input[type="checkbox"] {
 <p>In this example, we’d expect to the sequence to flip back and forth between red and blue, but not deterministically. At every step, the sequence is more likely to flip than to stay in the current color.</p>
 <p><em>Example sequence</em>: <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> …</p>
 </section>
-<section id="markov-example3" class="level4">
-<h4 class="anchored" data-anchor-id="markov-example3">Example 3</h4>
+<section id="markov-example3" class="level4" data-number="9.1.1.3">
+<h4 data-number="9.1.1.3" class="anchored" data-anchor-id="markov-example3"><span class="header-section-number">9.1.1.3</span> Example 3</h4>
 <table class="table">
 <thead>
 <tr class="header">
@@ -178,8 +320,8 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Example sequence</em>: <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: blue;">B</span> <span style="color: blue;">B</span> <span style="color: red;">R</span> <span style="color: red;">R</span> <span style="color: red;">R</span> …</p>
 </section>
 </section>
-<section id="stationary-distributions" class="level3">
-<h3 class="anchored" data-anchor-id="stationary-distributions">Stationary distributions</h3>
+<section id="stationary-distributions" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="stationary-distributions"><span class="header-section-number">9.1.2</span> Stationary distributions</h3>
 <p>A common question for a given Markov chain is what is its so-called <em>stationary distribution</em>, the proportion of time the chain will spend in each state if it runs for a very long time. For Markov chains a small number of states, computing the stationary distribution is easy to do with some algebra. Consider the following example.</p>
 <p>Let’s define a transition matrix for Markov chain with two states, <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>:</p>
 <p><span class="math display">\[
@@ -217,12 +359,12 @@ t_{21} + t_{22} = 1
 <p>In <a href="#markov-example1">Example 1</a>, unsurprisingly, <span class="math inline">\(\theta_R = \theta_B = 0.5\)</span>. Because the sequence alternates, it will be red half the time and blue half the time. In <a href="#markov-example2">Example 2</a>, again <span class="math inline">\(\theta_R = \theta_B = 0.5\)</span>. Even though the alternating is not deterministic, no matter what state the sequence is in, there is an equal probability that it will switch to the other state. In <a href="#markov-example3">Example 3</a>, <span class="math inline">\(\theta_R = 0.75\)</span> and <span class="math inline">\(\theta_B = 0.25\)</span>.</p>
 </section>
 </section>
-<section id="hmms" class="level2">
-<h2 class="anchored" data-anchor-id="hmms">Hidden Markov models 🙈</h2>
+<section id="hmms" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="hmms"><span class="header-section-number">9.2</span> Hidden Markov models 🙈</h2>
 <p>Now let’s consider a more complicated situation in which each step in a Markov chain generates an observation. A learner gets to see the observations, but not the states themselves. In this situation, we say that the states are “hidden”, hence the name <strong>hidden Markov model</strong>.</p>
 <p>Hidden Markov models are sometimes used to model language production, where the hidden states are the parts of speech (like noun, verb, adjective, or more complex things like noun phrases, objects, and subjects). What we actually get to observe as readers and listeners, however, are words (like “dog”, “eats”, and “play”). In English, many words are ambiguous and can potentially belong to different parts of speech. “Play”, for example could be a noun (“The actors performed in a play”) or a verb (“The children play in the sand”). We are constantly decoding the language we observe to infer the parts of speech of the words.</p>
-<section id="formal-definition" class="level3">
-<h3 class="anchored" data-anchor-id="formal-definition">Formal definition</h3>
+<section id="formal-definition" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="formal-definition"><span class="header-section-number">9.2.1</span> Formal definition</h3>
 <p>A hidden Markov model includes the following pieces:</p>
 <ol type="1">
 <li>A set of states <span class="math inline">\(S = \{s_1, \ldots, s_N\}\)</span></li>
@@ -240,24 +382,24 @@ t_{21} + t_{22} = 1
 </figure>
 </div>
 </section>
-<section id="inference" class="level3">
-<h3 class="anchored" data-anchor-id="inference">Inference</h3>
+<section id="inference" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="inference"><span class="header-section-number">9.2.2</span> Inference</h3>
 <p>Usually the purpose of using an HMM is to infer <span class="math inline">\(X\)</span> from <span class="math inline">\(Y\)</span>. There is a standard algorithm for doing this called <a href="https://en.wikipedia.org/wiki/Viterbi_algorithm">the Viterbi algorithm</a>, the details of which are beyond the scope of this book.</p>
 <p>There are many existing programming packages available for working with HMMs. On Python package is <a href="https://github.com/hmmlearn/hmmlearn">hmmlearn</a>, which includes a <a href="https://hmmlearn.readthedocs.io/en/stable/api.html#hmmlearn.base.BaseHMM.predict"><code>predict()</code></a> function, which will predict the most probable sequence of hidden states <span class="math inline">\(X\)</span>, given a sequence of observations <span class="math inline">\(Y\)</span> and a fully specified Hidden Markov model. Note that this function will not always be correct. If the model is probabilistic and there are some observations that can be produced in more than one state (for example, the word “play” could be produced by either the noun or verb state), there will be some cases where it is impossible to be certain which state an observation came from.</p>
 </section>
 </section>
-<section id="cultural-transmission" class="level2">
-<h2 class="anchored" data-anchor-id="cultural-transmission">Cultural transmission 🗣</h2>
+<section id="cultural-transmission" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="cultural-transmission"><span class="header-section-number">9.3</span> Cultural transmission 🗣</h2>
 <p>So what does all this have to do with “defecate” changing meaning over time?</p>
 <p>Well you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?</p>
 <p>This is the subject of a line research in computational cognitive science. The basic model combines some assumptions we’ve seen before with some assumptions of hidden Markov models you just learned about in this chapter.</p>
-<p>First, assume that people are trying to learn some concept by seeing an example <span class="math inline">\(x_i\)</span> and getting a label for it <span class="math inline">\(y_i\)</span> and then trying to generalize that label to other instances by forming a hypothesis <span class="math inline">\(h\)</span> about what other things <span class="math inline">\(y_i\)</span> applies to. This is the problem we encountered in the <a href="#generalization">generalization chapter</a>, and we can assume that each person forms their beliefs about <span class="math inline">\(h\)</span> using Bayesian inference.</p>
+<p>First, assume that people are trying to learn some concept by seeing an example <span class="math inline">\(x_i\)</span> and getting a label for it <span class="math inline">\(y_i\)</span> and then trying to generalize that label to other instances by forming a hypothesis <span class="math inline">\(h\)</span> about what other things <span class="math inline">\(y_i\)</span> applies to. This is the problem we encountered in the <a href="03-generalization.html">generalization chapter</a>, and we can assume that each person forms their beliefs about <span class="math inline">\(h\)</span> using Bayesian inference.</p>
 <p>Now let’s add in the communication factor. Each person <span class="math inline">\(n+1\)</span> gets a label <span class="math inline">\(y_n\)</span> from someone else Person <span class="math inline">\(n\)</span>, forms their own hypothesis <span class="math inline">\(h_{n+1}\)</span> then labels a new object <span class="math inline">\(x_{n+1}\)</span> for the next person. This process repeats, creating a Markov chain.</p>
 <p>To simplify this chain, what we end up with is a sequence of states where each state is a hypothesis about the concept.</p>
 <p><em>What will this chain converge to?</em></p>
 <p><strong>It turns out that the stationary distribution of this chain is the prior</strong> <span class="math inline">\(P(h)\)</span>. Because people make mistakes and communication is noisy, over time, the labels <span class="math inline">\(y_n\)</span> become virtually useless and people will converge to their shared prior beliefs.</p>
-<section id="using-iterated-learning-to-identify-peoples-priors" class="level3">
-<h3 class="anchored" data-anchor-id="using-iterated-learning-to-identify-peoples-priors">Using iterated learning to identify people’s priors</h3>
+<section id="using-iterated-learning-to-identify-peoples-priors" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="using-iterated-learning-to-identify-peoples-priors"><span class="header-section-number">9.3.1</span> Using iterated learning to identify people’s priors</h3>
 <p>For this reason, we can use a kind of Telephone game as a way to find out what people’s shared prior beliefs are.</p>
 <p><a href="https://link.springer.com/content/pdf/10.3758/BF03194066.pdf">A study lead by Michael Kalish</a> tested this idea for function learning: learning to predict <span class="math inline">\(y\)</span> values from <span class="math inline">\(x\)</span> values.</p>
 <p>In the task, people were given <span class="math inline">\(x\)</span> values and had to predict the corresponding <span class="math inline">\(y\)</span> values using a slider. They got feedback on 50 training examples. Then they did an additional 25 trials without feedback.</p>
@@ -279,7 +421,6 @@ t_{21} + t_{22} = 1
 <p>The researchers found that, over time, people drifted much closer to equal spaced letters, which was much more legible. Moreover, if they averaged the responses across all chains (DZP<sub>2</sub> in the figure), they found that people’s responses were even better than equal spacing, getting closer to Linotype, recommended by designers.</p>
 
 
-</section>
 </section>
 </section>
 
@@ -517,6 +658,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-social-cognition.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10-causal-inference.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

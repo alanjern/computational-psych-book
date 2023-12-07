@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>rsa</title>
+<title>Introduction to Computational Psychology - 7&nbsp; Language pragmatics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +59,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./08-social-cognition.html" rel="next">
+<link href="./06-sampling-assumptions.html" rel="prev">
+<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -96,24 +101,142 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<meta name="twitter:title" content="Introduction to Computational Psychology - 7&nbsp; Language pragmatics">
+<meta name="twitter:description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
+<meta name="twitter:image" content="images/cover/marble_notext.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-RSA.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Computational Psychology</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/alanjern/computational-psych-book" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="07-RSA.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#surprisal" id="toc-surprisal" class="nav-link active" data-scroll-target="#surprisal"><span class="header-section-number">7.1</span> Surprisal 😯</a></li>
+  <li><a href="#rsa-model" id="toc-rsa-model" class="nav-link" data-scroll-target="#rsa-model"><span class="header-section-number">7.2</span> The Rational Speech Act model 🍪</a></li>
+  <li><a href="#does-this-model-match-human-behavior" id="toc-does-this-model-match-human-behavior" class="nav-link" data-scroll-target="#does-this-model-match-human-behavior"><span class="header-section-number">7.3</span> Does this model match human behavior? 🔵</a>
+  <ul class="collapse">
+  <li><a href="#the-task" id="toc-the-task" class="nav-link" data-scroll-target="#the-task"><span class="header-section-number">7.3.1</span> The task</a></li>
+  <li><a href="#the-model" id="toc-the-model" class="nav-link" data-scroll-target="#the-model"><span class="header-section-number">7.3.2</span> The model</a></li>
+  <li><a href="#homework-4-implement-the-model" id="toc-homework-4-implement-the-model" class="nav-link" data-scroll-target="#homework-4-implement-the-model"><span class="header-section-number">7.3.3</span> Homework 4: Implement the model</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alanjern/computational-psych-book/blob/main/07-RSA.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Language pragmatics</h1>
+<h1 class="title"><span id="pragmatics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></h1>
 </div>
 
 
@@ -135,8 +258,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>Person A didn’t explicitly ask a question, but Person B understood that A wouldn’t have said anything at all if they didn’t need something or weren’t explaining something they were about to do, so B responded with an answer to the implied question (“Where can I get gas?”).</p>
 <p>In this chapter, we’ll see how some aspects of pragmatics can be explained by combining Bayesian inference with two new ideas: <em>information theory</em> and <em>decision theory</em> (or expected utility).</p>
-<section id="surprisal" class="level2">
-<h2 class="anchored" data-anchor-id="surprisal">Surprisal 😯</h2>
+<section id="surprisal" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="surprisal"><span class="header-section-number">7.1</span> Surprisal 😯</h2>
 <p>We’ll focus on one concept from information theory: surprisal. Surprisal captures how unexpected an observation is. Intuitively, the unexpectedness of an observation should depend how probable it is. Namely, the more probable it is, the less unexpected it is.</p>
 <p>We want a function <span class="math inline">\(f(p)\)</span> that takes a probability and gives us its unexpectedness. Here are some reasonable constraints on <span class="math inline">\(f\)</span>:</p>
 <ul>
@@ -167,7 +290,7 @@ f(p) = -log(p)
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"surprisal"</span>)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-2-output-1.png" width="576" height="422"></p>
+<p><img src="07-RSA_files/figure-html/cell-2-output-1.png" width="576" height="429"></p>
 </div>
 </div>
 <p><em>What does surprisal have to do with language?</em></p>
@@ -183,8 +306,8 @@ f(p) = -log(p)
 <p>In formal terms, you’re trying to send a signal such that the number you observed is not surprising for the other person after receiving your signal. That is, you’re trying to minimize the surprisal of <span class="math inline">\(P(2|\text{signal})\)</span>.</p>
 <p><strong>Exercise</strong>: Compute the surprisal of each of these two signals.</p>
 </section>
-<section id="rsa-model" class="level2">
-<h2 class="anchored" data-anchor-id="rsa-model">The Rational Speech Act model 🍪</h2>
+<section id="rsa-model" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="rsa-model"><span class="header-section-number">7.2</span> The Rational Speech Act model 🍪</h2>
 <p>Let’s apply the concept of surprisal to the following example. There were initially two cookies in a cookie jar, you may have eaten some, and you’re telling your friend how many you had. You can say:</p>
 <ol type="1">
 <li>“I had <em>some</em> cookies.” (You ate one or two.)</li>
@@ -223,7 +346,7 @@ f(p) = -log(p)
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the matrix</span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>print_state_matrix(state_matrix, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-4-output-1.png" width="386" height="470"></p>
+<p><img src="07-RSA_files/figure-html/cell-4-output-1.png" width="386" height="469"></p>
 </div>
 </div>
 <p>Now let’s calculate how a literal listener would interpret each of these statements. Each row in the matrix above (one for each signal) will define a distribution over the states. That is, for for state <span class="math inline">\(h\)</span> and signal <span class="math inline">\(d\)</span>, we want to compute:</p>
@@ -246,7 +369,7 @@ P_{\text{listener}}(h|d) \propto P(d|h) P(h)
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>literal_listener <span class="op">=</span> normalize_rows(state_matrix)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>print_state_matrix(literal_listener, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-6-output-1.png" width="386" height="470"></p>
+<p><img src="07-RSA_files/figure-html/cell-6-output-1.png" width="386" height="469"></p>
 </div>
 </div>
 <p>Now let’s calculate the pragmatic speaker. The pragmatic speaker chooses a signal given a state. Therefore, this time, the <em>columns</em> of the matrix will be probability distributions.</p>
@@ -262,11 +385,13 @@ P_{\text{listener}}(h|d) \propto P(d|h) P(h)
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>print_state_matrix(pragmatic_speaker, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>RuntimeWarning: divide by zero encountered in log
-  pragmatic_speaker = np.exp(np.log(literal_listener)*alpha)</code></pre>
+<pre><code>C:\Users\jern\AppData\Local\Temp\ipykernel_22432\3850398469.py:3: RuntimeWarning:
+
+divide by zero encountered in log
+</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-7-output-2.png" width="386" height="470"></p>
+<p><img src="07-RSA_files/figure-html/cell-7-output-2.png" width="386" height="469"></p>
 </div>
 </div>
 <p>In the above code, I used something known as a “softmax” rather than a true maximizing function. The exponential function captures the idea that the speaker will choose probabilistically, generally choosing options with more utility. This is a fairly common assumption in both psychology and economics because we often don’t have complete information when making decisions (or when modeling other people’s decisions), so assuming a pure maximizing function isn’t always the best choice.</p>
@@ -277,24 +402,24 @@ P_{\text{listener}}(h|d) \propto P(d|h) P(h)
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pragmatic_listener <span class="op">=</span> normalize_rows(pragmatic_speaker)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>print_state_matrix(pragmatic_listener, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-8-output-1.png" width="386" height="470"></p>
+<p><img src="07-RSA_files/figure-html/cell-8-output-1.png" width="386" height="469"></p>
 </div>
 </div>
 <p>The pragmatic listener correctly infers a <a href="https://en.wikipedia.org/wiki/Scalar_implicature">scalar implicature</a>, a concept from pragmatics in linguistics. Even though “I had some cookies” is consistent with eating all of the cookies, a pragmatic listener will infer that if a person says they ate <em>some</em> then they did not eat <em>all</em> (otherwise they would have said so).</p>
 </section>
-<section id="does-this-model-match-human-behavior" class="level2">
-<h2 class="anchored" data-anchor-id="does-this-model-match-human-behavior">Does this model match human behavior? 🔵</h2>
+<section id="does-this-model-match-human-behavior" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="does-this-model-match-human-behavior"><span class="header-section-number">7.3</span> Does this model match human behavior? 🔵</h2>
 <p>In a word, yes. One of the <a href="http://langcog.stanford.edu/papers_new/frank-2012-science.pdf">first papers</a> to look at this was by Michael Frank and Noah Goodman. They applied this model to the simple task of picking out a shape from a small set and tested the model’s predictions in a behavioral experiment.</p>
-<section id="the-task" class="level3">
-<h3 class="anchored" data-anchor-id="the-task">The task</h3>
+<section id="the-task" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="the-task"><span class="header-section-number">7.3.1</span> The task</h3>
 <ul>
 <li><strong>The speaker</strong>: “Imagine you are talking to someone and you want to refer to the middle object. What word would you use: <em>blue</em> or <em>circle</em>?” 🟦 🔵 🟩</li>
 <li><strong>The listener</strong>: “Imagine someone is talking to you and uses the word <em>blue</em> to refer to one of these objects. Which object are they talking about?” 🟦 🔵 🟩</li>
 </ul>
 <p>In the task and experiment, the researchers varied the actual set of objects in a systematic way.</p>
 </section>
-<section id="the-model" class="level3">
-<h3 class="anchored" data-anchor-id="the-model">The model</h3>
+<section id="the-model" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="the-model"><span class="header-section-number">7.3.2</span> The model</h3>
 <p>Their model is virtually identical to the cookie jar model we just worked through. They assume that speakers try to choose words to maximize the listener’s utility, as measured by surprisal.</p>
 <p>A literal listener in this case would assume that any object that is consistent with the speaker’s chosen word could have been the one they were referring to.</p>
 <p>With these assumptions, the researchers derive the probability of the speaker choosing each word (details in the paper) as:</p>
@@ -311,8 +436,8 @@ P(w|r_s,C) = \frac{|w|^{-1}}{\sum_{w^\prime \in W} {|w^\prime|}^{-1}}
 <p>Regarding <span class="math inline">\(W\)</span>, imagine that the speaker wanted to refer to the blue circle. In that case, <span class="math inline">\(W = \{ \text{blue}, \text{circle} \}\)</span>, because either word could apply to the object.</p>
 <p>According to this model, speakers will tend to choose words that more uniquely identify an object in a set. For example, in the set above, because <em>blue</em> applies to two objects (blue square and blue circle), but <em>circle</em> only applies to one, <em>circle</em> will get higher probability.</p>
 </section>
-<section id="homework-4-implement-the-model" class="level3">
-<h3 class="anchored" data-anchor-id="homework-4-implement-the-model">Homework 4: Implement the model</h3>
+<section id="homework-4-implement-the-model" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="homework-4-implement-the-model"><span class="header-section-number">7.3.3</span> Homework 4: Implement the model</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://colab.research.google.com/drive/107RdaavVkoQQS_1xoH7jnvbe0RA1AJy-?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
@@ -558,6 +683,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./06-sampling-assumptions.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./08-social-cognition.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

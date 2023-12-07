@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
 
-<title>social-cognition</title>
+<title>Introduction to Computational Psychology - 8&nbsp; Social cognition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +59,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./09-iterated-learning.html" rel="next">
+<link href="./07-RSA.html" rel="prev">
+<link href="./images/favicons/favicon-32x32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -96,24 +101,145 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<meta name="twitter:title" content="Introduction to Computational Psychology - 8&nbsp; Social cognition">
+<meta name="twitter:description" content="An introduction to computational cognitive science with a focus on probabilistic modeling. Code and exercises in Python.">
+<meta name="twitter:image" content="images/cover/marble_notext.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-social-cognition.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Computational Psychology</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/alanjern/computational-psych-book" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why computational modeling?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-generalization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-categorization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-hierarchical-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hierarchical generalization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sampling-assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Sampling assumptions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-RSA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-social-cognition.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-iterated-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="08-social-cognition.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#inverse-decision-making" id="toc-inverse-decision-making" class="nav-link active" data-scroll-target="#inverse-decision-making"><span class="header-section-number">8.1</span> Inverse decision-making 🍑</a>
+  <ul class="collapse">
+  <li><a href="#a-preference-learning-model" id="toc-a-preference-learning-model" class="nav-link" data-scroll-target="#a-preference-learning-model"><span class="header-section-number">8.1.1</span> A preference learning model</a></li>
+  <li><a href="#homework-5-your-turn" id="toc-homework-5-your-turn" class="nav-link" data-scroll-target="#homework-5-your-turn"><span class="header-section-number">8.1.2</span> Homework 5: Your turn</a></li>
+  </ul></li>
+  <li><a href="#naïve-utility-calculus" id="toc-naïve-utility-calculus" class="nav-link" data-scroll-target="#naïve-utility-calculus"><span class="header-section-number">8.2</span> Naïve utility calculus 🧮</a>
+  <ul class="collapse">
+  <li><a href="#markov-decision-processes" id="toc-markov-decision-processes" class="nav-link" data-scroll-target="#markov-decision-processes"><span class="header-section-number">8.2.1</span> Markov decision processes</a></li>
+  <li><a href="#inverting-the-mdp" id="toc-inverting-the-mdp" class="nav-link" data-scroll-target="#inverting-the-mdp"><span class="header-section-number">8.2.2</span> Inverting the MDP</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">8.2.3</span> Results</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/alanjern/computational-psych-book/blob/main/08-social-cognition.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Social cognition</h1>
+<h1 class="title"><span id="social-cognition" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Social cognition</span></span></h1>
 </div>
 
 
@@ -133,8 +259,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If you’re like most people, you see more than just lifeless shapes moving around. You see a whole drama play out involving characters with goals and emotions.</p>
 <p>This animation, from a <a href="https://psycnet.apa.org/doi/10.2307/1416950">1944 study by Heider and Simmel</a>, is an excellent example of our capacity for <em>social cognition</em>: thinking about other people. <strong>We are constantly attributing goals, beliefs, desires, and feelings to others.</strong> The fact that we are willing to do it for simple shapes suggests we may not be able to help ourselves from doing it.</p>
 <p>When someone takes an action, makes a decision, or makes a facial expression, how do we infer what they’re thinking or feeling? In this chapter, we’ll look at two computational approaches to answering this question.</p>
-<section id="inverse-decision-making" class="level2">
-<h2 class="anchored" data-anchor-id="inverse-decision-making">Inverse decision-making 🍑</h2>
+<section id="inverse-decision-making" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="inverse-decision-making"><span class="header-section-number">8.1</span> Inverse decision-making 🍑</h2>
 <p>All social cognition problems have the same basic character: you <em>observe</em> something about other people, and you want to <em>infer</em> some underlying cause of the thing you observed. For example, you see someone take an action, and you want to infer the goal that motivated the action.</p>
 <p>The basic idea behind many approaches to understanding how people reason about other people is that they have some kind of mental model of how other people act and they essentially run that model backward (or invert) the model to infer the information they don’t get to see.</p>
 <p>Consider a simple decision-making situation. Rue likes peaches more than oranges and oranges more than apples:</p>
@@ -151,29 +277,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>At the very least, you might guess she likes peaches more than oranges and apples. But why?</p>
 <p>You assume that people’s choices are guided by <em>preferences</em> and that people’s actions are basically <em>rational</em>. So seeing Rue make one choice from a set of options gives you information about what she likes.</p>
 <p>Can we formalize this intuition?<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<section id="a-preference-learning-model" class="level3">
-<h3 class="anchored" data-anchor-id="a-preference-learning-model">A preference learning model</h3>
+<section id="a-preference-learning-model" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="a-preference-learning-model"><span class="header-section-number">8.1.1</span> A preference learning model</h3>
 <p>Let’s start with some assumptions:</p>
 <ul>
-<li>Each fruit provides some utility to the person who takes it (recall the notion of utility introduced in <a href="#pragmatics">Chapter 7</a>).</li>
+<li>Each fruit provides some utility to the person who takes it (recall the notion of utility introduced in <a href="07-RSA.html">Chapter 7</a>).</li>
 <li>Utilities are additive, meaning two peaches provide twice as much utility as one peach.</li>
-<li>People will choose options <em>in proportion</em> to their utility. This is the same “softmax” assumption we used in <a href="#rsa-model">the rational speech act model</a>.</li>
+<li>People will choose options <em>in proportion</em> to their utility. This is the same “softmax” assumption we used in <a href="07-RSA.html#rsa-model">the rational speech act model</a>.</li>
 </ul>
 <p>These assumptions combine to give us a <em>choice model</em>, a model of how people will make choices between different options. (We’ve limited our focus to fruits, but the model could be applied to anything.)</p>
 <p><span id="eq-choicemodel"><span class="math display">\[
 \begin{equation}
 p(c = o_j|\mathbf{u}, \mathbf{A}) = \frac{\exp(U_j)}{\sum^n_{k=1}\exp(U_k)}
 \end{equation}
-\tag{1}\]</span></span></p>
+\tag{8.1}\]</span></span></p>
 <p>In this model, <span class="math inline">\(c\)</span> is the choice, <span class="math inline">\(o_j\)</span> refers to option <span class="math inline">\(j\)</span>, <span class="math inline">\(\mathbf{A}\)</span> is a vector specifying each option and their attributes (or features), <span class="math inline">\(\mathbf{u}\)</span> is a vector of utilities that the decision-maker assigns to each attribute, and <span class="math inline">\(U_j\)</span> is the summed total utility in each option.</p>
-<section id="inverting-the-choice-model" class="level4">
-<h4 class="anchored" data-anchor-id="inverting-the-choice-model">Inverting the model</h4>
-<p>Remember that our goal is to <em>infer other people’s preferences</em>, not predict their choices. So, after we see someone make a choice between some fruits, how do we infer what fruits they like best? We can invert Equation <a href="#eq-choicemodel">Equation&nbsp;1</a> using Bayes’s rule:</p>
+<section id="inverting-the-choice-model" class="level4" data-number="8.1.1.1">
+<h4 data-number="8.1.1.1" class="anchored" data-anchor-id="inverting-the-choice-model"><span class="header-section-number">8.1.1.1</span> Inverting the model</h4>
+<p>Remember that our goal is to <em>infer other people’s preferences</em>, not predict their choices. So, after we see someone make a choice between some fruits, how do we infer what fruits they like best? We can invert Equation <a href="#eq-choicemodel">Equation&nbsp;<span>8.1</span></a> using Bayes’s rule:</p>
 <p><span id="eq-idmodel"><span class="math display">\[
 \begin{equation}
 p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|\mathbf{A})}
 \end{equation}
-\tag{2}\]</span></span></p>
+\tag{8.2}\]</span></span></p>
 <p>Suppose Rue has a choice between the following options:</p>
 <blockquote class="blockquote">
 <p>Option 1: 🍑 🍎 🍊</p>
@@ -200,7 +326,7 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>choice_jules <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s define a function that calculates the choice probability in Equation <a href="#eq-choicemodel">Equation&nbsp;1</a>. This is our likelihood function.</p>
+<p>Let’s define a function that calculates the choice probability in Equation <a href="#eq-choicemodel">Equation&nbsp;<span>8.1</span></a>. This is our likelihood function.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_choice_prob(j, u, options): </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns the probability of choosing option j</span></span>
@@ -270,15 +396,15 @@ Jules's choice probability:0.7310585786300048</code></pre>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="08-social-cognition_files/figure-html/cell-6-output-1.png" width="571" height="442"></p>
+<p><img src="08-social-cognition_files/figure-html/cell-6-output-1.png" width="571" height="449"></p>
 </div>
 </div>
 <p>Additionally, we’ll make the simplifying assumption that utilities for different fruits are <em>independent</em>. This means that knowing someone likes pineapples doesn’t tell you anything about how much they’ll like grapefruits.</p>
 <p>Finally, we need a way to compute <span class="math inline">\(p(c|\mathbf{A})\)</span>. In other words, after seeing Rue make a choice, what was the probability of <em>anyone</em> with <em>any preferences</em> making that choice?</p>
-<p><a href="#normalization">Previously</a>, we got around computing denominators like this by normalizing. This works when you can enumerate the full hypothesis space. This time, the space of hypotheses (all possible assignments of utilities to fruits) is continuous and it’s not easy to integrate over. So we need to do something else.</p>
+<p><a href="02-bayes.html#normalization">Previously</a>, we got around computing denominators like this by normalizing. This works when you can enumerate the full hypothesis space. This time, the space of hypotheses (all possible assignments of utilities to fruits) is continuous and it’s not easy to integrate over. So we need to do something else.</p>
 </section>
-<section id="monte-carlo" class="level4">
-<h4 class="anchored" data-anchor-id="monte-carlo">Monte Carlo estimation</h4>
+<section id="monte-carlo" class="level4" data-number="8.1.1.2">
+<h4 data-number="8.1.1.2" class="anchored" data-anchor-id="monte-carlo"><span class="header-section-number">8.1.1.2</span> Monte Carlo estimation</h4>
 <p>We’ll use an estimation method known as <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method">Monte Carlo</a> that relies on random sampling.</p>
 <p>Here’s the basic idea as it applies to our problem. We want to know the overall probability of someone in the general population making a certain choice. We don’t know what that is, but we do know the distribution of utilities in the general population. That’s the prior <span class="math inline">\(p(\mathbf{u})\)</span> we just defined. So we can get a close approximation to what we want using the following algorithm:</p>
 <ol type="1">
@@ -322,14 +448,14 @@ Jules's choice probability:0.7310585786300048</code></pre>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability: "</span> <span class="op">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, <span class="dv">2000</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rue's choice probability: 0.9739635031175857
-Jules's choice probability: 0.028668204389175354</code></pre>
+<pre><code>Rue's choice probability: 0.9719132424016815
+Jules's choice probability: 0.028545335214233</code></pre>
 </div>
 </div>
 <p>Unsurprisingly, Jules’s choice has a much higher baseline probability.</p>
 </section>
-<section id="putting-it-all-together" class="level4">
-<h4 class="anchored" data-anchor-id="putting-it-all-together">Putting it all together</h4>
+<section id="putting-it-all-together" class="level4" data-number="8.1.1.3">
+<h4 data-number="8.1.1.3" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">8.1.1.3</span> Putting it all together</h4>
 <p>Now we’ll infer Rue’s and Jules’s preferences from their choices using Monte Carlo estimation again.</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random state for reproducibility</span></span>
@@ -377,11 +503,17 @@ Jules's choice probability: 0.028668204389175354</code></pre>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sb.displot(data<span class="op">=</span>samples_filtered, x<span class="op">=</span><span class="st">"u"</span>, hue<span class="op">=</span><span class="st">"person"</span>, kind<span class="op">=</span><span class="st">"kde"</span>)</span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="08-social-cognition_files/figure-html/cell-10-output-1.png" width="581" height="409"></p>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\jern\AppData\Local\anaconda3\Lib\site-packages\seaborn\axisgrid.py:118: UserWarning:
+
+The figure layout has changed to tight
+</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="08-social-cognition_files/figure-html/cell-10-output-2.png" width="557" height="470"></p>
+<p><img src="08-social-cognition_files/figure-html/cell-10-output-2.png" width="581" height="416"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="08-social-cognition_files/figure-html/cell-10-output-3.png" width="557" height="468"></p>
 </div>
 </div>
 <p>The model’s inferences here require some interpretation. The model is more certain about Rue having a preference for peach, but the distribution on the Jules’s preference for peach has a much longer tail.</p>
@@ -389,8 +521,8 @@ Jules's choice probability: 0.028668204389175354</code></pre>
 <p>Jules’s choice is a bit odd, so it’s harder to make sense of. One way to explain it is that she simply made a mistake (after all, <a href="#monte-carlo">as we saw above</a>, it’s an improbable choice). Another way to explain it is by assuming she has a very strong preference for peaches. (Of course, the model doesn’t take into account the countless other reasons Jules might prefer one fruit over three.)</p>
 </section>
 </section>
-<section id="homework-5-your-turn" class="level3">
-<h3 class="anchored" data-anchor-id="homework-5-your-turn">Homework 5: Your turn</h3>
+<section id="homework-5-your-turn" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="homework-5-your-turn"><span class="header-section-number">8.1.2</span> Homework 5: Your turn</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://colab.research.google.com/drive/1Zk2mUWffNXrBd_9S_7FqD8KDCr9-CofY?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
@@ -405,8 +537,8 @@ Jules's choice probability: 0.028668204389175354</code></pre>
 </div>
 </section>
 </section>
-<section id="naïve-utility-calculus" class="level2">
-<h2 class="anchored" data-anchor-id="naïve-utility-calculus">Naïve utility calculus 🧮</h2>
+<section id="naïve-utility-calculus" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="naïve-utility-calculus"><span class="header-section-number">8.2</span> Naïve utility calculus 🧮</h2>
 <p>Suppose Rue and Jules both make a choice between the same two fruits:</p>
 <blockquote class="blockquote">
 <p>Option 1: 🍑</p>
@@ -421,8 +553,8 @@ Jules's choice probability: 0.028668204389175354</code></pre>
 U(o,p) = R(o) - C(p)
 \]</span></p>
 <p>where <span class="math inline">\(R(\cdot)\)</span> is their reward from the outcome and <span class="math inline">\(C(\cdot)\)</span> is the cost they incur from carrying out the plan.</p>
-<section id="markov-decision-processes" class="level3">
-<h3 class="anchored" data-anchor-id="markov-decision-processes">Markov decision processes</h3>
+<section id="markov-decision-processes" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="markov-decision-processes"><span class="header-section-number">8.2.1</span> Markov decision processes</h3>
 <p>Earlier, we considered single decisions that happened in isolation. But lots of behavior involves a series of small decisions that happen in a sequence: the order in which someone prepares and cooks a dish, the route someone takes to get from their workplace to their home, which sections of a book chapter they write first.</p>
 <p>A series of decisions is a plan <span class="math inline">\(p\)</span>. And a useful computational framework for choosing optimal plans is a <a href="https://en.wikipedia.org/wiki/Markov_decision_process">Markov decision process</a>.</p>
 <p>To be concrete, let’s focus on the specific environment in <a href="https://compdevlab.yale.edu/docs/2020/cogpsych_NUC.pdf">Jara-Ettinger et al (2020)</a>: a 7x7 grid in which agents can move in any direction, one step at a time.</p>
@@ -445,18 +577,18 @@ V^*(s) = \text{max}_a\gamma \sum_{s^\prime} P_{s,a}(s^\prime) V^*(s^\prime) + R(
 \begin{equation}
 p(a|s) \propto \exp \left( \sum_{s^\prime} P_{s,a}(s^\prime) V^*(s^\prime) \right)
 \end{equation}
-\tag{3}\]</span></span> In their model, they once again introduce a notion of a “softmax” choice rule, rather than assume agents will be perfectly optimal. This makes sense because the goal is to model how people reason about others, and people often have incomplete information about other people.</p>
+\tag{8.3}\]</span></span> In their model, they once again introduce a notion of a “softmax” choice rule, rather than assume agents will be perfectly optimal. This makes sense because the goal is to model how people reason about others, and people often have incomplete information about other people.</p>
 </section>
-<section id="inverting-the-mdp" class="level3">
-<h3 class="anchored" data-anchor-id="inverting-the-mdp">Inverting the MDP</h3>
+<section id="inverting-the-mdp" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="inverting-the-mdp"><span class="header-section-number">8.2.2</span> Inverting the MDP</h3>
 <p>After seeing an agent take a series of actions <span class="math inline">\(\mathbf{a}\)</span>, we can infer their costs and rewards pretty much the same way we did before, by applying Bayes’s rule.</p>
 <p><span class="math display">\[
 p(C,R|\mathbf{a}) \propto p(\mathbf{a}|C,R) p(C,R)
 \]</span></p>
-<p>In the model, they use uniform priors over costs and rewards. Computing <span class="math inline">\(p(\mathbf{a}|C,R)\)</span> means just applying Equation <a href="#eq-optimalpolicy">Equation&nbsp;3</a> repeatedly for each action the agent took in their sequence. (The researchers also modeled a notion of sub-goals that I’ve omitted.)</p>
+<p>In the model, they use uniform priors over costs and rewards. Computing <span class="math inline">\(p(\mathbf{a}|C,R)\)</span> means just applying Equation <a href="#eq-optimalpolicy">Equation&nbsp;<span>8.3</span></a> repeatedly for each action the agent took in their sequence. (The researchers also modeled a notion of sub-goals that I’ve omitted.)</p>
 </section>
-<section id="results" class="level3">
-<h3 class="anchored" data-anchor-id="results">Results</h3>
+<section id="results" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="results"><span class="header-section-number">8.2.3</span> Results</h3>
 <p>The researchers tested their model in a series of experiments in which people saw paths that agents took across the grid and then had to rate the costs and rewards the agent assigned to different states.</p>
 <p>Results from one experiment are below.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -712,6 +844,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./07-RSA.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Language pragmatics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-iterated-learning.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iterated learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
