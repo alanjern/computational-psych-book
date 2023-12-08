@@ -26,6 +26,7 @@ book:
   favicon: "images/favicons/favicon-32x32.png"
   twitter-card: 
     image: "images/cover/marble_notext.jpg"
+  google-analytics: "G-HG2MG0W08W"
 
 format:
   html:

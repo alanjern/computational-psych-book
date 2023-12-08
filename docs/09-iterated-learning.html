@@ -63,6 +63,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HG2MG0W08W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -393,7 +402,7 @@ t_{21} + t_{22} = 1
 <p>So what does all this have to do with “defecate” changing meaning over time?</p>
 <p>Well you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?</p>
 <p>This is the subject of a line research in computational cognitive science. The basic model combines some assumptions we’ve seen before with some assumptions of hidden Markov models you just learned about in this chapter.</p>
-<p>First, assume that people are trying to learn some concept by seeing an example <span class="math inline">\(x_i\)</span> and getting a label for it <span class="math inline">\(y_i\)</span> and then trying to generalize that label to other instances by forming a hypothesis <span class="math inline">\(h\)</span> about what other things <span class="math inline">\(y_i\)</span> applies to. This is the problem we encountered in the <a href="03-generalization.html">generalization chapter</a>, and we can assume that each person forms their beliefs about <span class="math inline">\(h\)</span> using Bayesian inference.</p>
+<p>First, assume that people are trying to learn some concept by seeing an example <span class="math inline">\(x_i\)</span> and getting a label for it <span class="math inline">\(y_i\)</span> and then trying to generalize that label to other instances by forming a hypothesis <span class="math inline">\(h\)</span> about what other things <span class="math inline">\(y_i\)</span> applies to. This is the problem we encountered in the <a href="#generalization">generalization chapter</a>, and we can assume that each person forms their beliefs about <span class="math inline">\(h\)</span> using Bayesian inference.</p>
 <p>Now let’s add in the communication factor. Each person <span class="math inline">\(n+1\)</span> gets a label <span class="math inline">\(y_n\)</span> from someone else Person <span class="math inline">\(n\)</span>, forms their own hypothesis <span class="math inline">\(h_{n+1}\)</span> then labels a new object <span class="math inline">\(x_{n+1}\)</span> for the next person. This process repeats, creating a Markov chain.</p>
 <p>To simplify this chain, what we end up with is a sequence of states where each state is a hypothesis about the concept.</p>
 <p><em>What will this chain converge to?</em></p>

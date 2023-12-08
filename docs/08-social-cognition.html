@@ -97,6 +97,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HG2MG0W08W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -281,9 +290,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="a-preference-learning-model"><span class="header-section-number">8.1.1</span> A preference learning model</h3>
 <p>Let’s start with some assumptions:</p>
 <ul>
-<li>Each fruit provides some utility to the person who takes it (recall the notion of utility introduced in <a href="07-RSA.html">Chapter 7</a>).</li>
+<li>Each fruit provides some utility to the person who takes it (recall the notion of utility introduced in <a href="#pragmatics">Chapter 7</a>).</li>
 <li>Utilities are additive, meaning two peaches provide twice as much utility as one peach.</li>
-<li>People will choose options <em>in proportion</em> to their utility. This is the same “softmax” assumption we used in <a href="07-RSA.html#rsa-model">the rational speech act model</a>.</li>
+<li>People will choose options <em>in proportion</em> to their utility. This is the same “softmax” assumption we used in <a href="#rsa-model">the rational speech act model</a>.</li>
 </ul>
 <p>These assumptions combine to give us a <em>choice model</em>, a model of how people will make choices between different options. (We’ve limited our focus to fruits, but the model could be applied to anything.)</p>
 <p><span id="eq-choicemodel"><span class="math display">\[
@@ -294,7 +303,7 @@ p(c = o_j|\mathbf{u}, \mathbf{A}) = \frac{\exp(U_j)}{\sum^n_{k=1}\exp(U_k)}
 <p>In this model, <span class="math inline">\(c\)</span> is the choice, <span class="math inline">\(o_j\)</span> refers to option <span class="math inline">\(j\)</span>, <span class="math inline">\(\mathbf{A}\)</span> is a vector specifying each option and their attributes (or features), <span class="math inline">\(\mathbf{u}\)</span> is a vector of utilities that the decision-maker assigns to each attribute, and <span class="math inline">\(U_j\)</span> is the summed total utility in each option.</p>
 <section id="inverting-the-choice-model" class="level4" data-number="8.1.1.1">
 <h4 data-number="8.1.1.1" class="anchored" data-anchor-id="inverting-the-choice-model"><span class="header-section-number">8.1.1.1</span> Inverting the model</h4>
-<p>Remember that our goal is to <em>infer other people’s preferences</em>, not predict their choices. So, after we see someone make a choice between some fruits, how do we infer what fruits they like best? We can invert Equation <a href="#eq-choicemodel">Equation&nbsp;<span>8.1</span></a> using Bayes’s rule:</p>
+<p>Remember that our goal is to <em>infer other people’s preferences</em>, not predict their choices. So, after we see someone make a choice between some fruits, how do we infer what fruits they like best? We can invert Equation <a href="#eq-choicemodel">Equation&nbsp;<span class="quarto-unresolved-ref">eq-choicemodel</span></a> using Bayes’s rule:</p>
 <p><span id="eq-idmodel"><span class="math display">\[
 \begin{equation}
 p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|\mathbf{A})}
@@ -326,7 +335,7 @@ p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>choice_jules <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                         [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s define a function that calculates the choice probability in Equation <a href="#eq-choicemodel">Equation&nbsp;<span>8.1</span></a>. This is our likelihood function.</p>
+<p>Let’s define a function that calculates the choice probability in Equation <a href="#eq-choicemodel">Equation&nbsp;<span class="quarto-unresolved-ref">eq-choicemodel</span></a>. This is our likelihood function.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_choice_prob(j, u, options): </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns the probability of choosing option j</span></span>
@@ -401,7 +410,7 @@ Jules's choice probability:0.7310585786300048</code></pre>
 </div>
 <p>Additionally, we’ll make the simplifying assumption that utilities for different fruits are <em>independent</em>. This means that knowing someone likes pineapples doesn’t tell you anything about how much they’ll like grapefruits.</p>
 <p>Finally, we need a way to compute <span class="math inline">\(p(c|\mathbf{A})\)</span>. In other words, after seeing Rue make a choice, what was the probability of <em>anyone</em> with <em>any preferences</em> making that choice?</p>
-<p><a href="02-bayes.html#normalization">Previously</a>, we got around computing denominators like this by normalizing. This works when you can enumerate the full hypothesis space. This time, the space of hypotheses (all possible assignments of utilities to fruits) is continuous and it’s not easy to integrate over. So we need to do something else.</p>
+<p><a href="#normalization">Previously</a>, we got around computing denominators like this by normalizing. This works when you can enumerate the full hypothesis space. This time, the space of hypotheses (all possible assignments of utilities to fruits) is continuous and it’s not easy to integrate over. So we need to do something else.</p>
 </section>
 <section id="monte-carlo" class="level4" data-number="8.1.1.2">
 <h4 data-number="8.1.1.2" class="anchored" data-anchor-id="monte-carlo"><span class="header-section-number">8.1.1.2</span> Monte Carlo estimation</h4>
@@ -448,8 +457,8 @@ Jules's choice probability:0.7310585786300048</code></pre>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jules's choice probability: "</span> <span class="op">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">str</span>(estimate_marginal_likelihood(<span class="dv">0</span>, choice_jules, <span class="dv">2000</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rue's choice probability: 0.9719132424016815
-Jules's choice probability: 0.028545335214233</code></pre>
+<pre><code>Rue's choice probability: 0.9718852228441163
+Jules's choice probability: 0.02831722430481147</code></pre>
 </div>
 </div>
 <p>Unsurprisingly, Jules’s choice has a much higher baseline probability.</p>
@@ -585,7 +594,7 @@ p(a|s) \propto \exp \left( \sum_{s^\prime} P_{s,a}(s^\prime) V^*(s^\prime) \righ
 <p><span class="math display">\[
 p(C,R|\mathbf{a}) \propto p(\mathbf{a}|C,R) p(C,R)
 \]</span></p>
-<p>In the model, they use uniform priors over costs and rewards. Computing <span class="math inline">\(p(\mathbf{a}|C,R)\)</span> means just applying Equation <a href="#eq-optimalpolicy">Equation&nbsp;<span>8.3</span></a> repeatedly for each action the agent took in their sequence. (The researchers also modeled a notion of sub-goals that I’ve omitted.)</p>
+<p>In the model, they use uniform priors over costs and rewards. Computing <span class="math inline">\(p(\mathbf{a}|C,R)\)</span> means just applying Equation <a href="#eq-optimalpolicy">Equation&nbsp;<span class="quarto-unresolved-ref">eq-optimalpolicy</span></a> repeatedly for each action the agent took in their sequence. (The researchers also modeled a notion of sub-goals that I’ve omitted.)</p>
 </section>
 <section id="results" class="level3" data-number="8.2.3">
 <h3 data-number="8.2.3" class="anchored" data-anchor-id="results"><span class="header-section-number">8.2.3</span> Results</h3>

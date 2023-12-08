@@ -63,6 +63,15 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HG2MG0W08W"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -214,8 +223,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>So far, we’ve seen where <a href="03-generalization.html#weak-strong-sampling">strong sampling</a> was a logical assumption to make. But it isn’t always.</p>
-<p>For example, consider <a href="03-generalization.html#hormones">the hormone problem from Chapter 3</a>. If you were randomly testing people’s hormone levels and every person just happened to be healthy, clearly strong sampling wouldn’t be appropriate, because we were sampling from the full population of both healthy and unhealthy people.</p>
+<p>So far, we’ve seen where <a href="#weak-strong-sampling">strong sampling</a> was a logical assumption to make. But it isn’t always.</p>
+<p>For example, consider <a href="#hormones">the hormone problem from Chapter 3</a>. If you were randomly testing people’s hormone levels and every person just happened to be healthy, clearly strong sampling wouldn’t be appropriate, because we were sampling from the full population of both healthy and unhealthy people.</p>
 <p>This raises a question: Are people sensitive to the process by which data are generated?</p>
 <p><em>Spoiler alert: Yes.</em></p>
 <section id="word-learning" class="level2" data-number="6.1">
@@ -282,8 +291,8 @@ P_{\text{teacher}}(d|h) \propto (P_{\text{learner}}(h|d))^\alpha
 <li>Initialize <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using weak sampling.</li>
 <li>Iterate through the following steps until <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> stabilizes (doesn’t change from one iteration to the next):
 <ol type="1">
-<li>For each possible <span class="math inline">\(h\)</span> and <span class="math inline">\(d\)</span>, compute <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> using Equation <a href="#eq-plearner">Equation&nbsp;<span>6.2</span></a> and <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> values from the previous iteration.</li>
-<li>For each possible <span class="math inline">\(d\)</span> and <span class="math inline">\(h\)</span>, update <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> values from the previous step, where <span class="math inline">\(P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)\)</span> (Equation <a href="#eq-pedagogical">Equation&nbsp;<span>6.1</span></a>).</li>
+<li>For each possible <span class="math inline">\(h\)</span> and <span class="math inline">\(d\)</span>, compute <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> using Equation <a href="#eq-plearner">Equation&nbsp;<span class="quarto-unresolved-ref">eq-plearner</span></a> and <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> values from the previous iteration.</li>
+<li>For each possible <span class="math inline">\(d\)</span> and <span class="math inline">\(h\)</span>, update <span class="math inline">\(P_{\text{teacher}}(d|h)\)</span> using <span class="math inline">\(P_{\text{learner}}(h|d)\)</span> values from the previous step, where <span class="math inline">\(P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)\)</span> (Equation <a href="#eq-pedagogical">Equation&nbsp;<span class="quarto-unresolved-ref">eq-pedagogical</span></a>).</li>
 </ol></li>
 </ol>
 <section id="the-rectangle-game" class="level3" data-number="6.2.1">
