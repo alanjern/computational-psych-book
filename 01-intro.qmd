@@ -2,21 +2,21 @@
 
 The field of psychology is full of theories. But this book is focused on a specific type of theory: the type that can be formalized as a computational model.
 
-What advantage does a computational (or mathematical) theory have over one that can't be expressed in computational terms? The biggest advantage is precision. For example, suppose you say that attention is like a spotlight 🔦: you can attend to things that are currently within the light, and you can control where the light is shining, but things outside of the light are outside of our awareness. This is a kind of theory -- an analogy-based one -- and it's a good start for making some general *qualitative* predictions about how attention works.
+What advantage does a computational (or mathematical) theory have over one that can't be expressed in computational terms? The biggest advantage is precision. For example, suppose you say that attention is like a spotlight 🔦: we can attend to things that are currently within the light, and we can control where the light is shining, but things outside of the light are outside of our awareness. This is a kind of theory -- an analogy-based one -- and it's a good start for making some general *qualitative* predictions about how attention works.
 
 But you'll quickly run into problems if you want to make precise *quantitative* predictions about attention. How big is the spotlight? Does the size expand and contract? How quickly does it move around? Is attention completely absent outside of the spotlight or does it ramp down as you get near the edge of the light? In other words, if you wanted to build a computer model of this theory, a simple analogy doesn't cut it.
 
-*Computational models, if nothing else, force us to be explicit about all of our assumptions.*
+*Computational models force us to be explicit about our assumptions.*
 
 ## Representations 🔸
 
-We don't perceive the world as it truly is. As one example, the visible spectrum that our eyes can detect is just a fraction of the full electromagnetic spectrum. Similarly, we can only hear a narrow range of audible sound frequencies. In other words, we perceive an incomplete picture of the surrounding world.
+We don't perceive the world as it truly is. As one example, the visible spectrum that our eyes can detect is just a fraction of the full electromagnetic spectrum. Similarly, we can only hear a narrow range of sound frequencies. In other words, we perceive an incomplete picture of the world.
 
 ![Source: Abstruse Goose.](images/01/range_of_sensation.png)
 
-Similarly, we are constantly making assumptions about the things we see and hear and using those assumptions to fill in gaps.
+Even for the parts of the world that we *can* perceive, the information we get through our senses is often incomplete, so we are constantly making assumptions to fill in gaps.
 
-What we have in our heads is a kind of model of the world around us -- what cognitive scientists call a mental representation. These representations help us to reach rapid conclusions about things involving language, causes and effects, concepts, mental states, and many other aspects of cognition.
+As a result, what we have in our heads is a kind of model of the world around us -- what cognitive scientists call a mental representation. These representations help us to reach rapid conclusions about things involving language, causes and effects, concepts, mental states, and many other aspects of cognition.
 
 Some of the key questions for cognitive scientists who use computational models are:
 
@@ -24,7 +24,7 @@ Some of the key questions for cognitive scientists who use computational models 
 2.  How do our minds use these representations to learn when we get new information?
 3.  What kind of information do we get and how do our expectations about the kind of information we're getting to affect how we use it?
 
-This book will elaborate, with examples, on each of these questions.
+This book focuses on each of these questions.
 
 ## Homework 1: Build your first computational model 💻
 
@@ -32,12 +32,16 @@ This book will elaborate, with examples, on each of these questions.
 
 To get some initial experience with computational modeling, you'll build and experiment with a simple model of classical conditioning developed by Robert Rescorla and Allan Wagner -- now called the Rescorla-Wagner model.
 
-All homework assignments for this book will be done in Google Colab. Click the button above at the top of this section view Homework 1.
+All homework assignments for this book will be done in Google Colab. Click the button at the top of this section to view Homework 1.
+
+::: callout-note
+You'll have to make a copy of the notebook saved to your own Drive in order to edit it.
+:::
 
 If you're unfamiliar with Colab (or Jupyter Notebooks), watch this brief introduction video.
 
 {{< video https://www.youtube.com/embed/inN8seMm7UI >}}
 
-::: callout-note
-You'll have to make a copy of the notebook saved to your own Drive in order to edit it.
-:::
+This video gives some extra tips for working with Colab.
+
+{{< video https://youtu.be/rNgswRZ2C1Y?si=aVooywIqX0_G0NId >}}

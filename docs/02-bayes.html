@@ -257,7 +257,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="bayes" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></h1>
 </div>
 
 
@@ -340,7 +340,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <pre><code>Text(0, 0.5, 'Number of samples')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-4-output-2.png" width="602" height="429"></p>
+<p><img src="02-bayes_files/figure-html/cell-4-output-2.png" width="601" height="422"></p>
 </div>
 </div>
 <p>Now for the next step. For each sample in <code>prior_samples</code>, we want to sample an observation. To do that, let’s pause for a second and think about the probability of pulling a black ball given that hypothesis <span class="math inline">\(B_3\)</span> is true, for example. This means that there are 3 black balls and 6 red balls in the bag. So the probability of pulling a black ball from the bag at random will be 3/9.</p>
@@ -358,7 +358,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                  p <span class="op">=</span> p_black)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ball_samples[<span class="dv">0</span>:<span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[0 1 0 0 1 1 0 1 1]</code></pre>
+<pre><code>[1 0 1 0 1 1 0 1 1]</code></pre>
 </div>
 </div>
 <p><code>ball_samples</code> is 1 for black and 0 for red. Once again, let’s plot all our samples.</p>
@@ -371,7 +371,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <pre><code>Text(0, 0.5, 'Number of samples')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-7-output-2.png" width="602" height="411"></p>
+<p><img src="02-bayes_files/figure-html/cell-7-output-2.png" width="601" height="404"></p>
 </div>
 </div>
 <p>You can think of this plot representing our overall beliefs about the number of red and black balls in the bag, averaged over all possible hypotheses.</p>
@@ -467,7 +467,7 @@ P(B9|B) = 0.2</code></pre>
 <pre><code>Text(0, 0.5, 'Hypothesis')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-12-output-2.png" width="585" height="429"></p>
+<p><img src="02-bayes_files/figure-html/cell-12-output-2.png" width="585" height="422"></p>
 </div>
 </div>
 </section>
