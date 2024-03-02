@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -257,7 +257,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></h1>
+<h1 class="title"><span id="bayes" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian inference</span></span></h1>
 </div>
 
 
@@ -272,7 +272,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 
 </header>
 
-<p>This chapter reviews some basic probability and Bayesian inference. You might be asking yourself: <em>What does this have to do with psychology?</em> The answer becomes clear when you recognize that most of what we do when we’re making sense of the world is drawing inferences. When you see an ambiguous image, is it a rabbit or a duck? When someone mumbles something, did they say “hello” or “go to hell”? When you take a pill and your headache goes away, did the pill eliminate your headache or did the headache go away on its own?</p>
+<p>This chapter reviews some basic probability and Bayesian inference. You might be asking yourself: <em>What does this have to do with psychology?</em> The answer becomes clear when you recognize that most of what we do when we’re making sense of the world is drawing inferences. When you see an ambiguous image like the one below, is it a rabbit or a duck? When someone mumbles something, did they say “hello” or “go to hell”? When you take a pill and your headache goes away, did the pill eliminate your headache or did the headache go away on its own?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/02/duck-rabbit.png" class="img-fluid figure-img" style="width:70.0%"></p>
@@ -293,8 +293,8 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <h2 data-number="2.2" class="anchored" data-anchor-id="a-motivating-example-sampling-from-a-bag"><span class="header-section-number">2.2</span> A motivating example: Sampling from a bag 👝</h2>
 <p>Suppose you have a bag full of black and red balls. You can’t see inside the bag and you don’t know how many black and red balls are inside, but you know that there are nine total balls in the bag.</p>
 <p>You want to know how many black balls and red balls there are. There are a finite number of hypotheses: {0 black balls, 1 black ball, 2 black balls, …, 9 black balls}. Let’s call these hypotheses <span class="math inline">\(B_0\)</span>, <span class="math inline">\(B_1\)</span>, etc., respectively.</p>
-<p>You don’t know which hypothesis is true, but you might have some idea which hypotheses are more likely than others. Therefore, it is natural to represent your uncertainty with a probability distribution over the possible unknown states that the world could be in – in this case, the 10 hypotheses. Each hypothesis gets assigned a probability, and the probabilities sum to 1.</p>
-<p>For simplicity, let’s assume that you <em>don’t</em> have any idea which hypotheses are more likely. In other words, you give every hypothesis the same probability: 1/10 = 0.1. This is also called a uniform distribution over hypotheses. This distribution is your prior.</p>
+<p>You don’t know which hypothesis is true, but you might have some idea that some hypotheses are more likely than others. It’s natural to represent your uncertainty with a probability distribution over the possible unknown states that the world could be in – in this case, the ten hypotheses. Each hypothesis gets assigned a probability and the probabilities sum to 1.</p>
+<p>For starters, let’s assume that you <em>don’t</em> have any idea which hypotheses are more likely. In other words, you give every hypothesis the same probability: 1/10 = 0.1. This is called a uniform distribution over hypotheses. This distribution is your prior.</p>
 <p>Now suppose you put your hand in the bag and pull out a ball at random. The possible observations are: <code>{black, red}</code>, Let’s call them <span class="math inline">\(B\)</span> and <span class="math inline">\(R\)</span>, respectively. The probability of observing each color depends on which hypothesis is true, i.e., how many balls of each color are in the bag. For instance, if <span class="math inline">\(B_0\)</span> is true (there are 0 black balls in the bag), then the probability of observing a red ball is 1 (<span class="math inline">\(P(R|B_0)=1\)</span>), and the probability of observing a black ball is 0 (<span class="math inline">\(P(B|B_0)=0\)</span>). These expressions that tell us how probable our observations are, given a specific hypothesis, are your likelihoods.</p>
 <section id="sampling-from-the-generative-model" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="sampling-from-the-generative-model"><span class="header-section-number">2.2.1</span> Sampling from the generative model</h3>
@@ -304,7 +304,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <li>Sample a hypothesis from the prior.</li>
 <li>Sample data given the hypothesis, using the likelihood.</li>
 </ol>
-<p>Let’s first create a vector with the probability of each hypothesis:</p>
+<p>Let’s first create an array with the probability of each hypothesis:</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -317,7 +317,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <pre><code>[0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1]</code></pre>
 </div>
 </div>
-<p>Now we’ll do the first step: create a vector of 10000 hypotheses sampled from the prior:</p>
+<p>Now we’ll do the first step: create an array of 10000 hypotheses sampled from the prior:</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prior_samples <span class="op">=</span> np.array(random.choices(np.arange(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>),</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   weights <span class="op">=</span> h_priors, </span>
@@ -330,17 +330,19 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 </div>
 <p>Here, each number corresponds to one hypothesis: 0 corresponds to <span class="math inline">\(B_0\)</span>, 1 to <span class="math inline">\(B_1\)</span>, and so on. Each sample represents one possible way (a hypothesis) the world could be. Since the prior was uniform (each hypothesis had the same probability), each hypothesis appears about equally often. We can plot all the samples to verify:</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>n, bins, patches <span class="op">=</span> ax.hist(prior_samples, bins<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Prior sample'</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Number of samples'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>sns.histplot(prior_samples, bins<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Prior sample'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Number of samples'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Text(0, 0.5, 'Number of samples')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-4-output-2.png" width="601" height="422"></p>
+<p><img src="02-bayes_files/figure-html/cell-4-output-2.png" width="605" height="428"></p>
 </div>
 </div>
 <p>Now for the next step. For each sample in <code>prior_samples</code>, we want to sample an observation. To do that, let’s pause for a second and think about the probability of pulling a black ball given that hypothesis <span class="math inline">\(B_3\)</span> is true, for example. This means that there are 3 black balls and 6 red balls in the bag. So the probability of pulling a black ball from the bag at random will be 3/9.</p>
@@ -358,25 +360,25 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                  p <span class="op">=</span> p_black)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ball_samples[<span class="dv">0</span>:<span class="dv">9</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1 0 1 0 1 1 0 1 1]</code></pre>
+<pre><code>[0 1 0 0 1 1 1 1 1]</code></pre>
 </div>
 </div>
 <p><code>ball_samples</code> is 1 for black and 0 for red. Once again, let’s plot all our samples.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n, bins, patches <span class="op">=</span> ax.hist(ball_samples, bins<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([<span class="dv">0</span>,<span class="dv">1</span>])</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Number of samples'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(ball_samples, bins<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(ticks<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Number of samples"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Text(0, 0.5, 'Number of samples')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-7-output-2.png" width="601" height="404"></p>
+<p><img src="02-bayes_files/figure-html/cell-7-output-2.png" width="605" height="408"></p>
 </div>
 </div>
-<p>You can think of this plot representing our overall beliefs about the number of red and black balls in the bag, averaged over all possible hypotheses.</p>
+<p>You can think of this plot representing your overall beliefs about the number of red and black balls in the bag, averaged over all possible hypotheses.</p>
 <p>Not surprisingly, we got about equal numbers of red and black balls. This makes sense: We didn’t have any prior expectations about whether red or black balls were more likely in the bag.</p>
-<p>How should our beliefs change after we pull a ball out of the bag? That is, how should we respond to evidence?</p>
+<p>How should your beliefs change after you pull a ball out of the bag? That is, how should you respond to evidence?</p>
 </section>
 </section>
 <section id="bayesian-updating-learning-from-evidence" class="level2" data-number="2.3">
@@ -385,8 +387,8 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <section id="applying-bayess-rule-to-the-bag-case" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="applying-bayess-rule-to-the-bag-case"><span class="header-section-number">2.3.1</span> Applying Bayes’s rule to the bag case</h3>
 <p>Suppose you have a uniform prior distribution over the 10 hypotheses about balls in the bag. Now you pick a ball and it’s black. Given this observation <span class="math inline">\(B\)</span>, how should you change the probabilities you give to each hypothesis?</p>
-<p>Intuitively, you should now give a little bit more probability to those hypotheses that have more black balls than red balls, because those are the hypotheses that make your observations more likely. Moreover, you can safely exclude hypothesis <span class="math inline">\(B_0\)</span>, because your observation would be impossible if <span class="math inline">\(B_0\)</span> were true. Let’s calculate this with Bayes’s rule.</p>
-<p>The prior is the vector <code>h_priors</code> defined above. Given that we have observed <span class="math inline">\(B\)</span>, the likelihood should tell us, for each hypothesis, the probability of <span class="math inline">\(B\)</span> given that hypothesis. For example, for <span class="math inline">\(B_9\)</span>, the likelihood <span class="math inline">\(P(B|B_9) = 1\)</span>. For <span class="math inline">\(B_8\)</span>, <span class="math inline">\(P(B|B_8) = 8/9\)</span>, because 8 of the 9 balls are black.</p>
+<p>Intuitively, you should now give a little bit more probability to those hypotheses that have more black balls than red balls, because those are the hypotheses that make your observations more likely. Moreover, you can definitively exclude hypothesis <span class="math inline">\(B_0\)</span>, because your observation would be impossible if <span class="math inline">\(B_0\)</span> were true. Let’s calculate this with Bayes’s rule.</p>
+<p>The prior is the array <code>h_priors</code> defined above. Given that we have observed <span class="math inline">\(B\)</span>, the likelihood should tell us, for each hypothesis, the probability of <span class="math inline">\(B\)</span> given that hypothesis. For example, for <span class="math inline">\(B_9\)</span>, the likelihood <span class="math inline">\(P(B|B_9) = 1\)</span>. For <span class="math inline">\(B_8\)</span>, <span class="math inline">\(P(B|B_8) = 8/9\)</span>, because 8 of the 9 balls are black.</p>
 <p>Generalizing this idea, <span class="math inline">\(P(B|B_n) = n/9\)</span>. We can therefore compute the likelihoods for all hypotheses in a vector:</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>likelihoods <span class="op">=</span> np.arange(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>) <span class="op">/</span> <span class="dv">9</span></span>
@@ -453,35 +455,34 @@ P(B9|B) = 0.2</code></pre>
 </div>
 <p>Finally, let’s plot the posterior probabilities.</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>hypotheses <span class="op">=</span> (<span class="st">'B0'</span>, <span class="st">'B1'</span>, <span class="st">'B2'</span>, <span class="st">'B3'</span>, <span class="st">'B4'</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'B5'</span>, <span class="st">'B6'</span>, <span class="st">'B7'</span>, <span class="st">'B8'</span>, <span class="st">'B9'</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>y_pos <span class="op">=</span> np.arange(<span class="bu">len</span>(hypotheses))</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>ax.barh(y_pos, posteriors, align<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(y_pos)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(hypotheses)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Probability'</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Hypothesis'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>hypotheses <span class="op">=</span> (<span class="st">'B0'</span>, <span class="st">'B1'</span>, <span class="st">'B2'</span>, <span class="st">'B3'</span>, <span class="st">'B4'</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">'B5'</span>, <span class="st">'B6'</span>, <span class="st">'B7'</span>, <span class="st">'B8'</span>, <span class="st">'B9'</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>y_pos <span class="op">=</span> np.arange(<span class="bu">len</span>(hypotheses))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>sns.barplot(posteriors, orient<span class="op">=</span><span class="st">"y"</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(ticks <span class="op">=</span> y_pos, labels<span class="op">=</span>hypotheses)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Hypothesis'</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Probability'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>Text(0, 0.5, 'Hypothesis')</code></pre>
+<pre><code>Text(0.5, 0, 'Probability')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-bayes_files/figure-html/cell-12-output-2.png" width="585" height="422"></p>
+<p><img src="02-bayes_files/figure-html/cell-12-output-2.png" width="591" height="428"></p>
 </div>
 </div>
 </section>
 <section id="normalization" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="normalization"><span class="header-section-number">2.3.2</span> How to avoid calculating P(d)</h3>
 <p>In practice, we generally do not need to calculate the <span class="math inline">\(P(d)\)</span> (the denominator in Bayes’s rule) explicitly. I’ll give you the general idea why in this section.</p>
-<p>First, we create a vector of prior probabilities, which has as many components as there are hypotheses. We’ll just reuse <code>h_priors</code>. Note that the probabilities sum to 1, as they should because it’s a probability distribution.</p>
+<p>First, we create an array of prior probabilities, which has as many components as there are hypotheses. We’ll just reuse <code>h_priors</code>. Note that the probabilities sum to 1, as they should because it’s a probability distribution.</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>h_priors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1])</code></pre>
 </div>
 </div>
-<p>Next, we create a likelihood array. When we did calculations above, we only had a vector with the likelihoods for a specific observation. However, we would like to have something that encodes the likelihood function for each possible observation given each possible hypothesis, rather than just for a specific observation.</p>
+<p>Next, we create a likelihood array. When we did calculations above, we only had an array with the likelihoods for a specific observation. However, we would like to have something that encodes the likelihood function for each possible observation given each possible hypothesis, rather than just for a specific observation.</p>
 <p>In this example, there are two possible observations: <span class="math inline">\(B\)</span> and <span class="math inline">\(R\)</span>. We can encode the likelihood as an <span class="math inline">\(m \times n\)</span> array where <span class="math inline">\(m\)</span> is the number of hypotheses and <span class="math inline">\(n\)</span> is the number of possible observations. In our case: <span class="math inline">\(10 \times 2\)</span>.</p>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>likelihood_array <span class="op">=</span> np.array((np.arange(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>) <span class="op">/</span> <span class="dv">9</span>,</span>
@@ -556,7 +557,7 @@ Note
 <h2 data-number="2.4" class="anchored" data-anchor-id="bayes-exercises"><span class="header-section-number">2.4</span> Exercises 📝</h2>
 <section id="taxi-cabs" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="taxi-cabs"><span class="header-section-number">2.4.1</span> Taxi cabs</h3>
-<p>80% of the taxi cabs in Simpletown are green and 20% are yellow. An hit-and-run accident happened at night involving a taxi. A witness claimed that the taxi was yellow. After extensive testing, it is determined that the witness can correctly identify the color of a taxi only 75% of the time under conditions like the ones present during the accident. What is the probability that the taxi was yellow?</p>
+<p>80% of the taxi cabs in Simpletown are green and 20% are yellow<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. A hit-and-run accident happened at night involving a taxi. A witness claimed that the taxi was yellow. After extensive testing, it is determined that the witness can correctly identify the color of a taxi only 75% of the time under conditions like the ones present during the accident. What is the probability that the taxi was yellow?</p>
 </section>
 <section id="flipping-coins" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="flipping-coins"><span class="header-section-number">2.4.2</span> Flipping coins</h3>
@@ -616,6 +617,12 @@ P(h_1|d) &amp;= \frac{P(d|h_1) P(h_1)}{P(d)} \\
 
 </section>
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>After the protracted and aptly named “color wars” of 2113-2114, the previously dominant (and ruthless) orange cabs were wiped from existence. For the purposes of this problem, you may ignore them.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
