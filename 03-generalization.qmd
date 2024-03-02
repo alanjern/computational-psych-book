@@ -2,7 +2,7 @@
 
 In the last chapter, you learned that much of cognition is about making inferences. A common inference we're faced with involves generalizing examples of things to new cases.
 
--   A child hears a brand new word and they have to figure out which objects to apply that word to.
+-   A child hears a brand new word and has to figure out which objects that word applies to.
 -   You eat one candy from an assorted box and then try to guess what the others might taste like.
 -   You remember that your friend liked doing crosswords during a weekend trip at the cabin one time, so you guess they might like a book of puzzles as a gift (generalizing their interests).
 
@@ -10,7 +10,7 @@ How can we apply Bayesian inference to these kinds of problems?
 
 ## Healthy hormone levels 💉 {#hormones}
 
-This example comes from a [2001 paper by Josh Tenenbaum and Thomas Griffiths](https://cocosci.princeton.edu/tom/papers/TGbbs.pdf)[^03-generalization-1]
+The following example comes from a [2001 paper by Josh Tenenbaum and Thomas Griffiths](https://cocosci.princeton.edu/tom/papers/TGbbs.pdf)[^03-generalization-1]
 
 [^03-generalization-1]: Tenenbaum, J. B. & Griffiths, T. L. (2001). Generalization, similarity, and Bayesian inference. Behavioral and Brain Sciences, 24, 629-640.
 
@@ -65,7 +65,7 @@ $$
 
 ### Generalizing {#generalizing}
 
-We aren't quite finished. Remember that we really want to know the probability of some new value $y$ also being a healthy hormone level. But at this point all we have done is assigned a probability to each *interval* being the consequential region.
+We aren't quite finished. Remember that we really want to know the probability of some new value $y$ also being a healthy hormone level. But at this point all we have done is assign a probability to each *interval* being the consequential region.
 
 What we want to do is essentially a two-step process:
 
@@ -76,7 +76,9 @@ This basic idea is sometimes known as hypothesis averaging because we don't actu
 
 $$
 P(y \in C|X) = \sum_h P(y \in C | h) P(h | X)
-$$ The second term on the right is what we computed earlier using Bayes's rule.
+$$
+
+The second term on the right is what we computed earlier using Bayes's rule.
 
 What about the first term? This time, we'll assume *weak sampling* because there's no reason to assume that this new value $y$ was chosen to be a healthy value or not.
 
@@ -94,7 +96,7 @@ Consider the following problem: You are given one or more examples $X$ of number
 
 The model we discussed before can be naturally extended to this problem. For the likelihood, we can make the same [strong sampling](#weak-strong-sampling) assumption as before.
 
-The prior is where things get a little trickier. Intuitively some concepts like "even numbers" seem more probable even before seeing any examples than concepts like "multiples of 7". This now becomes a psychological question: Which rules will people find to be more intuitively plausible? There is no single way to decide this, but we could run a survey to find out: Give people a long list of rules and ask them to judge how intuitively natural they seem. We could then construct a prior probability distribution using this data.
+The prior is where things get a little trickier. Intuitively, some concepts like "even numbers" seem more probable than concepts like "multiples of 7". This now becomes a psychological question: Which rules will people find to be more intuitively plausible? There is no single way to decide this, but we could run a survey to find out: Give people a long list of rules and ask them to judge how intuitively natural they seem. We could then construct a prior probability distribution using this data.
 
 Alternatively, we could come up with some definition of "complexity" in hypotheses and assume that less complex hypotheses will receive higher prior probability.
 
@@ -126,7 +128,7 @@ The interesting psychological question is why is it that some generalizations se
 
 ### Hypothesis space
 
-This problem is conceptually similar to the ones we've already been discussing. You want to infer what animals have blicketitis after seeing some examples of animals that blicketitis. The first question to answer is what is the analogue of a consequential region for this problem. Animals don't naturally fall on a one-dimensional interval so we'll need to define a different hypothesis space. One possibility is a hierarchy, which naturally captures the knowledge people have about animals.
+This problem is conceptually similar to the ones we've already been discussing. You want to infer what animals have blicketitis after seeing some examples of animals that blicketitis. The first question to answer is: What is the analogue of a consequential region for this problem? Animals don't naturally fall on a one-dimensional interval so we'll need to define a different hypothesis space. One possibility is a hierarchy, which naturally captures the knowledge people have about animals.
 
 #### Clustering
 
@@ -159,26 +161,35 @@ A consequence of both of these assumptions is something like [Occam's razor](htt
 
 ### Try out the model yourself
 
-```{python include=FALSE}
+```{python}
+#| include: false
 
 import numpy as np
 import pandas as pd
 from scipy.special import comb
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 
 def animalGeneralization(premises, phi=20): 
+  """
+  Plots the generalization values and returns them.
+
+  Args:
+    premises: a list of animal names.
+    phi: a number that describes the strength of the simplicity bias.
+
+    This function uses a slightly simpler version of the prior than the
+    one in the original paper.
   
-  # - premises is a list of animal names.
-  # - phi is a number that describes the strength of the simplicity
-  #   bias in the prior (default = 20). This function uses a slightly simpler
-  #   version of the prior than the one in the original paper.
-  # 
-  # Plots the generalization values and returns them
-  
+  Returns:
+    The generalization values.
+
+  """
+
   animals = ["horse", "cow", "elephant", "rhino", "chimp",
-  "gorilla", "mouse", "squirrel", "dolphin", "seal"]
-  
+            "gorilla", "mouse", "squirrel", "dolphin", "seal"]
+
   # We'll hard-code the clusters from the tree structure. Here, each column in the
   # matrix. Each row is a cluster. A 1 means the animal is present in the cluster
   animal_clusters = np.array([[1,0,0,0,0,0,0,0,0,0], # The singleton clusters
@@ -197,112 +208,114 @@ def animalGeneralization(premises, phi=20):
                               [0,0,0,0,1,1,0,0,0,0],
                               [0,0,0,0,0,0,1,1,0,0],
                               [0,0,0,0,0,0,0,0,1,1],
-                              
+
                               [1,1,1,1,0,0,0,0,0,0], # The bigger clusters
                               [1,1,1,1,1,1,0,0,0,0],
                               [1,1,1,1,1,1,1,1,0,0],
                               [1,1,1,1,1,1,1,1,1,1],
                               ],
-                              dtype = "int")
-  
+                            dtype = "int")
+
   animal_clusters_df = pd.DataFrame(animal_clusters, columns = animals)
-  
+
   n_clusters = animal_clusters_df.shape[0]
   n_animals = len(animals)
   n_hypotheses = int(sum(comb(n_clusters,np.arange(1,4))))
-  
+
   # Initialize a hypothesis space of all possible clusters
   hypotheses = pd.DataFrame(np.zeros((n_hypotheses, n_animals)), 
-  columns = animals)
+                            columns = animals)
   priors = np.zeros(n_hypotheses)
-  
-  
+
+
   # The first order hypotheses are just the 19 clusters defined by the tree
   hypotheses[0:n_clusters] = animal_clusters_df
   priors[0:n_clusters] = 1/phi
-  
+
   # The second order hypotheses are the unique pairs of clusters in the tree
   i = n_clusters
-  
+
   for a in range(0, n_clusters-1):
     for b in range(a+1, n_clusters):
-      
+
       # Take the logical "or" of the two clusters from the tree
       hypotheses[i:i+1] = (np.array(animal_clusters_df[a:a+1], dtype="int") |
-      np.array(animal_clusters_df[b:b+1], dtype="int"))
-      
+                          np.array(animal_clusters_df[b:b+1], dtype="int"))
+
       # Update the prior
       priors[i] = (1/phi)**2
-      
+
       i += 1
-      
+
   # The third order hypotheses are the unique triples of clusters in the tree
   for a in range(0, n_clusters-2):
     for b in range(a+1, n_clusters-1):
       for c in range(b+1, n_clusters):
-        
+
         # Take the logical "or" of the three clusters from the tree
         hypotheses[i:i+1] = (np.array(animal_clusters_df[a:a+1], dtype="int") |
-        np.array(animal_clusters_df[b:b+1], dtype="int") |
-        np.array(animal_clusters_df[c:c+1], dtype="int"))
-        
+                            np.array(animal_clusters_df[b:b+1], dtype="int") |
+                            np.array(animal_clusters_df[c:c+1], dtype="int"))
+
         # Update the prior
         priors[i] = (1/phi)**3
-        
+
         i += 1
-            
-            
+
+
   # Now we need to remove the duplicate hypotheses. For example, there's a
   # {horse} cluster and a {cow} cluster, and there's also a {horse, cow}
   # cluster. So in our second order hypotheses, there's no need to include
   # {horse}+{cow}, because it's already included as a first order
   # hypothesis.
-  
+
   # To solve this problem, we'll remove the duplicate rows from our
   # hypothesis matrix (data frame).
-  
+
   # The pandas functions duplicated and drop_duplicates will handle this for us
   duplicates = hypotheses.duplicated()
   duplicate_indices = np.logical_not(duplicates)[np.logical_not(duplicates)].index
   hypotheses = hypotheses.drop_duplicates(ignore_index=True)
-  
+
   priors = priors[duplicate_indices]
   priors = priors / sum(priors) # normalize the prior prob. distribution
   n_hypotheses = len(priors) # update number of hypotheses to be more accurate
-  
+
   # Create the likelihoods
   likelihood = pd.DataFrame(np.zeros((n_hypotheses, n_animals)), 
-  columns = animals)
-            
+                            columns = animals)
+
   for i in range(0, n_hypotheses):
     # Set the likelihood equal to 1 over the number of animal species
     # in the hypothesis. If the animal isn't in the hypothesis, just ignore
     # it and leave the likelihood at 0.
     likelihood.loc[i, hypotheses.loc[i,:]==1] = 1/sum(hypotheses.loc[i,:])
-    
+
   # Show the model the premises
   for p in premises:
     priors = priors * np.array(likelihood[p])
-      
+
   priors = priors / sum(priors)
-  
+
   # Now compute the generealization probilities by computing a 
   # matrix multiplication of the belief vector and the hypothesis
   # matrix
   generalizations = np.matmul(priors, np.array(hypotheses))
-  
-  
+
+
   # Plot the results
+  sns.set_theme()
   fig, ax = plt.subplots()
+
   y_pos = np.arange(len(animals))
-  
-  
-  ax.barh(animals, generalizations, align='center')
-  ax.set_xlabel("Generalization probability")
+
+  sns.barplot(data=generalizations, orient = "y")
   ax.set_title("Premises: " + " ".join(premises))
-  
+  ax.set_xlabel("Generalization probability")
+  ax.set_yticks(ticks = y_pos, labels = animals)
+
   plt.show()
-  
+
   return(generalizations)
 
 ```
@@ -337,7 +350,7 @@ Now the probabilities for other animals drop, because it's starting to look like
 
 To sum up, when we've seen a small number of examples, like a single horse, the model will generally prefer simpler hypotheses. But once we've seen more data, it will favor more complex hypotheses (like a group of animals from two separate evolutionary clusters) if the data support it.
 
-As one final example, let's look at the specific impact of multiple examples of a single animal.
+As one final example, let's look at the impact of multiple examples of a single animal.
 
 ```{python}
 animalGeneralization(["gorilla"])
