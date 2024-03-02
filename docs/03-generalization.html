@@ -251,7 +251,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="generalization" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Generalization</span></h1>
 </div>
 
 
@@ -399,7 +399,7 @@ Horses have blicketitis</code></pre>
 <p><span class="math display">\[
 P(h) \propto \frac{1}{\phi^k}
 \]</span> where <span class="math inline">\(k\)</span> is the number of clusters in <span class="math inline">\(h\)</span>. <span class="math inline">\(\phi\)</span> is a parameter that we can choose. As long as <span class="math inline">\(\phi &gt; 1\)</span>, <span class="math inline">\(P(h)\)</span> will be smaller for hypotheses consisting of more clusters. This has the effect of assigning higher weight to “simpler” hypotheses.</p>
-<p>Once again, we will make the <a href="#sampling-assumptions">strong sampling assumption</a> for the likelihood. This time, <span class="math inline">\(|h|\)</span> is the number of animal species in <span class="math inline">\(h\)</span> and <span class="math inline">\(n\)</span> is the number of examples in the premises.</p>
+<p>Once again, we will make the <a href="06-sampling-assumptions.html#sampling-assumptions">strong sampling assumption</a> for the likelihood. This time, <span class="math inline">\(|h|\)</span> is the number of animal species in <span class="math inline">\(h\)</span> and <span class="math inline">\(n\)</span> is the number of examples in the premises.</p>
 <p>A consequence of both of these assumptions is something like <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam’s razor</a> which says that the simplest explanation should be preferred. This model will assign 0 likelihood to any hypotheses that don’t include <span class="math inline">\(X\)</span>, thus narrowing the hypothesis space down to just hypotheses that are possible. Of those, it will favor hypotheses with fewer clusters and with fewer animals. In other words, it will favor the simplest hypotheses that are consistent with the examples we’ve seen.</p>
 </section>
 <section id="try-out-the-model-yourself" class="level3" data-number="3.3.3">
@@ -554,7 +554,7 @@ P(h) \propto \frac{1}{\phi^k}
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-3-output-1.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-3-output-1.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>array([1.        , 0.52984834, 0.30628906, 0.30628906, 0.19579428,
@@ -565,7 +565,7 @@ P(h) \propto \frac{1}{\phi^k}
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-4-output-1.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-4-output-1.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>array([1.        , 1.        , 0.57379051, 0.57379051, 0.47852518,
@@ -576,7 +576,7 @@ P(h) \propto \frac{1}{\phi^k}
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-5-output-1.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-5-output-1.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>array([1.        , 1.        , 0.64983602, 0.64983602, 0.58531333,
@@ -587,7 +587,7 @@ P(h) \propto \frac{1}{\phi^k}
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"horse"</span>, <span class="st">"cow"</span>, <span class="st">"mouse"</span>, <span class="st">"squirrel"</span>, <span class="st">"horse"</span>, <span class="st">"squirrel"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-6-output-1.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-6-output-1.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array([1.        , 1.        , 0.32551484, 0.32551484, 0.26938358,
@@ -602,13 +602,13 @@ P(h) \propto \frac{1}{\phi^k}
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>])</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>animalGeneralization([<span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>, <span class="st">"gorilla"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-7-output-1.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-7-output-1.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-7-output-2.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-7-output-2.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="03-generalization_files/figure-html/cell-7-output-3.png" width="608" height="449"></p>
+<p><img src="03-generalization_files/figure-html/cell-7-output-3.png" width="608" height="442"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([0.01730482, 0.01730482, 0.01730482, 0.01730482, 0.1259028 ,

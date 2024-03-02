@@ -28,11 +28,11 @@ This book focuses on each of these questions.
 
 ## Homework 1: Build your first computational model 💻
 
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1MEiil0swXHERwJ38rVGZPTndyetHJPYQ?usp=sharing)
-
 To get some initial experience with computational modeling, you'll build and experiment with a simple model of classical conditioning developed by Robert Rescorla and Allan Wagner -- now called the Rescorla-Wagner model.
 
-All homework assignments for this book will be done in Google Colab. Click the button at the top of this section to view Homework 1.
+All homework assignments for this book will be done in Google Colab. Click the button below to view Homework 1.
+
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Rxi7Aqu6423eTypW_Ok6709hIVtOCtm0?usp=sharing)
 
 ::: callout-note
 You'll have to make a copy of the notebook saved to your own Drive in order to edit it.
