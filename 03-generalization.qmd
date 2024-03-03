@@ -84,7 +84,7 @@ What about the first term? This time, we'll assume *weak sampling* because there
 
 ### Homework 2: Finish the details
 
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1PQMz6W9d1VoRi471NLdxCsV-XGp4Rs-j?usp=sharing)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1aqPpMyc-eMyLGpHFl2Fq_NlLiTuHkGky?usp=sharing)
 
 I haven't provided all the details for this model because your assignment is to finish the implementation yourself, run some simulations, and collect a small amount of real data to compare the model to.
 

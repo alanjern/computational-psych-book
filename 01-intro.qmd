@@ -32,7 +32,7 @@ To get some initial experience with computational modeling, you'll build and exp
 
 All homework assignments for this book will be done in Google Colab. Click the button below to view Homework 1.
 
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Rxi7Aqu6423eTypW_Ok6709hIVtOCtm0?usp=sharing)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1tOD-ChXJ2MlsIqU85yWzSqZnmg64KcRv?usp=sharing)
 
 ::: callout-note
 You'll have to make a copy of the notebook saved to your own Drive in order to edit it.
