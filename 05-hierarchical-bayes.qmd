@@ -1,6 +1,6 @@
 # Hierarchical generalization {#hierarchical-generalization}
 
-In [previous examples](#bayes), there were always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval \[0,1\].
+In [previous examples](02-bayes.qmd#bayes), there was always a finite number of hypotheses that we were making inferences about (number of black balls, fair or trick coin, yellow or green taxi). Sometimes, we want to consider an infinite set of hypotheses. For example, after flipping a coin, what is the probability of that coin coming up heads? The answer to this question could be any number in the interval \[0,1\].
 
 ## The Beta-Binomial model 🪙 {#beta-binomial}
 
@@ -39,13 +39,18 @@ The [Beta distribution](https://en.wikipedia.org/wiki/Beta_distribution) has two
 from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set_theme()
 
 def plot_beta(a, b):
   x = np.linspace(0,1,num=500)
   px = stats.beta.pdf(x, a, b)
   
   fig, ax = plt.subplots()
-  ax.plot(x, px)
+  #ax.plot(x, px)
+  sns.lineplot(x = x, y = px)
+  ax.set_xlabel(r'$\theta$')
   plt.show()
 
 ```
@@ -100,7 +105,7 @@ The parameters of the posterior distribution are (1) the sum of $\alpha$ from th
 
 Because we used a conjugate distribution, we can use our same `plot_beta` function to generate posterior probability distributions after some coin flips.
 
-Suppose we start with a fairly strong belief that a coin is fair, represented by this distribution:
+Suppose you start with a fairly strong belief that a coin is fair, represented by this distribution:
 
 ```{python}
 plot_beta(30,30)
@@ -120,7 +125,7 @@ This wasn't totally realistic, though. If you picked a coin off the ground, your
 plot_beta(2000,2000)
 ```
 
-What happens if we *now* flipped this coin 20 times and it came up heads every time?
+What happens if you *now* flipped this coin 20 times and it came up heads every time?
 
 ```{python}
 plot_beta(2000+20,2000)
@@ -144,7 +149,7 @@ As you can see, the posterior distribution shows that you should think this coin
 
 ### Hypothesis averaging
 
-[In Chapter 3](#generalizing), we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.
+[In Chapter 3](03-generalization.qmd#generalizing), we solved the generalization problem by summing over all hypotheses, weighted by their posterior probabilities. Here, we can do something similar.
 
 Suppose we want to know the probability of the next flip coming up heads. In other words, we want to know $P(\text{heads}|D)$. We can do that by averaging over all possible values of $\theta$:
 
@@ -160,7 +165,7 @@ If you answered yes, it's probably because you formed an *overhypothesis* about 
 
 ### The shape bias
 
-This coins example is pretty artificial, but the notion of overhypotheses is one that you find in language learning. A phenomenon known as [the shape bias](https://doi.org/10.1016/0885-2014(88)90014-7) refers to the fact that even young children are more likely to generalize a new word based on its shape rather than other properties like color or texture.
+This coins example is pretty artificial, but the concept of overhypotheses is one that you find in language learning. A phenomenon known as [the shape bias](https://doi.org/10.1016/0885-2014(88)90014-7) refers to the fact that even young children are more likely to generalize a new word based on its shape rather than other properties like color or texture.
 
 ![A common task used to test for the shape bias.](images/05/shape_bias.gif)
 
@@ -172,7 +177,7 @@ Charles Kemp, Andy Perfors, and Josh Tenenbaum developed [a model](http://www.ch
 
 The details of the model are outside the scope of this book. But the basic idea is that the model learns at two levels simultaneously. At the higher level, the model learns the parameters $\alpha$ and $\beta$ of a Beta distribution that characterizes the proportion of black and white marbles in each bag. As we saw above, a Beta distribution can have a peak around a particular proportion, or it can be peaked around both 0 and 1, meaning that each bag is likely to be nearly all black or all white.
 
-At the lower level, the model learns the specific distribution of marbles within a bag. If you draw 20 marbles and 5 of them are black, you may have some uncertainty about the overall proportion in the bag, but your best estimate will be around 5/20 or 1/4.
+At the lower level, the model learns the specific distribution of marbles within a bag. If you draw 20 marbles and 5 of them are black, you may have some uncertainty about the overall proportion in the bag, but your best estimate will be around 5/20 (or 1/4).
 
 Where the model excels is being able to draw inferences *across* bags. If you see many bags that are full of *only* black or *only* white marbles, and then you draw a single black marble out of a new bag, you are likely to be very confident that the rest of the marbles in that bag are black.
 
