@@ -1,8 +1,8 @@
 # Sampling assumptions
 
-So far, we've seen where [strong sampling](#weak-strong-sampling) was a logical assumption to make. But it isn't always.
+So far, we've seen where [strong sampling](03-generalization.qmd#weak-strong-sampling) was a logical assumption to make. But it isn't always.
 
-For example, consider [the hormone problem from Chapter 3](#hormones). If you were randomly testing people's hormone levels and every person just happened to be healthy, clearly strong sampling wouldn't be appropriate, because we were sampling from the full population of both healthy and unhealthy people.
+For example, consider [the hormone problem from Chapter 3](03-generalization.qmd#hormones). If you were randomly testing people's hormone levels and every person just happened to be healthy, clearly strong sampling wouldn't be appropriate, because we were sampling from the full population of both healthy and unhealthy people.
 
 This raises a question: Are people sensitive to the process by which data are generated?
 
@@ -26,7 +26,7 @@ Consider a different situation:
 
 **What is a wug?** Are all circles wugs? Or just blue circles?
 
-In both situations, the observed data is the same: three blue circles labeled as wugs. What's different is the process by which the data was generated. In one case, a knowledgeable teacher picked all the wugs; in the other, the teacher only picked one example and a (probably not knowledgeable) child picked the others.
+In both situations, the observed data is the same: three blue circles labeled as wugs. What's different is the process by which the data were generated. In one case, a knowledgeable teacher picked all the wugs; in the other, the teacher only picked one example and a (probably not knowledgeable) child picked the others.
 
 To use some terms we've seen before, the teacher is using strong sampling. The child is using something closer to weak sampling.
 
@@ -52,7 +52,7 @@ $$ {#eq-pedagogical}
 
 Here, $\alpha$ is a parameter that controls how optimized the teacher's choices are. As $\alpha \rightarrow \infty$, the teacher will choose examples $d$ that maximize the learner's posterior probability.
 
-This means we can figure out how the learner will update their beliefs about a concept by directly applying Bayes rule:
+We can figure out how the learner will update their beliefs about a concept by directly applying Bayes rule:
 
 $$
 \begin{equation}
@@ -74,8 +74,8 @@ How to solve this equation? In the paper, they use an iterative algorithm, that 
 
 1.  Initialize $P_{\text{teacher}}(d|h)$ using weak sampling.
 2.  Iterate through the following steps until $P_{\text{teacher}}(d|h)$ stabilizes (doesn't change from one iteration to the next):
-    1.  For each possible $h$ and $d$, compute $P_{\text{learner}}(h|d)$ using Equation @eq-plearner and $P_{\text{teacher}}(d|h)$ values from the previous iteration.
-    2.  For each possible $d$ and $h$, update $P_{\text{teacher}}(d|h)$ using $P_{\text{learner}}(h|d)$ values from the previous step, where $P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)$ (Equation @eq-pedagogical).
+    1.  For each possible $h$ and $d$, compute $P_{\text{learner}}(h|d)$ using @eq-plearner and $P_{\text{teacher}}(d|h)$ values from the previous iteration.
+    2.  For each possible $d$ and $h$, update $P_{\text{teacher}}(d|h)$ using $P_{\text{learner}}(h|d)$ values from the previous step, where $P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)$ (@eq-pedagogical).
 
 ### The rectangle game
 
@@ -100,5 +100,19 @@ One key prediction of the model is that the most informative locations for examp
 ![Results from Shafto et al.'s (2014) Experiment 1.](images/06/shafto_etal_expt1_results.png)
 
 As you can see, when people thought a knowledgeable teacher was providing the examples (the teaching-pedagogical and pedagogical learning conditions), they were much more likely to draw tight boundaries around the examples, compared to when they didn't think a teacher was providing the examples (the non-pedagogical learning condition). This suggests that people were indeed sensitive to the process by which the data were generated and incorporated that understanding into their inferences.
+
+### Why the hypothesis space matters
+
+What happens when teachers and learners have different assumptions about the the problem they're looking at?
+
+In the rectangle game, it's pretty obvious what the space of hypotheses is: it's practically pre-specified as part of the game. But in most real-world teaching situations, teachers have much more knowledge not shared by the learners than just the specific concept they are trying to convey. How might this interfere with learning?
+
+This was the question that a group of researchers led by Rosie Aboody [tested](https://compdevlab.yale.edu/docs/2023/aboody2023-cogsci.pdf). They applied the model we just looked at to a problem where the space of hypotheses was more ambiguous than in the rectangle game. In a study of 220 people (20 teachers and 200 learners), only about half of the learners managed to fully learn the concept (a rule in this case). They used the model to better understand what was going on.
+
+![From Aboody et al. (2023).](images/06/aboody_etal_expt1.PNG){width="85%"}
+
+They input the teachers' chosen examples into the model to see if the model successfully learned the correct rule. What they varied was the hypothesis space of possible rules the model considered. When the hypothesis space was small (55 or fewer total rules), the model inferred the correct rule for 75% of the teachers' sets of examples (by correct, they mean placing 95% or more posterior probability on the correct rule). It wasn't until they increased the hypothesis space to 95 total rules that the percentage of times the teachers' examples led the model to correctly infer the rule dropped to 55%.
+
+The researchers concluded from this that the learners were probably considering a larger, more complex set of rules than the teachers were. This misaligned set of assumptions likely caused the low learning rate.
 
 In the next chapter, we'll work through one more application of people's sensitivity to different sampling assumptions: understanding the pragmatics of speech.
