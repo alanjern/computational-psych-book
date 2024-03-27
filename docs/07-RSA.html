@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -288,18 +288,20 @@ f(p) = -log(p)
 <p>Here’s a plot of this function:</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.linspace(<span class="fl">0.001</span>,<span class="dv">1</span>,num<span class="op">=</span><span class="dv">500</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> <span class="op">-</span>np.log(p)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ax.plot(p, fp)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"p"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"surprisal"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.linspace(<span class="fl">0.001</span>,<span class="dv">1</span>,num<span class="op">=</span><span class="dv">500</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> <span class="op">-</span>np.log(p)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x <span class="op">=</span> p, y <span class="op">=</span> fp)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"p"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"surprisal"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-2-output-1.png" width="576" height="429"></p>
+<p><img src="07-RSA_files/figure-html/cell-2-output-1.png" width="581" height="428"></p>
 </div>
 </div>
 <p><em>What does surprisal have to do with language?</em></p>
@@ -322,7 +324,7 @@ f(p) = -log(p)
 <li>“I had <em>some</em> cookies.” (You ate one or two.)</li>
 <li>“I had <em>all</em> the cookies.” (You ate two.)</li>
 <li>“I had <em>no</em> cookies.” (You ate none.)</li>
-<li>Nothing – stay silent. (You could have eaten none or any number of cookies.)</li>
+<li>Nothing – stay silent. (You could have eaten no cookies, one cookie, or two cookies.)</li>
 </ol>
 <p>Let’s define this situation using a binary matrix. Each row is a signal (what you say) and each column is a state (how many cookies were eaten).</p>
 <div class="cell" data-execution_count="2">
@@ -338,31 +340,24 @@ f(p) = -log(p)
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_state_matrix(m, x_labels<span class="op">=</span><span class="va">None</span>, y_labels<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  im <span class="op">=</span> ax.imshow(m)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x_labels <span class="kw">and</span> y_labels):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(np.arange(<span class="bu">len</span>(x_labels)), labels<span class="op">=</span>x_labels)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks(np.arange(<span class="bu">len</span>(y_labels)), labels<span class="op">=</span>y_labels)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(y_labels)):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x_labels)):</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> ax.text(j, i, <span class="bu">round</span>(m[i, j],<span class="dv">2</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>          ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"center"</span>, color<span class="op">=</span><span class="st">"w"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  fig.tight_layout()</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the matrix</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>print_state_matrix(state_matrix, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x_labels <span class="kw">and</span> y_labels):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    sns.heatmap(m, annot<span class="op">=</span><span class="va">True</span>, xticklabels<span class="op">=</span>x_labels, yticklabels<span class="op">=</span>y_labels)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    sns.heatmap(m, annot<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the matrix</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>print_state_matrix(state_matrix, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-4-output-1.png" width="386" height="469"></p>
+<p><img src="07-RSA_files/figure-html/cell-4-output-1.png" width="540" height="414"></p>
 </div>
 </div>
-<p>Now let’s calculate how a literal listener would interpret each of these statements. Each row in the matrix above (one for each signal) will define a distribution over the states. That is, for for state <span class="math inline">\(h\)</span> and signal <span class="math inline">\(d\)</span>, we want to compute:</p>
+<p>Now let’s calculate how a literal listener would interpret each of these statements. Each row in the matrix above (one for each signal) will define a distribution over the states. That is, for state <span class="math inline">\(h\)</span> and signal <span class="math inline">\(d\)</span>, we want to compute:</p>
 <p><span class="math display">\[
 P_{\text{listener}}(h|d) \propto P(d|h) P(h)
 \]</span></p>
-<p>The literal listener assumes that, given a state, a signal consistent with that state is chosen at random by the speaker. This is already captured in the matrix above: Signals consistent with a state have a value of 1 in their cells and signals inconsistent have a 0. We will also assume that the listener has a uniform prior over states. Therefore, we can calculate the literal listener’s probabilities by just normalizing the rows of the matrix.</p>
+<p>The literal listener assumes that, given a state, a signal consistent with that state is chosen at random by the speaker. This is already captured in the matrix above: signals consistent with a state have a value of 1 in their cells and signals inconsistent have a 0. We will also assume that the listener has a uniform prior over states. Therefore, we can calculate the literal listener’s probabilities by just normalizing the rows of the matrix.</p>
 <p>We’ll do this more than once, so let’s write a function to do it.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize_rows(m):</span>
@@ -378,40 +373,39 @@ P_{\text{listener}}(h|d) \propto P(d|h) P(h)
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>literal_listener <span class="op">=</span> normalize_rows(state_matrix)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>print_state_matrix(literal_listener, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-6-output-1.png" width="386" height="469"></p>
+<p><img src="07-RSA_files/figure-html/cell-6-output-1.png" width="540" height="414"></p>
 </div>
 </div>
 <p>Now let’s calculate the pragmatic speaker. The pragmatic speaker chooses a signal given a state. Therefore, this time, the <em>columns</em> of the matrix will be probability distributions.</p>
 <p>Unlike the literal listener, the pragmatic speaker is trying to convey some information, so they will choose a signal with the greatest <em>expected utility</em> for the literal listener. Expected utility in this case is defined as the expected increase in understanding about the true state of the world. Remember, we already have a way of quantifying this: surprisal. So we’ll define utility as negative surprisal of the state given the signal from the point of view of the literal listener: <span class="math inline">\(-(-log(P_{\text{listener}}(h|d)))\)</span>.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we apply a softmax decision function</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="dv">1</span> <span class="co"># paramater controls how close to maximizing speaker is</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pragmatic_speaker <span class="op">=</span> np.exp(np.log(literal_listener)<span class="op">*</span>alpha)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> <span class="bu">range</span>(pragmatic_speaker.shape[<span class="dv">1</span>]):</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  pragmatic_speaker[:,col] <span class="op">=</span> (pragmatic_speaker[:,col] <span class="op">/</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span>(pragmatic_speaker[:,col]))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>print_state_matrix(pragmatic_speaker, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\jern\AppData\Local\Temp\ipykernel_11876\3850398469.py:3: RuntimeWarning:
-
-divide by zero encountered in log
-</code></pre>
-</div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="dv">1</span> <span class="co"># this paramater controls how close to maximizing the speaker is</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># To avoid an error, let's avoid the cells with P(0)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>nonzero_probs <span class="op">=</span> literal_listener <span class="op">!=</span> <span class="dv">0</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>pragmatic_speaker <span class="op">=</span> literal_listener</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>pragmatic_speaker[nonzero_probs] <span class="op">=</span> np.exp(np.log(literal_listener[nonzero_probs])<span class="op">*</span>alpha)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> <span class="bu">range</span>(pragmatic_speaker.shape[<span class="dv">1</span>]):</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  pragmatic_speaker[:,col] <span class="op">=</span> (pragmatic_speaker[:,col] <span class="op">/</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span>(pragmatic_speaker[:,col]))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>print_state_matrix(pragmatic_speaker, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-7-output-2.png" width="386" height="469"></p>
+<p><img src="07-RSA_files/figure-html/cell-7-output-1.png" width="540" height="408"></p>
 </div>
 </div>
-<p>In the above code, I used something known as a “softmax” rather than a true maximizing function. The exponential function captures the idea that the speaker will choose probabilistically, generally choosing options with more utility. This is a fairly common assumption in both psychology and economics because we often don’t have complete information when making decisions (or when modeling other people’s decisions), so assuming a pure maximizing function isn’t always the best choice.</p>
+<p>In the above code, I used something known as a “softmax” rather than a true maximizing function. The exponential function captures the idea that the speaker will choose probabilistically, generally choosing options with more utility. This is a common assumption in both psychology and economics because we often don’t have complete information when making decisions (or when modeling other people’s decisions), so assuming a pure maximizing function isn’t always the best choice.</p>
 <p>However, I also included a parameter <code>alpha</code> that controls how close to maximizing the speaker is. The larger <code>alpha</code> is, the closer the speaker will get to maximizing utility.</p>
 <p>Now we can calculate the probabilities for the pragmatic listener. This will be similar to the literal listener in that the pragmatic listener receives a signal and computes the probability of each state given a signal. The difference is that the pragmatic listener doesn’t assume the signals are chosen at random, but that the signals are chosen by the pragmatic speaker above.</p>
 <p>We can compute the pragmatic listener by normalizing the matrix above along the rows.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pragmatic_listener <span class="op">=</span> normalize_rows(pragmatic_speaker)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>print_state_matrix(pragmatic_listener, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pragmatic_listener <span class="op">=</span> normalize_rows(pragmatic_speaker)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>print_state_matrix(pragmatic_listener, states, signals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="07-RSA_files/figure-html/cell-8-output-1.png" width="386" height="469"></p>
+<p><img src="07-RSA_files/figure-html/cell-8-output-1.png" width="540" height="414"></p>
 </div>
 </div>
 <p>The pragmatic listener correctly infers a <a href="https://en.wikipedia.org/wiki/Scalar_implicature">scalar implicature</a>, a concept from pragmatics in linguistics. Even though “I had some cookies” is consistent with eating all of the cookies, a pragmatic listener will infer that if a person says they ate <em>some</em> then they did not eat <em>all</em> (otherwise they would have said so).</p>
@@ -449,7 +443,7 @@ P(w|r_s,C) = \frac{|w|^{-1}}{\sum_{w^\prime \in W} {|w^\prime|}^{-1}}
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="homework-4-implement-the-model"><span class="header-section-number">7.3.3</span> Homework 4: Implement the model</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://colab.research.google.com/drive/107RdaavVkoQQS_1xoH7jnvbe0RA1AJy-?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
+<p><a href="https://colab.research.google.com/drive/1qrSDiXLG4VlBJI_XajdbAFQdcwMAqD0W?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 <p>I haven’t provided all the details for this model because your assignment is to finish the implementation yourself, run some simulations, and collect a small amount of real data to compare the model to.</p>
