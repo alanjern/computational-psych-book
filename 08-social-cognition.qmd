@@ -8,13 +8,13 @@ If you're like most people, you see more than just lifeless shapes moving around
 
 This animation, from a [1944 study by Heider and Simmel](https://psycnet.apa.org/doi/10.2307/1416950), is an excellent example of our capacity for *social cognition*: thinking about other people. **We are constantly attributing goals, beliefs, desires, and feelings to others.** The fact that we are willing to do it for simple shapes suggests we may not be able to help ourselves from doing it.
 
-When someone takes an action, makes a decision, or makes a facial expression, how do we infer what they're thinking or feeling? In this chapter, we'll look at two computational approaches to answering this question.
+When someone takes an action, makes a decision, or makes a facial expression, how do we infer what they're thinking or feeling? In this chapter, we'll look at two simple computational approaches to answering this question.
 
 ## Inverse decision-making 🍑 {#inverse-decision-making}
 
-All social cognition problems have the same basic character: you *observe* something about other people, and you want to *infer* some underlying cause of the thing you observed. For example, you see someone take an action, and you want to infer the goal that motivated the action.
+All social cognition problems have the same basic character: you *observe* something about other people and you want to *infer* some underlying cause of what you observed. For example, you see someone take an action and you want to infer the goal that motivated their action.
 
-The basic idea behind many approaches to understanding how people reason about other people is that they have some kind of mental model of how other people act and they essentially run that model backward (or invert) the model to infer the information they don't get to see.
+The basic idea behind many approaches to understanding how people reason about other people is that people have some kind of mental model of how other people act and they essentially run that model backward (or invert the model) to infer the information they don't get to see.
 
 Consider a simple decision-making situation. Rue likes peaches more than oranges and oranges more than apples:
 
@@ -22,7 +22,7 @@ Consider a simple decision-making situation. Rue likes peaches more than oranges
 
 Now you give Rue a choice between these three fruits. Which one is she most likely to choose?
 
-Probably the peach right? I mean, she might choose the orange or the apple because she happens to be in the mood for one of those, but given the information you have, the peach is a good guess.
+Probably the peach, right? She might choose the orange or the apple because she happens to be in the mood for one of those, but given the information you have, the peach is a good guess.
 
 Now imagine you don't know Rue's fruit preferences. She's offered the following fruits to pick from:
 
@@ -58,7 +58,7 @@ In this model, $c$ is the choice, $o_j$ refers to option $j$, $\mathbf{A}$ is a 
 
 #### Inverting the model {#inverting-the-choice-model}
 
-Remember that our goal is to *infer other people's preferences*, not predict their choices. So, after we see someone make a choice between some fruits, how do we infer what fruits they like best? We can invert Equation @eq-choicemodel using Bayes's rule:
+Remember that our goal is to *infer other people's preferences*, not predict their choices. So, after we see someone make a choice between some fruits, how do we infer what fruits they like best? We can invert @eq-choicemodel using Bayes's rule:
 
 $$
 \begin{equation}
@@ -78,7 +78,7 @@ Jules has a choice between the following options:
 >
 > Option 2: 🍎 🍊 🍌
 
-Both Rue and Jules pick Option 1, which includes a peach 🍑. Based on their choices alone, who do you think likes peaches more? (Or, at least, which person's choice would make you more confident they like peaches?)
+Both Rue and Jules pick Option 1, which includes a peach 🍑. Based on their choices alone, who do you think likes peaches more? Or, to put it a different way, which person's choice would make you more confident they like peaches?
 
 Let's apply the inverse decision-making model to these two choices.
 
@@ -99,23 +99,23 @@ choice_jules = np.array([[1,0,0,0],
 
 ```
 
-Let's define a function that calculates the choice probability in Equation @eq-choicemodel. This is our likelihood function.
+Let's define a function that calculates the choice probability in @eq-choicemodel. This is our likelihood function.
 
 ```{python}
 def compute_choice_prob(j, u, options): 
-  '''Returns the probability of choosing option j
-     from the set options.
+  '''
+  Returns the probability of choosing option j from the set options.
      
-     Parameters:
-       j (int): the chosen option
-       u (array): a vector of utilities assigned to the
-         attributes in the options
-       options (array): a matrix in which each row is an
-         option, and each option is a binary array of the 
-         attributes in that option
-         
-     Returns:
-       p (float): probability of choosing option j
+  Args:
+    j (int): the chosen option
+    u (array): a vector of utilities assigned to the
+      attributes in the options
+    options (array): a matrix in which each row is an
+      option, and each option is a binary array of the 
+      attributes in that option
+     
+  Returns:
+    p (float): probability of choosing option j
   '''
   
   # Compute the total utility of each option
@@ -130,10 +130,10 @@ Let's first assume they both like all fruits equally (they get a utility of 1 fr
 ```{python}
 utilities = np.array([1,1,1,1])
 
-print("Rue's choice probability:" + 
-  str(compute_choice_prob(0, utilities, choice_rue)))
-print("Jules's choice probability:" + 
-  str(compute_choice_prob(0, utilities, choice_jules)))
+print("Rue's choice probability: {:.3f}".format(
+  compute_choice_prob(0, utilities, choice_rue)))
+print("Jules's choice probability: {:.3f}".format(
+  compute_choice_prob(0, utilities, choice_jules)))
 ```
 
 Unsurprisingly, Rue's choice is much more probable. What if they like peaches four times as much as other fruits?
@@ -141,10 +141,10 @@ Unsurprisingly, Rue's choice is much more probable. What if they like peaches fo
 ```{python}
 utilities = np.array([4,1,1,1])
 
-print("Rue's choice probability:" + 
-  str(compute_choice_prob(0, utilities, choice_rue)))
-print("Jules's choice probability:" + 
-  str(compute_choice_prob(0, utilities, choice_jules)))
+print("Rue's choice probability: {:.3f}".format(
+  compute_choice_prob(0, utilities, choice_rue)))
+print("Jules's choice probability: {:.3f}".format(
+  compute_choice_prob(0, utilities, choice_jules)))
 ```
 
 This increases Rue's choice probability by just over 10%, but it increases Jules's choice probability by over 60%.
@@ -156,6 +156,9 @@ We can capture this idea by assuming that utilities for fruits are normally dist
 ```{python}
 from scipy.stats import norm
 import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set_theme()
 
 u_mean = 2
 u_sd = 0.5
@@ -164,7 +167,7 @@ u = np.linspace(-1,5,1000)
 pu = norm.pdf(u,u_mean,u_sd)
 
 fig, ax = plt.subplots(1,1)
-ax.plot(u, pu)
+sns.lineplot(x = u, y = pu)
 ax.set_xlabel("u")
 ax.set_title("Prior probability of u")
 
@@ -175,7 +178,7 @@ Additionally, we'll make the simplifying assumption that utilities for different
 
 Finally, we need a way to compute $p(c|\mathbf{A})$. In other words, after seeing Rue make a choice, what was the probability of *anyone* with *any preferences* making that choice?
 
-[Previously](#normalization), we got around computing denominators like this by normalizing. This works when you can enumerate the full hypothesis space. This time, the space of hypotheses (all possible assignments of utilities to fruits) is continuous and it's not easy to integrate over. So we need to do something else.
+[Previously](#normalization), we avoided computing denominators like this by normalizing. This works when you can enumerate the full hypothesis space. This time, the space of hypotheses (all possible assignments of utilities to fruits) is continuous and it's not easy to integrate over. So we need to do something else.
 
 #### Monte Carlo estimation {#monte-carlo}
 
@@ -191,20 +194,24 @@ Here's the basic idea as it applies to our problem. We want to know the overall 
 Let's write a function to do this.
 
 ```{python}
-def estimate_marginal_likelihood(j, options, n_samples): 
-  '''Returns an estimate of the probability of choosing option j
-     from the set options using Monte Carlo estimation.
+def estimate_marginal_likelihood(j, options, n_samples, m, sd): 
+  '''
+  Returns an estimate of the probability of choosing option j
+     from the set of options using Monte Carlo estimation.
      
-     Parameters:
-       j (int): the chosen option
-       options (array): a matrix in which each row is an
-         option, and each option is a binary array of the 
-         attributes in that option
-       n_samples (int): number of Monte Carlo samples to
-         collect
-         
-     Returns:
-       (float): probability of choosing option j
+   Args:
+    j (int): the chosen option
+    options (array): a matrix in which each row is an
+     option, and each option is a binary array of the 
+     attributes in that option
+    n_samples (int): number of Monte Carlo samples to
+     collect
+    m: mean of utility prior
+    sd: std. dev. of utility prior
+      
+       
+   Returns:
+    (float): probability of choosing option j
   '''
   
   n_attributes = len(options[0])
@@ -212,7 +219,7 @@ def estimate_marginal_likelihood(j, options, n_samples):
   
   for i in range(n_samples):
     # draw random u sample
-    u = np.random.normal(u_mean,u_sd,n_attributes)
+    u = np.random.normal(m,sd,n_attributes)
     mc_samples[i] = compute_choice_prob(j, u, options)
   
   return(np.mean(mc_samples))
@@ -221,13 +228,14 @@ def estimate_marginal_likelihood(j, options, n_samples):
 Let's compare the probability of someone making [the choices that Rue and Jules made](#inverting-the-choice-model).
 
 ```{python}
-print("Rue's choice probability: " + 
-  str(estimate_marginal_likelihood(0, choice_rue, 2000)))
-print("Jules's choice probability: " +
-  str(estimate_marginal_likelihood(0, choice_jules, 2000)))
+
+print("Rue's choice probability: {:.3f}".format(
+  estimate_marginal_likelihood(0, choice_rue, 2000, u_mean, u_sd)))
+print("Jules's choice probability: {:.3f}".format(
+  estimate_marginal_likelihood(0, choice_jules, 2000, u_mean, u_sd)))
 ```
 
-Unsurprisingly, Jules's choice has a much higher baseline probability.
+Unsurprisingly, Rue's choice has a much higher baseline probability (because she picked three fruits over one and Jules picked one fruit over three).
 
 #### Putting it all together
 
@@ -242,8 +250,10 @@ n_attributes = len(choice_rue[0])
 peach = 0
 banana = 3
 
-marginal_likelihood_rue = estimate_marginal_likelihood(0, choice_rue, n_samples)
-marginal_likelihood_jules = estimate_marginal_likelihood(0, choice_jules, n_samples)
+marginal_likelihood_rue = estimate_marginal_likelihood(
+  0, choice_rue, n_samples, u_mean, u_sd)
+marginal_likelihood_jules = estimate_marginal_likelihood(
+  0, choice_jules, n_samples, u_mean, u_sd)
 
 mc_samples_rue = np.zeros(n_samples)
 mc_samples_jules = np.zeros(n_samples)
@@ -268,7 +278,6 @@ Let's look at the results.
 
 ```{python}
 import pandas as pd
-import seaborn as sb
 
 samples = pd.DataFrame(data = {'Rue': mc_samples_rue,
                                'Jules': mc_samples_jules})
@@ -278,8 +287,7 @@ samples = samples.melt(value_vars=["Jules","Rue"],
 # filter out extreme samples
 samples_filtered = samples[samples["u"] < 50]
 
-fig, ax = plt.subplots(1,1)
-g = sb.displot(data=samples_filtered, x="u", hue="person", kind="kde")
+sns.displot(data=samples_filtered, x="u", hue="person", kind="kde")
 
 plt.show()
 ```
@@ -292,7 +300,7 @@ Jules's choice is a bit odd, so it's harder to make sense of. One way to explain
 
 ### Homework 5: Your turn
 
-[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Zk2mUWffNXrBd_9S_7FqD8KDCr9-CofY?usp=sharing)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1hGTsIzEeT5YtS1X2aA625YZDI8OSLCSU?usp=sharing)
 
 In your next assignment, you'll fully implement a version of this model and compare it to data I collected (along with Chris Lucas and Charles Kemp).
 
@@ -306,7 +314,7 @@ Suppose Rue and Jules both make a choice between the same two fruits:
 >
 > Option 2: 🍌
 
-They both choose the peach 🍑. The difference is that, for Rue, both fruits were placed in a bowl in front of her. For Jules, the peach was in a bowl in front her, and the banana was on a high shelf in another room.
+They both choose the peach 🍑. The difference is that Rue and Jules had to exert a different degree of effort to make their choices. For Rue, both fruits were placed in a bowl in front of her. For Jules, the peach was in a bowl in front her and the banana was on a high shelf in another room.
 
 In both cases, you'd probably assume they like peaches, but you might conclude there's weaker evidence that Jules likes them. She may have chosen the peach because it was just convenient.
 
@@ -332,7 +340,7 @@ To be concrete, let's focus on the specific environment in [Jara-Ettinger et al 
 
 ![Example of a grid and an agent path from Jara-Ettinger et al (2020).](images/08/jara-ettinger-grid.png){width="60%"}
 
-The locations in the grid are states $S$. Whenever an agent is in a state $s$, they can take an action $a \in A$, moving to any adjacent state. The agent has some goal state in mind (in the figure above, it's the green square). What we want is an optimal *policy* that takes a state and returns an optimal action for getting toward the goal state. This can be computed as follows.
+The locations in the grid are states $S$. Whenever an agent is in a state $s$, it can take an action $a \in A$, moving to any adjacent state. The agent has some goal state in mind (in the figure above, it's the green square). What we want is an optimal *policy* that takes a state and returns an optimal action for getting toward the goal state. This can be computed as follows.
 
 First, we compute each state's optimal value $V^*(s)$, using this recursive equation:
 
@@ -352,7 +360,9 @@ $$
 \begin{equation}
 p(a|s) \propto \exp \left( \sum_{s^\prime} P_{s,a}(s^\prime) V^*(s^\prime) \right)
 \end{equation}
-$$ {#eq-optimalpolicy} In their model, they once again introduce a notion of a "softmax" choice rule, rather than assume agents will be perfectly optimal. This makes sense because the goal is to model how people reason about others, and people often have incomplete information about other people.
+$$ {#eq-optimalpolicy}
+
+In their model, they once again introduce a notion of a "softmax" choice rule, rather than assume agents will be perfectly optimal. This makes sense because the goal is to model how people reason about others, and people often have incomplete information about other people.
 
 ### Inverting the MDP
 
@@ -362,7 +372,7 @@ $$
 p(C,R|\mathbf{a}) \propto p(\mathbf{a}|C,R) p(C,R)
 $$
 
-In the model, they use uniform priors over costs and rewards. Computing $p(\mathbf{a}|C,R)$ means just applying Equation @eq-optimalpolicy repeatedly for each action the agent took in their sequence. (The researchers also modeled a notion of sub-goals that I've omitted.)
+In the model, they use uniform priors over costs and rewards. Computing $p(\mathbf{a}|C,R)$ means just applying @eq-optimalpolicy repeatedly for each action the agent took in their sequence. (The researchers also modeled a notion of sub-goals that I've omitted.)
 
 ### Results
 

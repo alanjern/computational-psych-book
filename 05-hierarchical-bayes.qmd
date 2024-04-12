@@ -48,7 +48,6 @@ def plot_beta(a, b):
   px = stats.beta.pdf(x, a, b)
   
   fig, ax = plt.subplots()
-  #ax.plot(x, px)
   sns.lineplot(x = x, y = px)
   ax.set_xlabel(r'$\theta$')
   plt.show()

@@ -304,38 +304,37 @@ P(\theta) = \text{Beta}(\theta;\alpha,\beta)
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  px <span class="op">=</span> stats.beta.pdf(x, a, b)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ax.plot(x, px)</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  sns.lineplot(x <span class="op">=</span> x, y <span class="op">=</span> px)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  ax.set_xlabel(<span class="vs">r'$\theta$'</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  sns.lineplot(x <span class="op">=</span> x, y <span class="op">=</span> px)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  ax.set_xlabel(<span class="vs">r'$\theta$'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>plot_beta</code> takes two arguments: <code>a</code> (<span class="math inline">\(\alpha\)</span>), and <code>b</code>(<span class="math inline">\(\beta\)</span>) and plots a Beta distribution with those parameter values.</p>
 <p>Let’s see what it looks like with a few different values.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-3-output-1.png" width="590" height="450"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-3-output-1.png" width="590" height="443"></p>
 </div>
 </div>
 <p>When <span class="math inline">\(\alpha = \beta = 1\)</span>, the Beta distribution is identical to a Uniform(<span class="math inline">\([0,1]\)</span>) distribution.</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">3</span>,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-4-output-1.png" width="581" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-4-output-1.png" width="581" height="428"></p>
 </div>
 </div>
 <p>When <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are greater than 1 and equal, we get a distribution with a peak around 0.5. If we had strong prior expectations that the coin was unbiased, we could increase the parameters even more:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">50</span>,<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-5-output-1.png" width="561" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-5-output-1.png" width="561" height="428"></p>
 </div>
 </div>
 <p>What about when <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are not equal?</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">4</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-6-output-1.png" width="573" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-6-output-1.png" width="573" height="428"></p>
 </div>
 </div>
 <p>This allows us to capture skewed priors, perhaps capturing a belief that the coin has a specific bias.</p>
@@ -343,7 +342,7 @@ P(\theta) = \text{Beta}(\theta;\alpha,\beta)
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="fl">0.5</span>,<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-7-output-1.png" width="561" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-7-output-1.png" width="561" height="428"></p>
 </div>
 </div>
 <p>This might capture the belief that the coin is strongly biased, but we aren’t sure in which direction.</p>
@@ -362,14 +361,14 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span>,<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-8-output-1.png" width="561" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-8-output-1.png" width="561" height="428"></p>
 </div>
 </div>
 <p>Now, suppose you flip a coin 20 times and it comes up heads every time. What should you think about the bias of the coin now? According to our model:</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">30</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-9-output-1.png" width="561" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-9-output-1.png" width="561" height="428"></p>
 </div>
 </div>
 <p>As you can see, this should cause you to shift your beliefs somewhat.</p>
@@ -377,14 +376,14 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span>,<span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-10-output-1.png" width="569" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-10-output-1.png" width="569" height="428"></p>
 </div>
 </div>
 <p>What happens if you <em>now</em> flipped this coin 20 times and it came up heads every time?</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">2000</span><span class="op">+</span><span class="dv">20</span>,<span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-11-output-1.png" width="569" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-11-output-1.png" width="569" height="428"></p>
 </div>
 </div>
 <p>You might be mildly surprised, but those 20 flips wouldn’t be enough to budge your estimate about the bias of the coin by much.</p>
@@ -392,14 +391,14 @@ P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-12-output-1.png" width="561" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-12-output-1.png" width="561" height="428"></p>
 </div>
 </div>
 <p>Now you flip the coin 100 times and it comes up heads 48 times. What should your updated beliefs be?</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_beta(<span class="dv">5</span><span class="op">+</span><span class="dv">48</span>,<span class="dv">1</span><span class="op">+</span><span class="dv">52</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-hierarchical-bayes_files/figure-html/cell-13-output-1.png" width="561" height="435"></p>
+<p><img src="05-hierarchical-bayes_files/figure-html/cell-13-output-1.png" width="561" height="428"></p>
 </div>
 </div>
 <p>As you can see, the posterior distribution shows that you should think this coin is probably fair now. This illustrates how sufficient evidence can override prior beliefs.</p>
