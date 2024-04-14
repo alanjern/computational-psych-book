@@ -238,20 +238,20 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <section id="markov-chains" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="markov-chains"><span class="header-section-number">9.1</span> Markov chains 🔗</h2>
 <p>Words and concepts change over <em>time</em>. <strong>Markov chains</strong> provide a useful modeling framework for time-dependent data.</p>
-<p>As the name suggests, a Markov chain is a chain, specifically of states. At each time step, it moves to a new state. A Markov chain meets the following conditions:</p>
+<p>As the name suggests, a Markov chain is a chain – specifically of states. At each time step, it moves to a new state. A Markov chain meets the following conditions:</p>
 <ol type="1">
-<li>A system can be in a finite number of states.</li>
+<li>A system can be in one of a finite number of states.</li>
 <li>The state at each step of the chain depends only on the previous state. (This dependence can be probabilistic.)</li>
 </ol>
-<p>For example, consider the game Telephone, where one person whispers a word to the next person, they whisper what they hear to the next person, and so on. The set of possible words are the states (finite but admittedly large).</p>
-<p>The word that Person <span class="math inline">\(n+1\)</span> hears clearly only depends on the word that Person <span class="math inline">\(n\)</span> whispered. But there might be some miscommunication: the probability that Person <span class="math inline">\(n+1\)</span> accurately hears the word is probably less than 1, with similar-sounding words getting higher probability than dissimilar words.</p>
+<p>For example, consider the game Telephone, where one person whispers a word to the next person, they whisper what they hear to the next person, and so on. The set of possible words are the states (finite but large).</p>
+<p>The word that Person <span class="math inline">\(n+1\)</span> hears only depends on the word that Person <span class="math inline">\(n\)</span> whispered. But there might be some miscommunication: that is, the probability that Person <span class="math inline">\(n+1\)</span> accurately hears the word could be less than 1, with similar-sounding words getting higher probability than dissimilar words.</p>
 <section id="examples" class="level3" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="examples"><span class="header-section-number">9.1.1</span> Examples</h3>
 <p>Consider a very simple chain of colors that are either red or blue. Here, the state space <span class="math inline">\(S = \{ \text{red, blue} \}\)</span>. To specify this Markov chain, we need to define the <em>transition probabilities</em>: the probabilities of moving from each state to every other state.</p>
-<p>Let <span class="math inline">\(t_{ij}\)</span> be the probability of transitioning from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span>. For example, if <span class="math inline">\(t_{RB} = 0.3\)</span> then the probability of transitioning from the red state to the blue state is 0.3. We can then write the transition probabilities in a matrix.</p>
-<section id="markov-exmaple1" class="level4" data-number="9.1.1.1">
-<h4 data-number="9.1.1.1" class="anchored" data-anchor-id="markov-exmaple1"><span class="header-section-number">9.1.1.1</span> Example 1</h4>
-<p>Here’s our transition probability matrix.</p>
+<p>Let <span class="math inline">\(t_{ij}\)</span> be the probability of transitioning from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span>. For example, if <span class="math inline">\(t_{RB} = 0.3\)</span> then the probability of transitioning from red to blue is 0.3. We can then write the transition probabilities in a matrix.</p>
+<section id="markov-example1" class="level4" data-number="9.1.1.1">
+<h4 data-number="9.1.1.1" class="anchored" data-anchor-id="markov-example1"><span class="header-section-number">9.1.1.1</span> Example 1</h4>
+<p>Here’s an example transition probability matrix for the red/blue state space.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -331,7 +331,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 </section>
 <section id="stationary-distributions" class="level3" data-number="9.1.2">
 <h3 data-number="9.1.2" class="anchored" data-anchor-id="stationary-distributions"><span class="header-section-number">9.1.2</span> Stationary distributions</h3>
-<p>A common question for a given Markov chain is what is its so-called <em>stationary distribution</em>, the proportion of time the chain will spend in each state if it runs for a very long time. For Markov chains a small number of states, computing the stationary distribution is easy to do with some algebra. Consider the following example.</p>
+<p>A common question for a given Markov chain is what is its so-called <em>stationary distribution</em>, the proportion of time the chain will spend in each state if it runs for a very long time. For Markov chains with a small number of states, computing the stationary distribution is easy to do with some algebra. Consider the following example.</p>
 <p>Let’s define a transition matrix for Markov chain with two states, <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>:</p>
 <p><span class="math display">\[
 \begin{equation}
@@ -400,7 +400,7 @@ t_{21} + t_{22} = 1
 <section id="cultural-transmission" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="cultural-transmission"><span class="header-section-number">9.3</span> Cultural transmission 🗣</h2>
 <p>So what does all this have to do with “defecate” changing meaning over time?</p>
-<p>Well you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?</p>
+<p>Well, you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?</p>
 <p>This is the subject of a line research in computational cognitive science. The basic model combines some assumptions we’ve seen before with some assumptions of hidden Markov models you just learned about in this chapter.</p>
 <p>First, assume that people are trying to learn some concept by seeing an example <span class="math inline">\(x_i\)</span> and getting a label for it <span class="math inline">\(y_i\)</span> and then trying to generalize that label to other instances by forming a hypothesis <span class="math inline">\(h\)</span> about what other things <span class="math inline">\(y_i\)</span> applies to. This is the problem we encountered in the <a href="03-generalization.html">generalization chapter</a>, and we can assume that each person forms their beliefs about <span class="math inline">\(h\)</span> using Bayesian inference.</p>
 <p>Now let’s add in the communication factor. Each person <span class="math inline">\(n+1\)</span> gets a label <span class="math inline">\(y_n\)</span> from someone else Person <span class="math inline">\(n\)</span>, forms their own hypothesis <span class="math inline">\(h_{n+1}\)</span> then labels a new object <span class="math inline">\(x_{n+1}\)</span> for the next person. This process repeats, creating a Markov chain.</p>

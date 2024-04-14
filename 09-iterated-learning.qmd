@@ -10,24 +10,24 @@ Yeah, maybe, kinda! But first, some math.
 
 Words and concepts change over *time*. **Markov chains** provide a useful modeling framework for time-dependent data.
 
-As the name suggests, a Markov chain is a chain, specifically of states. At each time step, it moves to a new state. A Markov chain meets the following conditions:
+As the name suggests, a Markov chain is a chain – specifically of states. At each time step, it moves to a new state. A Markov chain meets the following conditions:
 
-1.  A system can be in a finite number of states.
+1.  A system can be in one of a finite number of states.
 2.  The state at each step of the chain depends only on the previous state. (This dependence can be probabilistic.)
 
-For example, consider the game Telephone, where one person whispers a word to the next person, they whisper what they hear to the next person, and so on. The set of possible words are the states (finite but admittedly large).
+For example, consider the game Telephone, where one person whispers a word to the next person, they whisper what they hear to the next person, and so on. The set of possible words are the states (finite but large).
 
-The word that Person $n+1$ hears clearly only depends on the word that Person $n$ whispered. But there might be some miscommunication: the probability that Person $n+1$ accurately hears the word is probably less than 1, with similar-sounding words getting higher probability than dissimilar words.
+The word that Person $n+1$ hears only depends on the word that Person $n$ whispered. But there might be some miscommunication: that is, the probability that Person $n+1$ accurately hears the word could be less than 1, with similar-sounding words getting higher probability than dissimilar words.
 
 ### Examples
 
 Consider a very simple chain of colors that are either red or blue. Here, the state space $S = \{ \text{red, blue} \}$. To specify this Markov chain, we need to define the *transition probabilities*: the probabilities of moving from each state to every other state.
 
-Let $t_{ij}$ be the probability of transitioning from state $i$ to state $j$. For example, if $t_{RB} = 0.3$ then the probability of transitioning from the red state to the blue state is 0.3. We can then write the transition probabilities in a matrix.
+Let $t_{ij}$ be the probability of transitioning from state $i$ to state $j$. For example, if $t_{RB} = 0.3$ then the probability of transitioning from red to blue is 0.3. We can then write the transition probabilities in a matrix.
 
-#### Example 1 {#markov-exmaple1}
+#### Example 1 {#markov-example1}
 
-Here's our transition probability matrix.
+Here's an example transition probability matrix for the red/blue state space.
 
 |     | R   | B   |
 |-----|-----|-----|
@@ -62,7 +62,7 @@ In this example, no matter what state we're in, there is a 0.75 probability of m
 
 ### Stationary distributions
 
-A common question for a given Markov chain is what is its so-called *stationary distribution*, the proportion of time the chain will spend in each state if it runs for a very long time. For Markov chains a small number of states, computing the stationary distribution is easy to do with some algebra. Consider the following example.
+A common question for a given Markov chain is what is its so-called *stationary distribution*, the proportion of time the chain will spend in each state if it runs for a very long time. For Markov chains with a small number of states, computing the stationary distribution is easy to do with some algebra. Consider the following example.
 
 Let's define a transition matrix for Markov chain with two states, $s_1$ and $s_2$:
 
@@ -138,7 +138,7 @@ There are many existing programming packages available for working with HMMs. On
 
 So what does all this have to do with "defecate" changing meaning over time?
 
-Well you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?
+Well, you can think of communication over time as one giant long-term game of Telephone. And an important question you can then ask is: What is the stationary distribution of these chains?
 
 This is the subject of a line research in computational cognitive science. The basic model combines some assumptions we've seen before with some assumptions of hidden Markov models you just learned about in this chapter.
 
