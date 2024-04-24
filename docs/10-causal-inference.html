@@ -246,7 +246,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></h1>
+<h1 class="title"><span id="causal-inference" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Causal inference</span></span></h1>
 </div>
 
 
@@ -264,11 +264,15 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <p>The world is full of weird and interesting relationships. Like this one.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/10/maine_divorce_rate.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com.</figcaption>
+<p><img src="images/10/pikachu-puerto-rico.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Correlation between “surprised Pikachu” meme and number of middle school teachers in Puerto Rico. Source: tylervigen.com.</figcaption>
 </figure>
 </div>
-<p>Which of these weird relationships are <em>causal</em> relationships and how can we tell? (Does cutting back on margarine reduce your chances of divorce? Probably not.)</p>
+<p>Which of these weird relationships are <em>causal</em> relationships and how can we tell? Here’s an AI-generated explanation for why the rise in the meme’s popularity might be responsible for the uptick in teachers in Puerto Rico:</p>
+<blockquote class="blockquote">
+<p>As the ‘surprised Pikachu’ meme gained traction, it led to an uptick in internet usage. This surge in online activity put a higher demand on the telecommunication infrastructure in Puerto Rico. To meet this demand, more tech companies invested in the region, creating job opportunities. With the expanding job market, there was a need for additional educators to support the growing number of families relocating to Puerto Rico. As a result, the popularity of the meme indirectly contributed to an increase in the number of middle school teachers in Puerto Rico.</p>
+</blockquote>
+<p><img src="images/10/surprised pikachu.jpg" class="img-fluid" style="width:40.0%"></p>
 <p>Causal inference is, in fact, a major area of research in statistics and machine learning. But we’ll just focus on the question of how people decide what causes what.</p>
 <p>We’ll use a computational framework for making optimal probabilistic causal judgments called Bayesian networks, or <strong>Bayes nets</strong> for short. Comparing people’s judgments to Bayes net predictions allows us to see how optimal (or not) people are. Additionally, as we’ll see, Bayes nets are well suited for <em>intervention</em>, which is one way that people learn about causes.</p>
 <section id="bayes-nets" class="level2" data-number="10.1">
@@ -281,7 +285,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <figcaption class="figure-caption">Bayes net representation of the coin bias problem.</figcaption>
 </figure>
 </div>
-<p>In Bayes nets, shaded notes represent variables that are known or observed, and unshaded nodes represent variables that are unknown. We know how many times the coin was flipped and came up heads, but we don’t directly know the bias <span class="math inline">\(\theta\)</span>.</p>
+<p>In Bayes nets, shaded nodes represent variables that are known or observed, and unshaded nodes represent variables that are unknown. We know how many times the coin was flipped and came up heads, but we don’t directly know the bias <span class="math inline">\(\theta\)</span>.</p>
 <p>We could extend this Bayes net to capture the <em>generalization</em> problem of predicting the outcome of the next coin flip <span class="math inline">\(x\)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -341,20 +345,25 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <p>Because <span class="math inline">\(z\)</span> represents an unknown variable, let’s plot just <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span>.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ax1.scatter(s_samples_cc, x_samples_cc, alpha <span class="op">=</span> <span class="fl">0.1</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"s"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"x"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"Common cause"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ax2.scatter(s_samples_chain, x_samples_chain, alpha <span class="op">=</span> <span class="fl">0.1</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"s"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"Chain"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x <span class="op">=</span> s_samples_cc, y <span class="op">=</span> x_samples_cc, alpha <span class="op">=</span> <span class="fl">0.1</span>, ax <span class="op">=</span> axes[<span class="dv">0</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"s"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"x"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Common cause"</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x <span class="op">=</span> s_samples_chain, y <span class="op">=</span> x_samples_chain, alpha <span class="op">=</span> <span class="fl">0.1</span>, ax <span class="op">=</span> axes[<span class="dv">1</span>])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"s"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"x"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Chain"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="10-causal-inference_files/figure-html/cell-3-output-1.png" width="587" height="442"></p>
+<p><img src="10-causal-inference_files/figure-html/cell-3-output-1.png" width="589" height="448"></p>
 </div>
 </div>
 <p>Clearly, the data isn’t identical in the two cases, but data generated by both Bayes nets results in a strong positive correlation between <span class="math inline">\(s\)</span> and <span class="math inline">\(x\)</span>.</p>
@@ -376,7 +385,7 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/10/graph_surgery.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Graph surgery applied to the common cause and chain Bayes nets. The invervention is indicated by the red arrow.</figcaption>
+<figcaption class="figure-caption">Graph surgery applied to the common cause and chain Bayes nets. The intervention is indicated by the red arrow.</figcaption>
 </figure>
 </div>
 <p>After intervening on sonin levels (<span class="math inline">\(s\)</span>), we remove the connection to <span class="math inline">\(s\)</span> in the common cause network, but no connections in the chain network. The resulting Bayes nets show why we should expect to see a resulting change in xanthan for the chain, but not the common cause.</p>
@@ -441,8 +450,8 @@ gtag('config', 'G-HG2MG0W08W', { 'anonymize_ip': true});
 <p>Maybe people reason about these problems by performing a kind of model selection between the two Bayes nets below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/10/griffiths_tenenbaum_graphs.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Causal inference as model selection. In one model, there is a connection from the potential cause to the effect; in the other, the two variables are unconnected. (Image from Griffiths &amp; Tenenbaum (2005).)</figcaption>
+<p><img src="images/10/griffiths_tenenbaum_graphs.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Causal inference as model selection. In one model, there is a connection from the potential cause to the effect; in the other, the two variables are unconnected. Image from Griffiths &amp; Tenenbaum (2005).</figcaption>
 </figure>
 </div>
 <p>These Bayes nets each have three variables: an effect <span class="math inline">\(E\)</span>, a cause <span class="math inline">\(C\)</span>, and a background cause <span class="math inline">\(B\)</span>. For our problem, the effect and cause refer to the gene and the drug. The inclusion of the background cause is to account for unknown factors that might cause the gene to be expressed without the drug.</p>
@@ -469,88 +478,91 @@ P(D | w_0, w_1, \text{Graph } 1) = \prod_{e,c} P(e|b^+,c; w_o, w_1)^{N(e,c)}
 <p>Here’s a function to compute this.</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_likelihood(data, w0, w1, graph):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns likelihood of data for a given graph</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">       data (list): observation counts in this order:</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">       w0 (float): probability of background cause producing effect</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">       w1 (float): probability of cause of interest producing effect</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">       graph (int): 0 (Graph 0) or 1 (Graph 1)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): probability of data</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> graph <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e-</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w0)<span class="op">**</span>(data[<span class="dv">0</span>]<span class="op">+</span>data[<span class="dv">2</span>])</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e+</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> w0<span class="op">**</span>(data[<span class="dv">1</span>]<span class="op">+</span>data[<span class="dv">3</span>])</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> graph <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c-, e-</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w0)<span class="op">**</span>data[<span class="dv">0</span>]</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c-, e+</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> w0<span class="op">**</span>data[<span class="dv">1</span>]</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c+, e-</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> (w0 <span class="op">+</span> w1 <span class="op">-</span> w0<span class="op">*</span>w1))<span class="op">**</span>data[<span class="dv">2</span>]</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c+, e+</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> (w0 <span class="op">+</span> w1 <span class="op">-</span> w0<span class="op">*</span>w1)<span class="op">**</span>data[<span class="dv">3</span>]</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># error!</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(<span class="dv">0</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Computes likelihood of data for a given graph</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">  Args:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    data (list): observation counts in this order:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">      N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    w0 (float): probability of background cause producing effect</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">    w1 (float): probability of cause of interest producing effect</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">      graph (int): 0 (Graph 0) or 1 (Graph 1)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">      (float): probability of data </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> graph <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e-</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w0)<span class="op">**</span>(data[<span class="dv">0</span>]<span class="op">+</span>data[<span class="dv">2</span>])</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> w0<span class="op">**</span>(data[<span class="dv">1</span>]<span class="op">+</span>data[<span class="dv">3</span>])</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> graph <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c-, e-</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (<span class="dv">1</span><span class="op">-</span>w0)<span class="op">**</span>data[<span class="dv">0</span>]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c-, e+</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> w0<span class="op">**</span>data[<span class="dv">1</span>]</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c+, e-</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> (w0 <span class="op">+</span> w1 <span class="op">-</span> w0<span class="op">*</span>w1))<span class="op">**</span>data[<span class="dv">2</span>]</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># c+, e+</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> p <span class="op">*</span> (w0 <span class="op">+</span> w1 <span class="op">-</span> w0<span class="op">*</span>w1)<span class="op">**</span>data[<span class="dv">3</span>]</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># error!</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(<span class="dv">0</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Causal support doesn’t actually depend directly on the parameters <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span>. The reason is that we ultimately don’t care what the values of these parameters are because we just want to draw an inference at a higher level about the best-fitting Bayes net.</p>
 <p>Mathematically speaking, <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span> are averaged out of the model, an idea we first saw in <a href="03-generalization.html#generalizing">Chapter 3</a>. We can accomplish this using Monte Carlo approximation, introduced in <a href="08-social-cognition.html#monte-carlo">Chapter 8</a>.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> estimate_likelihood(graph_number, data): </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns an estimate of the probability of observing the data</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">     under the specified graph using Monte Carlo estimation.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">       graph_number (int): either 0 (Graph 0) or 1 (Graph 1)</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">       data (list): observation counts in this order:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): probability of observing data</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> numpy.random <span class="im">import</span> default_rng</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  n_samples <span class="op">=</span> <span class="dv">5000</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  rng <span class="op">=</span> default_rng(<span class="dv">2022</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  mc_samples <span class="op">=</span> np.zeros(n_samples)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample values for w0 and w1 from a uniform distribution</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    w0 <span class="op">=</span> rng.random()</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    w1 <span class="op">=</span> rng.random()</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    mc_samples[i] <span class="op">=</span> compute_likelihood(data, w0, w1, graph_number)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(<span class="dv">1</span><span class="op">/</span>n_samples <span class="op">*</span> np.<span class="bu">sum</span>(mc_samples))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns an estimate of the probability of observing the data</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    under the specified graph using Monte Carlo estimation.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">  Args:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    graph_number (int): either 0 (Graph 0) or 1 (Graph 1)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    data (list): observation counts in this order:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">      N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">    (float): probability of observing data</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> numpy.random <span class="im">import</span> default_rng</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  n_samples <span class="op">=</span> <span class="dv">5000</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  rng <span class="op">=</span> default_rng(<span class="dv">2022</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  mc_samples <span class="op">=</span> np.zeros(n_samples)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample values for w0 and w1 from a uniform distribution</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    w0 <span class="op">=</span> rng.random()</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    w1 <span class="op">=</span> rng.random()</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    mc_samples[i] <span class="op">=</span> compute_likelihood(data, w0, w1, graph_number)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(<span class="dv">1</span><span class="op">/</span>n_samples <span class="op">*</span> np.<span class="bu">sum</span>(mc_samples))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, let’s put it all together by writing a function that computes causal support.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> causal_support(data):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''Returns a causal support value for a given data set.</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">     Causal support is a measure of how strongly a data</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">     set indicates that there is evidence for a causal</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">     effect.</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">     Parameters:</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">       data (list): observation counts in this order:</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns:</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">       (float): strength of evidence for causal relationship</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (np.log(estimate_likelihood(<span class="dv">1</span>,data<span class="op">=</span>data) <span class="op">/</span> </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                 estimate_likelihood(<span class="dv">0</span>,data<span class="op">=</span>data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">'''</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns a causal support value for a given data set.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Causal support is a measure of how strongly a data</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">  set indicates that there is evidence for a causal</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">  effect.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">  Parameters:</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">   data (list): observation counts in this order:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">    N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns:</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">    (float): strength of evidence for causal relationship</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">  '''</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (np.log(estimate_likelihood(<span class="dv">1</span>,data<span class="op">=</span>data) <span class="op">/</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                 estimate_likelihood(<span class="dv">0</span>,data<span class="op">=</span>data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s see what the model predicts for the <a href="#structure-strength">four cases we considered earlier</a>.</p>
 <div class="cell" data-execution_count="6">
@@ -561,13 +573,13 @@ P(D | w_0, w_1, \text{Graph } 1) = \prod_{e,c} P(e|b^+,c; w_o, w_1)^{N(e,c)}
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                              </span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"6/8, 8/8"</span>, <span class="st">"4/8, 6/8"</span>, <span class="st">"2/8, 4/8"</span>, <span class="st">"0/8, 2/8"</span>]</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.bar(labels, causal_support_predictions)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>sns.barplot(x<span class="op">=</span>labels, y<span class="op">=</span>causal_support_predictions)</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Data"</span>)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Model prediction"</span>)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="10-causal-inference_files/figure-html/cell-7-output-1.png" width="589" height="422"></p>
+<p><img src="10-causal-inference_files/figure-html/cell-7-output-1.png" width="593" height="428"></p>
 </div>
 </div>
 <p>The labels on the x-axis indicate the control condition counts, followed by the experimental condition counts.</p>

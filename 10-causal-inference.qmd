@@ -2,9 +2,13 @@
 
 The world is full of weird and interesting relationships. Like this one.
 
-![Correlation between Maine divorce rates and per capita margarine consumption. Source: tylervigen.com.](images/10/maine_divorce_rate.png)
+![Correlation between "surprised Pikachu" meme and number of middle school teachers in Puerto Rico. Source: tylervigen.com.](images/10/pikachu-puerto-rico.png){fig-align="center" width="80%"}
 
-Which of these weird relationships are *causal* relationships and how can we tell? (Does cutting back on margarine reduce your chances of divorce? Probably not.)
+Which of these weird relationships are *causal* relationships and how can we tell? Here's an AI-generated explanation for why the rise in the meme's popularity might be responsible for the uptick in teachers in Puerto Rico:
+
+> As the 'surprised Pikachu' meme gained traction, it led to an uptick in internet usage. This surge in online activity put a higher demand on the telecommunication infrastructure in Puerto Rico. To meet this demand, more tech companies invested in the region, creating job opportunities. With the expanding job market, there was a need for additional educators to support the growing number of families relocating to Puerto Rico. As a result, the popularity of the meme indirectly contributed to an increase in the number of middle school teachers in Puerto Rico.
+
+![](images/10/surprised pikachu.jpg){width="40%"}
 
 Causal inference is, in fact, a major area of research in statistics and machine learning. But we'll just focus on the question of how people decide what causes what.
 
@@ -18,13 +22,13 @@ For example, let's make a Bayes net for the problem in Chapter 5 of [inferring t
 
 ![Bayes net representation of the coin bias problem.](images/10/beta_binomial_bayesnet1.png)
 
-In Bayes nets, shaded notes represent variables that are known or observed, and unshaded nodes represent variables that are unknown. We know how many times the coin was flipped and came up heads, but we don't directly know the bias $\theta$.
+In Bayes nets, shaded nodes represent variables that are known or observed, and unshaded nodes represent variables that are unknown. We know how many times the coin was flipped and came up heads, but we don't directly know the bias $\theta$.
 
 We could extend this Bayes net to capture the *generalization* problem of predicting the outcome of the next coin flip $x$.
 
 ![Bayes net representation of the biased coin generalization problem.](images/10/beta_binomial_bayesnet2.png)
 
-A complete Bayes net also specifies a probability distribution for each variable. In the example above, $k$ is a function of $\theta$ and $n$. As we learned in [Chapter 5](#beta-binomial), this is a Binomial distribution. We also need to specify a prior probability over any unknown variables, like $\theta$. Previously we assumed it was distributed according to a Beta distribution. $x$ is just a single coin flip -- it's a special case of a Binomial distribution called a Bernoulli distribution in which $n = 1$. To sum up:
+A complete Bayes net also specifies a probability distribution for each variable. In the example above, $k$ is a function of $\theta$ and $n$. As we learned in [Chapter 5](#beta-binomial), this is a Binomial distribution. We also need to specify a prior probability over any unknown variables, like $\theta$. Previously we assumed it was distributed according to a Beta distribution. $x$ is just a single coin flip – it's a special case of a Binomial distribution called a Bernoulli distribution in which $n = 1$. To sum up:
 
 -   $\theta \sim \text{Beta}(\alpha, \beta)$
 -   $k \sim \text{Binomial}(n,\theta)$
@@ -78,16 +82,21 @@ Because $z$ represents an unknown variable, let's plot just $s$ and $x$.
 
 ```{python}
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-fig, (ax1, ax2) = plt.subplots(1,2)
-ax1.scatter(s_samples_cc, x_samples_cc, alpha = 0.1)
-ax1.set_xlabel("s")
-ax1.set_ylabel("x")
-ax1.set_title("Common cause")
+sns.set_theme()
 
-ax2.scatter(s_samples_chain, x_samples_chain, alpha = 0.1)
-ax2.set_xlabel("s")
-ax2.set_title("Chain")
+fig, axes = plt.subplots(1,2)
+
+sns.scatterplot(x = s_samples_cc, y = x_samples_cc, alpha = 0.1, ax = axes[0])
+axes[0].set_xlabel("s")
+axes[0].set_ylabel("x")
+axes[0].set_title("Common cause")
+
+sns.scatterplot(x = s_samples_chain, y = x_samples_chain, alpha = 0.1, ax = axes[1])
+axes[1].set_xlabel("s")
+axes[1].set_ylabel("x")
+axes[1].set_title("Chain")
 
 plt.show()
 ```
@@ -112,7 +121,7 @@ This intuition can be illustrated visually on the Bayes nets by performing "surg
 
 Let's apply this idea to our common cause and chain Bayes nets.
 
-![Graph surgery applied to the common cause and chain Bayes nets. The invervention is indicated by the red arrow.](images/10/graph_surgery.png)
+![Graph surgery applied to the common cause and chain Bayes nets. The intervention is indicated by the red arrow.](images/10/graph_surgery.png)
 
 After intervening on sonin levels ($s$), we remove the connection to $s$ in the common cause network, but no connections in the chain network. The resulting Bayes nets show why we should expect to see a resulting change in xanthan for the chain, but not the common cause.
 
@@ -157,11 +166,11 @@ Focusing just on the cases in the table, on average, people judged that the drug
 
 Maybe people reason about these problems by performing a kind of model selection between the two Bayes nets below.
 
-![Causal inference as model selection. In one model, there is a connection from the potential cause to the effect; in the other, the two variables are unconnected. (Image from Griffiths & Tenenbaum (2005).)](images/10/griffiths_tenenbaum_graphs.png)
+![Causal inference as model selection. In one model, there is a connection from the potential cause to the effect; in the other, the two variables are unconnected. Image from Griffiths & Tenenbaum (2005).](images/10/griffiths_tenenbaum_graphs.png){width="75%"}
 
 These Bayes nets each have three variables: an effect $E$, a cause $C$, and a background cause $B$. For our problem, the effect and cause refer to the gene and the drug. The inclusion of the background cause is to account for unknown factors that might cause the gene to be expressed without the drug.
 
-The problem people are faced with is deciding which of these two models is best supported by the data $D$ -- the number of times the effect occurred with and without the potential cause.
+The problem people are faced with is deciding which of these two models is best supported by the data $D$ – the number of times the effect occurred with and without the potential cause.
 
 This can be done with Bayesian inference:
 
@@ -197,17 +206,18 @@ Here's a function to compute this.
 
 ```{python}
 def compute_likelihood(data, w0, w1, graph):
-  '''Returns likelihood of data for a given graph
+  '''
+  Computes likelihood of data for a given graph
      
-     Parameters:
-       data (list): observation counts in this order:
-         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)
-       w0 (float): probability of background cause producing effect
-       w1 (float): probability of cause of interest producing effect
-       graph (int): 0 (Graph 0) or 1 (Graph 1)
+  Args:
+    data (list): observation counts in this order:
+      N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)
+    w0 (float): probability of background cause producing effect
+    w1 (float): probability of cause of interest producing effect
+      graph (int): 0 (Graph 0) or 1 (Graph 1)
 
-     Returns:
-       (float): probability of data
+    Returns:
+      (float): probability of data 
   '''
   
   if graph == 0:
@@ -238,16 +248,17 @@ Mathematically speaking, $w_0$ and $w_1$ are averaged out of the model, an idea 
 
 ```{python}
 def estimate_likelihood(graph_number, data): 
-  '''Returns an estimate of the probability of observing the data
-     under the specified graph using Monte Carlo estimation.
+  '''
+  Returns an estimate of the probability of observing the data
+    under the specified graph using Monte Carlo estimation.
      
-     Parameters:
-       graph_number (int): either 0 (Graph 0) or 1 (Graph 1)
-       data (list): observation counts in this order:
-         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)
+  Args:
+    graph_number (int): either 0 (Graph 0) or 1 (Graph 1)
+    data (list): observation counts in this order:
+      N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)
 
-     Returns:
-       (float): probability of observing data
+  Returns:
+    (float): probability of observing data
   '''
   from numpy.random import default_rng
   
@@ -270,17 +281,18 @@ Finally, let's put it all together by writing a function that computes causal su
 
 ```{python}
 def causal_support(data):
-  '''Returns a causal support value for a given data set.
-     Causal support is a measure of how strongly a data
-     set indicates that there is evidence for a causal
-     effect.
+  '''
+  Returns a causal support value for a given data set.
+  Causal support is a measure of how strongly a data
+  set indicates that there is evidence for a causal
+  effect.
      
-     Parameters:
-       data (list): observation counts in this order:
-         N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)
+  Parameters:
+   data (list): observation counts in this order:
+    N(c-,e-), N(c-,e+), N(c+,e-), N(c+,e+)
 
-     Returns:
-       (float): strength of evidence for causal relationship
+  Returns:
+    (float): strength of evidence for causal relationship
   '''
   import numpy as np
   
@@ -299,7 +311,7 @@ causal_support_predictions = [causal_support([2,6,0,8]),
                               
 labels = ["6/8, 8/8", "4/8, 6/8", "2/8, 4/8", "0/8, 2/8"]
 fig, ax = plt.subplots()
-ax.bar(labels, causal_support_predictions)
+sns.barplot(x=labels, y=causal_support_predictions)
 ax.set_xlabel("Data")
 ax.set_ylabel("Model prediction")
 
