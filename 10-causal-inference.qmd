@@ -8,7 +8,7 @@ Which of these weird relationships are *causal* relationships and how can we tel
 
 > As the 'surprised Pikachu' meme gained traction, it led to an uptick in internet usage. This surge in online activity put a higher demand on the telecommunication infrastructure in Puerto Rico. To meet this demand, more tech companies invested in the region, creating job opportunities. With the expanding job market, there was a need for additional educators to support the growing number of families relocating to Puerto Rico. As a result, the popularity of the meme indirectly contributed to an increase in the number of middle school teachers in Puerto Rico.
 
-![](images/10/surprised pikachu.jpg){width="40%"}
+![](images/10/surprised%20pikachu.jpg){width="40%"}
 
 Causal inference is, in fact, a major area of research in statistics and machine learning. But we'll just focus on the question of how people decide what causes what.
 
