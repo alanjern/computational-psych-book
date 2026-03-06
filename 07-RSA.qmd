@@ -32,7 +32,7 @@ $$ Let's verify.
 
 Here's a plot of this function:
 
-```{python}
+```{pyodide}
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -75,7 +75,7 @@ Let's apply the concept of surprisal to the following example. There were initia
 
 Let's define this situation using a binary matrix. Each row is a signal (what you say) and each column is a state (how many cookies were eaten).
 
-```{python}
+```{pyodide}
 
 state_matrix = np.array([[0,1,1],
                          [0,0,1],
@@ -89,7 +89,7 @@ states = ["0","1","2"]
 
 We'll define a function that prints out this matrix as a heat map.
 
-```{python}
+```{pyodide}
 def print_state_matrix(m, x_labels=None, y_labels=None):
   fig, ax = plt.subplots()
   if (x_labels and y_labels):
@@ -113,7 +113,7 @@ The literal listener assumes that, given a state, a signal consistent with that 
 
 We'll do this more than once, so let's write a function to do it.
 
-```{python}
+```{pyodide}
 def normalize_rows(m):
   normalized_m = np.zeros((m.shape))
   row_num = 0
@@ -123,9 +123,6 @@ def normalize_rows(m):
     
   return(normalized_m)
 
-```
-
-```{python}
 literal_listener = normalize_rows(state_matrix)
 print_state_matrix(literal_listener, states, signals)
 ```
@@ -134,7 +131,7 @@ Now let's calculate the pragmatic speaker. The pragmatic speaker chooses a signa
 
 Unlike the literal listener, the pragmatic speaker is trying to convey some information, so they will choose a signal with the greatest *expected utility* for the literal listener. Expected utility in this case is defined as the expected increase in understanding about the true state of the world. Remember, we already have a way of quantifying this: surprisal. So we'll define utility as negative surprisal of the state given the signal from the point of view of the literal listener: $-(-log(P_{\text{listener}}(h|d)))$.
 
-```{python}
+```{pyodide}
 
 # First we apply a softmax decision function
 alpha = 1 # this paramater controls how close to maximizing the speaker is
@@ -160,7 +157,7 @@ Now we can calculate the probabilities for the pragmatic listener. This will be 
 
 We can compute the pragmatic listener by normalizing the matrix above along the rows.
 
-```{python}
+```{pyodide}
 pragmatic_listener = normalize_rows(pragmatic_speaker)
 print_state_matrix(pragmatic_listener, states, signals)
 ```

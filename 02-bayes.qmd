@@ -36,7 +36,11 @@ How do we sample from the generative model? Note that which hypothesis $h$ is tr
 
 Let's first create an array with the probability of each hypothesis:
 
-```{python}
+::: callout-note
+Throughout this book, you will be able to run the code yourself by clicking the "Run Code" button. If you want, you can also edit the code to see what happens. Run the code below by clicking "Run Code".
+:::
+
+```{pyodide}
 import numpy as np
 import random
 
@@ -48,7 +52,11 @@ print(h_priors)
 
 Now we'll do the first step: create an array of 10000 hypotheses sampled from the prior:
 
-```{python}
+::: callout-note
+The code blocks in each chapter are dependent on each other, so you must run them all, in order, or you will get an error.
+:::
+
+```{pyodide}
 prior_samples = np.array(random.choices(np.arange(0,10,1),
                    weights = h_priors, 
                    k = 10000))
@@ -58,7 +66,7 @@ print(prior_samples[0:9]) # printing out just a few
 
 Here, each number corresponds to one hypothesis: 0 corresponds to $B_0$, 1 to $B_1$, and so on. Each sample represents one possible way (a hypothesis) the world could be. Since the prior was uniform (each hypothesis had the same probability), each hypothesis appears about equally often. We can plot all the samples to verify:
 
-```{python}
+```{pyodide}
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -68,20 +76,21 @@ fig, ax = plt.subplots()
 sns.histplot(prior_samples, bins=10)
 ax.set_xlabel('Prior sample')
 ax.set_ylabel('Number of samples')
+plt.show()
 ```
 
 Now for the next step. For each sample in `prior_samples`, we want to sample an observation. To do that, let's pause for a second and think about the probability of pulling a black ball given that hypothesis $B_3$ is true, for example. This means that there are 3 black balls and 6 red balls in the bag. So the probability of pulling a black ball from the bag at random will be 3/9.
 
 Generalizing this idea, we can get the probability of pulling a black ball from the bag by dividing the elements of `prior_samples` by 9:
 
-```{python}
+```{pyodide}
 p_black = prior_samples / 9
 print(p_black[0:4]) # print out just a few
 ```
 
 Now, to complete our generative model, we just need to sample one value for each element of `p_black`. Each sample represents a draw from a bag.
 
-```{python}
+```{pyodide}
 ball_samples = np.random.binomial(n = np.repeat(1,len(p_black)),
                                   p = p_black)
 print(ball_samples[0:9])
@@ -89,11 +98,12 @@ print(ball_samples[0:9])
 
 `ball_samples` is 1 for black and 0 for red. Once again, let's plot all our samples.
 
-```{python}
+```{pyodide}
 fig, ax = plt.subplots()
 sns.histplot(ball_samples, bins=2)
 ax.set_xticks(ticks=[0,1])
 ax.set_ylabel("Number of samples")
+plt.show()
 ```
 
 You can think of this plot representing your overall beliefs about the number of red and black balls in the bag, averaged over all possible hypotheses.
@@ -116,7 +126,7 @@ The prior is the array `h_priors` defined above. Given that we have observed $B$
 
 Generalizing this idea, $P(B|B_n) = n/9$. We can therefore compute the likelihoods for all hypotheses in a vector:
 
-```{python}
+```{pyodide}
 likelihoods = np.arange(0,10,1) / 9
 
 print(likelihoods)
@@ -128,7 +138,7 @@ $$P(B_5 | B) = \frac{P(B|B_5) P(B_5)}{\sum_h{p(B|h) P(h)}}$$
 
 Let's compute the parts we need to calculate $P(B_5 | B)$.
 
-```{python}
+```{pyodide}
 # Prior
 p_B5 = h_priors[3]
 
@@ -150,7 +160,7 @@ print("P(B5|B) = " + str(p_B5_given_B)) # Posterior
 
 Let's update the probabilities for all hypotheses in a more compact way.
 
-```{python}
+```{pyodide}
 posteriors = (likelihoods * h_priors) / sum(likelihoods * h_priors)
 
 for i in range(len(posteriors)):
@@ -159,13 +169,13 @@ for i in range(len(posteriors)):
 
 As expected, Bayes's rule says we should increase the probability we assign to hypotheses with more black balls than red balls. Additionally, let's double-check that the posterior probabilities sum to 1 (a requirement for a valid probability distribution).
 
-```{python}
+```{pyodide}
 sum(posteriors)
 ```
 
 Finally, let's plot the posterior probabilities.
 
-```{python}
+```{pyodide}
 hypotheses = ('B0', 'B1', 'B2', 'B3', 'B4',
               'B5', 'B6', 'B7', 'B8', 'B9')
 y_pos = np.arange(len(hypotheses))
@@ -175,6 +185,7 @@ sns.barplot(posteriors, orient="y")
 ax.set_yticks(ticks = y_pos, labels=hypotheses)
 ax.set_ylabel('Hypothesis')
 ax.set_xlabel('Probability')
+plt.show()
 ```
 
 ### How to avoid calculating P(d) {#normalization}
@@ -183,7 +194,7 @@ In practice, we generally do not need to calculate the $P(d)$ (the denominator i
 
 First, we create an array of prior probabilities, which has as many components as there are hypotheses. We'll just reuse `h_priors`. Note that the probabilities sum to 1, as they should because it's a probability distribution.
 
-```{python}
+```{pyodide}
 h_priors
 ```
 
@@ -191,7 +202,7 @@ Next, we create a likelihood array. When we did calculations above, we only had 
 
 In this example, there are two possible observations: $B$ and $R$. We can encode the likelihood as an $m \times n$ array where $m$ is the number of hypotheses and $n$ is the number of possible observations. In our case: $10 \times 2$.
 
-```{python}
+```{pyodide}
 likelihood_array = np.array((np.arange(0,10,1) / 9,
                              1-(np.arange(0,10,1) / 9))).T
 print(likelihood_array)
@@ -199,7 +210,7 @@ print(likelihood_array)
 
 Now we multiply the prior and likelihoods together (the numerator of Bayes's rule) *element-wise* (first element gets multiplied with first element, second element by second element, etc.):
 
-```{python}
+```{pyodide}
 prior_array = np.array((h_priors, h_priors)).T
 bayes_numerator = likelihood_array * prior_array
 
@@ -208,7 +219,7 @@ print(bayes_numerator)
 
 Finally, we want a distribution for each column, i.e., a distribution over hypotheses given each observation. Therefore, we sum each column and then divide each element by the sum of its column:
 
-```{python}
+```{pyodide}
 posteriors = bayes_numerator / np.sum(bayes_numerator, axis = 0)
 print(posteriors)
 ```

@@ -39,7 +39,7 @@ For example, in Robert Nosofsky's (1986) test of the GCM[^04-categorization-1], 
 
 Using our binary matrix representation, here is one possible stimulus from the Nosofsky experiment:
 
-```{python}
+```{pyodide}
 import numpy as np
 
 stimulus = np.array([[0, 0, 0, 0],
@@ -55,7 +55,7 @@ If we wanted to know how many of each stimulus to present our model, it would be
 
 For example, let's consider the "dimensional" condition of Nosofsky's experiment, in which subjects saw only the stimuli on the "diagonals" of the matrix. Let's assume they saw each one 100 times (actually, they did a mind-numbing 1200 trials after 2600 practice trials 🥴). We could represent that like so:
 
-```{python}
+```{pyodide}
 training_set = np.array([[100, 0, 0, 100],
                          [0, 100, 100, 0],
                          [0, 100, 100, 0],
@@ -67,7 +67,7 @@ This still isn't ideal though. Because it doesn't represent the category labels 
 
 Thinking ahead to how the GCM works, let's instead represent the training examples more like a list, so that we can iterate through them:
 
-```{python}
+```{pyodide}
 tDimensional = np.zeros((8,3), dtype=int)
 tDimensional[0] = [1,1,1]
 tDimensional[1] = [1,2,2]

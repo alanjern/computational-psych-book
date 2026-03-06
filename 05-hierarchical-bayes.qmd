@@ -35,7 +35,7 @@ $$
 
 The [Beta distribution](https://en.wikipedia.org/wiki/Beta_distribution) has two parameters: $\alpha > 0$ and $\beta > 0$. Let's create a function that will allow us to visualize the Beta distribution.
 
-```{python}
+```{pyodide}
 from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
@@ -58,25 +58,25 @@ def plot_beta(a, b):
 
 Let's see what it looks like with a few different values.
 
-```{python}
+```{pyodide}
 plot_beta(1,1)
 ```
 
 When $\alpha = \beta = 1$, the Beta distribution is identical to a Uniform($[0,1]$) distribution.
 
-```{python}
+```{pyodide}
 plot_beta(3,3)
 ```
 
 When $\alpha$ and $\beta$ are greater than 1 and equal, we get a distribution with a peak around 0.5. If we had strong prior expectations that the coin was unbiased, we could increase the parameters even more:
 
-```{python}
+```{pyodide}
 plot_beta(50,50)
 ```
 
 What about when $\alpha$ and $\beta$ are not equal?
 
-```{python}
+```{pyodide}
 plot_beta(4,2)
 ```
 
@@ -84,7 +84,7 @@ This allows us to capture skewed priors, perhaps capturing a belief that the coi
 
 Now, what if $\alpha$ and $\beta$ are less than 1?
 
-```{python}
+```{pyodide}
 plot_beta(0.5,0.5)
 ```
 
@@ -106,13 +106,13 @@ Because we used a conjugate distribution, we can use our same `plot_beta` functi
 
 Suppose you start with a fairly strong belief that a coin is fair, represented by this distribution:
 
-```{python}
+```{pyodide}
 plot_beta(30,30)
 ```
 
 Now, suppose you flip a coin 20 times and it comes up heads every time. What should you think about the bias of the coin now? According to our model:
 
-```{python}
+```{pyodide}
 plot_beta(30+20,30)
 ```
 
@@ -120,13 +120,13 @@ As you can see, this should cause you to shift your beliefs somewhat.
 
 This wasn't totally realistic, though. If you picked a coin off the ground, your prior beliefs about it being biased would probably look more like this:
 
-```{python}
+```{pyodide}
 plot_beta(2000,2000)
 ```
 
 What happens if you *now* flipped this coin 20 times and it came up heads every time?
 
-```{python}
+```{pyodide}
 plot_beta(2000+20,2000)
 ```
 
@@ -134,13 +134,13 @@ You might be mildly surprised, but those 20 flips wouldn't be enough to budge yo
 
 Finally, let's imagine a situation in which you had a weak prior belief that a coin was biased:
 
-```{python}
+```{pyodide}
 plot_beta(5,1)
 ```
 
 Now you flip the coin 100 times and it comes up heads 48 times. What should your updated beliefs be?
 
-```{python}
+```{pyodide}
 plot_beta(5+48,1+52)
 ```
 

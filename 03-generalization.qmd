@@ -161,9 +161,9 @@ A consequence of both of these assumptions is something like [Occam's razor](htt
 
 ### Try out the model yourself
 
-```{python}
-#| include: false
+Here's the full code for the model. Run this code to load the `animalGeneralization` function.
 
+```{pyodide}
 import numpy as np
 import pandas as pd
 from scipy.special import comb
@@ -320,30 +320,27 @@ def animalGeneralization(premises, phi=20):
 
 ```
 
-You can try out a running version of the model by making a copy of the [code here](https://colab.research.google.com/drive/1QIhYLYMcNXjrRQBXKRz9CZ4xMirzqcsp?usp=sharing). Here, let's look at how the model handles a few specific cases.
+Let's look at how the model handles a few specific cases, beginning with a single example: horses can get blicketitis.
 
-Let's start with a single example: horses can get blicketitis.
-
-```{python}
+```{pyodide}
 animalGeneralization(["horse"])
 ```
 
 Here, we see a standard generalization curve. Now, let's add a few more animals.
 
-```{python}
+```{pyodide}
 animalGeneralization(["horse", "cow", "mouse"])
 ```
 
 Now the model has increased probability for most other animals. This makes sense because there is more reason to think blicketitis might affect lots of different animals.
 
-```{python}
-animalGeneralization(["horse", "cow", "mouse", "squirrel"])
-```
+Try editing the code above to add more animals or different combinations of animals to see what happens. Do the results make intuitive sense?
 
-Adding a squirrel further supported this idea. But what if we add additional examples of animals we've already seen?
+For example, what happens if you add additional examples of animals we've already seen?
 
-```{python}
-animalGeneralization(["horse", "cow", "mouse", "squirrel", "horse", "squirrel"])
+```{pyodide}
+animalGeneralization(["horse", "cow", "mouse", 
+                      "squirrel", "horse", "squirrel"])
 ```
 
 Now the probabilities for other animals drop, because it's starting to look like maybe this disease only affects the four animals we've seen so far.
@@ -352,7 +349,7 @@ To sum up, when we've seen a small number of examples, like a single horse, the 
 
 As one final example, let's look at the impact of multiple examples of a single animal.
 
-```{python}
+```{pyodide}
 animalGeneralization(["gorilla"])
 animalGeneralization(["gorilla", "gorilla"])
 animalGeneralization(["gorilla", "gorilla", "gorilla"])

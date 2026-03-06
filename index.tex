@@ -1,0 +1,4227 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\usepackage{svg}
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Introduction to Computational Psychology},
+  pdfauthor={Alan Jern},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Introduction to Computational Psychology}
+\author{Alan Jern}
+\date{2026-03-03}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Welcome}\label{welcome}
+\addcontentsline{toc}{chapter}{Welcome}
+
+\markboth{Welcome}{Welcome}
+
+\section*{Thanks}\label{thanks}
+\addcontentsline{toc}{section}{Thanks}
+
+\markright{Thanks}
+
+This book borrows inspiration and content (especially Chapters
+\hyperref[bayes]{2} and \hyperref[pragmatics]{7}) from Fausto Carcassi's
+\href{https://github.com/thelogicalgrammar/cognitive_modelling_book}{Introduction
+to Cognitive Modelling in R} book and I am tremendously grateful to him
+for sharing his book publicly. Hopefully this resource will be equally
+helpful to others.
+
+A number of the modeling examples and homework assignments are adapted
+from code written by Danielle Navarro from previous iterations of her
+\href{https://compcogsci-3016.djnavarro.net/}{Computational Cognitive
+Science course} with Andy Perfors. I am very grateful to both of them
+for making all of their materials public (and well documented).
+
+Your \href{mailto:jern@rose-hulman.edu}{feedback} is welcome and
+encouraged.
+
+\section*{License}\label{license}
+\addcontentsline{toc}{section}{License}
+
+\markright{License}
+
+\href{https://creativecommons.org/licenses/by-nc/4.0/}{\pandocbounded{\includegraphics[keepaspectratio]{images/badges/cc-by-nc.png}}}
+
+Anyone is free to reuse and adapt this book for their own non-commercial
+purposes, with attribution. If you do use this book in any way,
+\href{mailto:jern@rose-hulman.edu}{please tell me about it}.
+
+\bookmarksetup{startatroot}
+
+\chapter{Why computational modeling?}\label{intro}
+
+The field of psychology is full of theories. But this book is focused on
+a specific type of theory: the type that can be formalized as a
+computational model.
+
+What advantage does a computational (or mathematical) theory have over
+one that can't be expressed in computational terms? The biggest
+advantage is precision. For example, suppose you say that attention is
+like a spotlight 🔦: we can attend to things that are currently within
+the light, and we can control where the light is shining, but things
+outside of the light are outside of our awareness. This is a kind of
+theory -- an analogy-based one -- and it's a good start for making some
+general \emph{qualitative} predictions about how attention works.
+
+But you'll quickly run into problems if you want to make precise
+\emph{quantitative} predictions about attention. How big is the
+spotlight? Does the size expand and contract? How quickly does it move
+around? Is attention completely absent outside of the spotlight or does
+it ramp down as you get near the edge of the light? In other words, if
+you wanted to build a computer model of this theory, a simple analogy
+doesn't cut it.
+
+\emph{Computational models force us to be explicit about our
+assumptions.}
+
+\section{Representations 🔸}\label{representations}
+
+We don't perceive the world as it truly is. As one example, the visible
+spectrum that our eyes can detect is just a fraction of the full
+electromagnetic spectrum. Similarly, we can only hear a narrow range of
+sound frequencies. In other words, we perceive an incomplete picture of
+the world.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/01/range_of_sensation.png}}
+
+}
+
+\caption{Source: Abstruse Goose.}
+
+\end{figure}%
+
+Even for the parts of the world that we \emph{can} perceive, the
+information we get through our senses is often incomplete, so we are
+constantly making assumptions to fill in gaps.
+
+As a result, what we have in our heads is a kind of model of the world
+around us -- what cognitive scientists call a mental representation.
+These representations help us to reach rapid conclusions about things
+involving language, causes and effects, concepts, mental states, and
+many other aspects of cognition.
+
+Some of the key questions for cognitive scientists who use computational
+models are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What mental representations do we rely on?
+\item
+  How do our minds use these representations to learn when we get new
+  information?
+\item
+  What kind of information do we get and how do our expectations about
+  the kind of information we're getting to affect how we use it?
+\end{enumerate}
+
+This book focuses on each of these questions.
+
+\section{Homework 1: Build your first computational model
+💻}\label{homework-1-build-your-first-computational-model}
+
+To get some initial experience with computational modeling, you'll build
+and experiment with a simple model of classical conditioning developed
+by Robert Rescorla and Allan Wagner -- now called the Rescorla-Wagner
+model.
+
+All homework assignments for this book will be done in Google Colab.
+Click the button below to view Homework 1.
+
+\href{https://colab.research.google.com/drive/1tOD-ChXJ2MlsIqU85yWzSqZnmg64KcRv?usp=sharing}{\pandocbounded{\includesvg[keepaspectratio]{index_files/mediabag/colab-badge.svg}}}
+
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, breakable, arc=.35mm, toptitle=1mm, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, coltitle=black, left=2mm, opacityback=0, colframe=quarto-callout-note-color-frame, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm]
+
+You'll have to make a copy of the notebook saved to your own Drive in
+order to edit it.
+
+\end{tcolorbox}
+
+If you're unfamiliar with Colab (or Jupyter Notebooks), watch this brief
+introduction video.
+
+\url{https://www.youtube.com/embed/inN8seMm7UI}
+
+This video gives some extra tips for working with Colab.
+
+\url{https://youtu.be/rNgswRZ2C1Y?si=aVooywIqX0_G0NId}
+
+\bookmarksetup{startatroot}
+
+\chapter{Bayesian inference}\label{bayes}
+
+This chapter reviews some basic probability and Bayesian inference. You
+might be asking yourself: \emph{What does this have to do with
+psychology?} The answer becomes clear when you recognize that most of
+what we do when we're making sense of the world is drawing inferences.
+When you see an ambiguous image like the one below, is it a rabbit or a
+duck? When someone mumbles something, did they say ``hello'' or ``go to
+hell''? When you take a pill and your headache goes away, did the pill
+eliminate your headache or did the headache go away on its own?
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{images/02/duck-rabbit.png}
+
+}
+
+\caption{The duck-rabbit illusion}
+
+\end{figure}%
+
+In all of these examples, there is more than one hypothesis about what
+we observed. Probability and Bayesian inference provide the tools for
+optimally determining how probable these different hypotheses are. One
+of the claims of this book is that when people are making inferences in
+situations like these, their inferences are often well predicted by the
+optimal inferences dictated by probability theory.
+
+\section{Basic probability 🎲}\label{basic-probability}
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional probability: \(P(b|a) = \frac{P(a,b)}{P(a)}\)
+\item
+  Chain rule: \(P(a,b) = P(b|a)P(a)\)
+\item
+  Marginalization: \(P(d) = \sum_h P(d,h) = \sum_h P(d|h) P(h)\)
+\item
+  Bayes's rule:
+  \(P(h|d) = \frac{P(d|h) P(h)}{P(d)} = \frac{P(d|h) P(h)}{\sum_h P(d|h) P(h)}\).
+  \(P(d|h)\) is referred to as the \emph{likelihood}, \(P(h)\) is the
+  \emph{prior}, and \(P(h|d)\) is the \emph{posterior}.
+\end{itemize}
+
+\section{A motivating example: Sampling from a bag
+👝}\label{a-motivating-example-sampling-from-a-bag}
+
+Suppose you have a bag full of black and red balls. You can't see inside
+the bag and you don't know how many black and red balls are inside, but
+you know that there are nine total balls in the bag.
+
+You want to know how many black balls and red balls there are. There are
+a finite number of hypotheses: \{0 black balls, 1 black ball, 2 black
+balls, \ldots, 9 black balls\}. Let's call these hypotheses \(B_0\),
+\(B_1\), etc., respectively.
+
+You don't know which hypothesis is true, but you might have some idea
+that some hypotheses are more likely than others. It's natural to
+represent your uncertainty with a probability distribution over the
+possible unknown states that the world could be in -- in this case, the
+ten hypotheses. Each hypothesis gets assigned a probability and the
+probabilities sum to 1.
+
+For starters, let's assume that you \emph{don't} have any idea which
+hypotheses are more likely. In other words, you give every hypothesis
+the same probability: 1/10 = 0.1. This is called a uniform distribution
+over hypotheses. This distribution is your prior.
+
+Now suppose you put your hand in the bag and pull out a ball at random.
+The possible observations are: \texttt{\{black,\ red\}}, Let's call them
+\(B\) and \(R\), respectively. The probability of observing each color
+depends on which hypothesis is true, i.e., how many balls of each color
+are in the bag. For instance, if \(B_0\) is true (there are 0 black
+balls in the bag), then the probability of observing a red ball is 1
+(\(P(R|B_0)=1\)), and the probability of observing a black ball is 0
+(\(P(B|B_0)=0\)). These expressions that tell us how probable our
+observations are, given a specific hypothesis, are your likelihoods.
+
+\subsection{Sampling from the generative
+model}\label{sampling-from-the-generative-model}
+
+Now we have a distribution over hypotheses (a prior), \(P(h)\), and a
+distribution over observations given each hypothesis (a likelihood),
+\(P(d|h)\). These two things allow us to create a \emph{generative
+model}, a model for sampling new data.
+
+How do we sample from the generative model? Note that which hypothesis
+\(h\) is true does not depend on the data, while the data \(d\) depends
+on which hypothesis is true. Therefore, we can sample from the
+generative model using the following two-step process:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Sample a hypothesis from the prior.
+\item
+  Sample data given the hypothesis, using the likelihood.
+\end{enumerate}
+
+Let's first create an array with the probability of each hypothesis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ random}
+
+\NormalTok{random.seed(}\DecValTok{2022}\NormalTok{) }\CommentTok{\# set random seed to get same results every time}
+
+\NormalTok{h\_priors }\OperatorTok{=}\NormalTok{ np.repeat(}\FloatTok{0.1}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(h\_priors)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we'll do the first step: create an array of 10000 hypotheses sampled
+from the prior:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prior\_samples }\OperatorTok{=}\NormalTok{ np.array(random.choices(np.arange(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+\NormalTok{                   weights }\OperatorTok{=}\NormalTok{ h\_priors, }
+\NormalTok{                   k }\OperatorTok{=} \DecValTok{10000}\NormalTok{))}
+                   
+\BuiltInTok{print}\NormalTok{(prior\_samples[}\DecValTok{0}\NormalTok{:}\DecValTok{9}\NormalTok{]) }\CommentTok{\# printing out just a few}
+\end{Highlighting}
+\end{Shaded}
+
+Here, each number corresponds to one hypothesis: 0 corresponds to
+\(B_0\), 1 to \(B_1\), and so on. Each sample represents one possible
+way (a hypothesis) the world could be. Since the prior was uniform (each
+hypothesis had the same probability), each hypothesis appears about
+equally often. We can plot all the samples to verify:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\NormalTok{sns.set\_theme()}
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\NormalTok{sns.histplot(prior\_samples, bins}\OperatorTok{=}\DecValTok{10}\NormalTok{)}
+\NormalTok{ax.set\_xlabel(}\StringTok{\textquotesingle{}Prior sample\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{\textquotesingle{}Number of samples\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now for the next step. For each sample in \texttt{prior\_samples}, we
+want to sample an observation. To do that, let's pause for a second and
+think about the probability of pulling a black ball given that
+hypothesis \(B_3\) is true, for example. This means that there are 3
+black balls and 6 red balls in the bag. So the probability of pulling a
+black ball from the bag at random will be 3/9.
+
+Generalizing this idea, we can get the probability of pulling a black
+ball from the bag by dividing the elements of \texttt{prior\_samples} by
+9:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_black }\OperatorTok{=}\NormalTok{ prior\_samples }\OperatorTok{/} \DecValTok{9}
+\BuiltInTok{print}\NormalTok{(p\_black[}\DecValTok{0}\NormalTok{:}\DecValTok{4}\NormalTok{]) }\CommentTok{\# print out just a few}
+\end{Highlighting}
+\end{Shaded}
+
+Now, to complete our generative model, we just need to sample one value
+for each element of \texttt{p\_black}. Each sample represents a draw
+from a bag.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ball\_samples }\OperatorTok{=}\NormalTok{ np.random.binomial(n }\OperatorTok{=}\NormalTok{ np.repeat(}\DecValTok{1}\NormalTok{,}\BuiltInTok{len}\NormalTok{(p\_black)),}
+\NormalTok{                                  p }\OperatorTok{=}\NormalTok{ p\_black)}
+\BuiltInTok{print}\NormalTok{(ball\_samples[}\DecValTok{0}\NormalTok{:}\DecValTok{9}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{ball\_samples} is 1 for black and 0 for red. Once again, let's
+plot all our samples.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\NormalTok{sns.histplot(ball\_samples, bins}\OperatorTok{=}\DecValTok{2}\NormalTok{)}
+\NormalTok{ax.set\_xticks(ticks}\OperatorTok{=}\NormalTok{[}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+\NormalTok{ax.set\_ylabel(}\StringTok{"Number of samples"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can think of this plot representing your overall beliefs about the
+number of red and black balls in the bag, averaged over all possible
+hypotheses.
+
+Not surprisingly, we got about equal numbers of red and black balls.
+This makes sense: We didn't have any prior expectations about whether
+red or black balls were more likely in the bag.
+
+How should your beliefs change after you pull a ball out of the bag?
+That is, how should you respond to evidence?
+
+\section{Bayesian updating: Learning from evidence
+🤔}\label{bayesian-updating-learning-from-evidence}
+
+Let's apply \hyperref[basic-probability]{Bayes's rule} to see how to
+optimally incorporate new data into your beliefs.
+
+\subsection{Applying Bayes's rule to the bag
+case}\label{applying-bayess-rule-to-the-bag-case}
+
+Suppose you have a uniform prior distribution over the 10 hypotheses
+about balls in the bag. Now you pick a ball and it's black. Given this
+observation \(B\), how should you change the probabilities you give to
+each hypothesis?
+
+Intuitively, you should now give a little bit more probability to those
+hypotheses that have more black balls than red balls, because those are
+the hypotheses that make your observations more likely. Moreover, you
+can definitively exclude hypothesis \(B_0\), because your observation
+would be impossible if \(B_0\) were true. Let's calculate this with
+Bayes's rule.
+
+The prior is the array \texttt{h\_priors} defined above. Given that we
+have observed \(B\), the likelihood should tell us, for each hypothesis,
+the probability of \(B\) given that hypothesis. For example, for
+\(B_9\), the likelihood \(P(B|B_9) = 1\). For \(B_8\),
+\(P(B|B_8) = 8/9\), because 8 of the 9 balls are black.
+
+Generalizing this idea, \(P(B|B_n) = n/9\). We can therefore compute the
+likelihoods for all hypotheses in a vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{likelihoods }\OperatorTok{=}\NormalTok{ np.arange(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{/} \DecValTok{9}
+
+\BuiltInTok{print}\NormalTok{(likelihoods)}
+\end{Highlighting}
+\end{Shaded}
+
+Now suppose we want to find the probability of hypothesis \(B_5\) after
+observing one draw \(B\). Let's apply Bayes's rule:
+
+\[P(B_5 | B) = \frac{P(B|B_5) P(B_5)}{\sum_h{p(B|h) P(h)}}\]
+
+Let's compute the parts we need to calculate \(P(B_5 | B)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prior}
+\NormalTok{p\_B5 }\OperatorTok{=}\NormalTok{ h\_priors[}\DecValTok{3}\NormalTok{]}
+
+\CommentTok{\# Likelihood}
+\NormalTok{likelihood\_B5 }\OperatorTok{=}\NormalTok{ likelihoods[}\DecValTok{5}\NormalTok{]}
+
+\CommentTok{\# Data}
+\NormalTok{p\_B }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(likelihoods}\OperatorTok{*}\NormalTok{h\_priors)}
+
+\CommentTok{\# Posterior}
+\NormalTok{p\_B5\_given\_B }\OperatorTok{=}\NormalTok{ p\_B5 }\OperatorTok{*}\NormalTok{ likelihood\_B5 }\OperatorTok{/}\NormalTok{ p\_B}
+
+\CommentTok{\# Print out results}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"P(B5) = "} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(p\_B5)) }\CommentTok{\# Prior}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"P(B|B5) = "} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(likelihood\_B5)) }\CommentTok{\# Likelihood}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"P(B) = "} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(p\_B)) }\CommentTok{\# Data}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"P(B5|B) = "} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(p\_B5\_given\_B)) }\CommentTok{\# Posterior}
+\end{Highlighting}
+\end{Shaded}
+
+Let's update the probabilities for all hypotheses in a more compact way.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posteriors }\OperatorTok{=}\NormalTok{ (likelihoods }\OperatorTok{*}\NormalTok{ h\_priors) }\OperatorTok{/} \BuiltInTok{sum}\NormalTok{(likelihoods }\OperatorTok{*}\NormalTok{ h\_priors)}
+
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(posteriors)):}
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"P(B"} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(i) }\OperatorTok{+} \StringTok{"|B) = "} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(posteriors[i]))}
+\end{Highlighting}
+\end{Shaded}
+
+As expected, Bayes's rule says we should increase the probability we
+assign to hypotheses with more black balls than red balls. Additionally,
+let's double-check that the posterior probabilities sum to 1 (a
+requirement for a valid probability distribution).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{sum}\NormalTok{(posteriors)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, let's plot the posterior probabilities.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hypotheses }\OperatorTok{=}\NormalTok{ (}\StringTok{\textquotesingle{}B0\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B1\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B2\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B3\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B4\textquotesingle{}}\NormalTok{,}
+              \StringTok{\textquotesingle{}B5\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B6\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B7\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B8\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B9\textquotesingle{}}\NormalTok{)}
+\NormalTok{y\_pos }\OperatorTok{=}\NormalTok{ np.arange(}\BuiltInTok{len}\NormalTok{(hypotheses))}
+
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\NormalTok{sns.barplot(posteriors, orient}\OperatorTok{=}\StringTok{"y"}\NormalTok{)}
+\NormalTok{ax.set\_yticks(ticks }\OperatorTok{=}\NormalTok{ y\_pos, labels}\OperatorTok{=}\NormalTok{hypotheses)}
+\NormalTok{ax.set\_ylabel(}\StringTok{\textquotesingle{}Hypothesis\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.set\_xlabel(}\StringTok{\textquotesingle{}Probability\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{How to avoid calculating P(d)}\label{normalization}
+
+In practice, we generally do not need to calculate the \(P(d)\) (the
+denominator in Bayes's rule) explicitly. I'll give you the general idea
+why in this section.
+
+First, we create an array of prior probabilities, which has as many
+components as there are hypotheses. We'll just reuse \texttt{h\_priors}.
+Note that the probabilities sum to 1, as they should because it's a
+probability distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h\_priors}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we create a likelihood array. When we did calculations above, we
+only had an array with the likelihoods for a specific observation.
+However, we would like to have something that encodes the likelihood
+function for each possible observation given each possible hypothesis,
+rather than just for a specific observation.
+
+In this example, there are two possible observations: \(B\) and \(R\).
+We can encode the likelihood as an \(m \times n\) array where \(m\) is
+the number of hypotheses and \(n\) is the number of possible
+observations. In our case: \(10 \times 2\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{likelihood\_array }\OperatorTok{=}\NormalTok{ np.array((np.arange(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{/} \DecValTok{9}\NormalTok{,}
+                             \DecValTok{1}\OperatorTok{{-}}\NormalTok{(np.arange(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{/} \DecValTok{9}\NormalTok{))).T}
+\BuiltInTok{print}\NormalTok{(likelihood\_array)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we multiply the prior and likelihoods together (the numerator of
+Bayes's rule) \emph{element-wise} (first element gets multiplied with
+first element, second element by second element, etc.):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prior\_array }\OperatorTok{=}\NormalTok{ np.array((h\_priors, h\_priors)).T}
+\NormalTok{bayes\_numerator }\OperatorTok{=}\NormalTok{ likelihood\_array }\OperatorTok{*}\NormalTok{ prior\_array}
+
+\BuiltInTok{print}\NormalTok{(bayes\_numerator)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, we want a distribution for each column, i.e., a distribution
+over hypotheses given each observation. Therefore, we sum each column
+and then divide each element by the sum of its column:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posteriors }\OperatorTok{=}\NormalTok{ bayes\_numerator }\OperatorTok{/}\NormalTok{ np.}\BuiltInTok{sum}\NormalTok{(bayes\_numerator, axis }\OperatorTok{=} \DecValTok{0}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(posteriors)}
+\end{Highlighting}
+\end{Shaded}
+
+And that gives us the posterior without us having to explicitly
+calculate the evidence for each observation!
+
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, breakable, arc=.35mm, toptitle=1mm, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, coltitle=black, left=2mm, opacityback=0, colframe=quarto-callout-note-color-frame, leftrule=.75mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm]
+
+The general idea is this. Because the denominator of Bayes's rule, for a
+fixed observation, is a constant, you can usually get away with
+computing \(P(d|h) P(h)\) for every possible hypothesis \(h\) and then
+``normalize'' the resulting values so that they sum to 1 (remember that
+they have to in order for it to be a valid probability distribution).
+
+\end{tcolorbox}
+
+\section{Exercises 📝}\label{bayes-exercises}
+
+\subsection{Taxi cabs}\label{taxi-cabs}
+
+80\% of the taxi cabs in Simpletown are green and 20\% are
+yellow\footnote{After the protracted and aptly named ``color wars'' of
+  2113-2114, the previously dominant (and ruthless) orange cabs were
+  wiped from existence. For the purposes of this problem, you may ignore
+  them.}. A hit-and-run accident happened at night involving a taxi. A
+witness claimed that the taxi was yellow. After extensive testing, it is
+determined that the witness can correctly identify the color of a taxi
+only 75\% of the time under conditions like the ones present during the
+accident. What is the probability that the taxi was yellow?
+
+\subsection{Flipping coins}\label{flipping-coins}
+
+You observe a sequence of coin flips and want to determine if the coin
+is a trick coin (always comes up heads) or a normal coin. Let
+\(P(\text{heads}) = \theta\). Let \(h_1\) be the hypothesis that
+\(\theta = 0.5\) (fair coin). Let \(h_2\) be the hypothesis that
+\(\theta = 1\) (trick coin).
+
+For this problem, we will define something called prior odds, which is
+the ratio of prior probabilities assigned to two hypotheses:
+\(\frac{P(h_1)}{P(h_2)}\). Because most coins aren't trick coins, we
+assume that \(\frac{P(h_1)}{P(h_2)} = 999\), indicating a very strong
+(999 to 1) prior probability in favor of fair coins. We can now compute
+the posterior odds, the ratio of posterior probabilities for the two
+hypotheses after observing some data \(d\):
+\(\frac{P(h_1|d)}{P(h_2|d)}\).
+
+Compute the posterior odds after observing the following sequences of
+coin flips:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  HHTHT
+\item
+  HHHHH
+\item
+  HHHHHHHHHH
+\end{enumerate}
+
+\section{Solutions}\label{solutions}
+
+\subsection{Taxi cabs}\label{taxi-cabs-1}
+
+Let \(h_1\) be the hypothesis that the taxi is yellow. Let \(h_2\) be
+the hypothesis that the taxi is green. Let data \(d\) be the witness
+report that the taxi was yellow. Given the problem statement,
+\(P(h_1) = 0.2\) and \(P(h_2) = 0.8\). The witness is only accurate 75\%
+of the time, so \(P(d|h1) = 0.75\) (the witness saw a yellow taxi and
+correctly identified it) and \(P(d|h2) = 0.25\) (the witness saw a green
+taxi but identified it as yellow). Now we apply Bayes's rule:
+
+\[\begin{align}
+P(h_1|d) &= \frac{P(d|h_1) P(h_1)}{P(d)} \\
+&= \frac{P(d|h_1) P(h_1)}{P(d|h_1) P(h_1) + P(d|h_2) P(h_2)} \\
+&= \frac{(0.75) (0.2)}{(0.75)(0.2) + (0.25)(0.8)} \approx 0.43
+\end{align}\]
+
+Because yellow cabs are rare (have low prior probability), it is
+actually more probable that the cab was green, even though the witness
+is 75\% accurate.
+
+\subsection{Flipping coins}\label{flipping-coins-1}
+
+\subsubsection*{HHTHT}\label{hhtht}
+\addcontentsline{toc}{subsubsection}{HHTHT}
+
+\[
+\begin{align}
+\frac{P(h_1|d)}{P(h_2|d)} &= \frac{P(d|h_1)}{P(d|h_2)} \frac{P(h_1)}{P(h_2)} \\
+&= \frac{(1/2)^5}{0} \times 999 = \inf
+\end{align}
+\] This sequence isn't even possible under \(h_2\) so we have infinite
+evidence in favor of \(h_1\).
+
+\subsubsection*{HHHHH}\label{hhhhh}
+\addcontentsline{toc}{subsubsection}{HHHHH}
+
+\[
+\begin{align}
+\frac{P(h_1|d)}{P(h_2|d)} &= \frac{P(d|h_1)}{P(d|h_2)} \frac{P(h_1)}{P(h_2)} \\
+&= \frac{(1/2)^5}{1^5} \times 999 = 31.2
+\end{align}
+\]
+
+This sequence favors \(h_1\) by a factor of about 31. Even five heads in
+a row can't overcome our strong prior favoring \(h_1\).
+
+\subsubsection*{HHHHHHHHHH}\label{hhhhhhhhhh}
+\addcontentsline{toc}{subsubsection}{HHHHHHHHHH}
+
+\[
+\begin{align}
+\frac{P(h_1|d)}{P(h_2|d)} &= \frac{P(d|h_1)}{P(d|h_2)} \frac{P(h_1)}{P(h_2)} \\
+&= \frac{(1/2)^{10}}{1^{10}} \times 999 = 0.98
+\end{align}
+\]
+
+Now the evidence favors \(h_2\) (trick coin) just barely.
+
+\bookmarksetup{startatroot}
+
+\chapter{Generalization}\label{generalization}
+
+In the last chapter, you learned that much of cognition is about making
+inferences. A common inference we're faced with involves generalizing
+examples of things to new cases.
+
+\begin{itemize}
+\tightlist
+\item
+  A child hears a brand new word and has to figure out which objects
+  that word applies to.
+\item
+  You eat one candy from an assorted box and then try to guess what the
+  others might taste like.
+\item
+  You remember that your friend liked doing crosswords during a weekend
+  trip at the cabin one time, so you guess they might like a book of
+  puzzles as a gift (generalizing their interests).
+\end{itemize}
+
+How can we apply Bayesian inference to these kinds of problems?
+
+\section{Healthy hormone levels 💉}\label{hormones}
+
+The following example comes from a
+\href{https://cocosci.princeton.edu/tom/papers/TGbbs.pdf}{2001 paper by
+Josh Tenenbaum and Thomas Griffiths}\footnote{Tenenbaum, J. B. \&
+  Griffiths, T. L. (2001). Generalization, similarity, and Bayesian
+  inference. Behavioral and Brain Sciences, 24, 629-640.}
+
+\textbf{The basic problem}: You learn the value of a healthy hormone
+level (say, 60) that varies on a scale from 1 to 100 (integers only).
+What is the probability that another value (say, 70) is also healthy?
+
+\subsection{Setting up a model}\label{setting-up-a-model}
+
+\subsubsection{The hypothesis space}\label{the-hypothesis-space}
+
+To start with, we'll assume that healthy values lie in a contiguous
+interval. Using the term from the paper, this interval is the
+\emph{consequential region} \(C\).
+
+The hypothesis space consists of all possible consequential regions. For
+example, {[}0,100{]}, {[}10,19{]}, and {[}44,45{]}, are all valid
+hypotheses. The full hypothesis space is every valid interval between 0
+and 100.
+
+\subsubsection{Prior}\label{prior}
+
+How much weight should we assign to each hypothesis? We might have
+reason to favor shorter intervals over longer ones, for example. In the
+paper, they use an
+\href{https://en.wikipedia.org/wiki/Erlang_distribution}{Erlang prior}.
+Alternatively, for simplicity of calculation, we could again assume a
+uniform prior distribution, placing equal weight on all hypotheses, like
+we did in the previous chapter. This is tantamount to making no prior
+assumptions about which intervals are most probable.
+
+\subsubsection{Likelihood}\label{likelihood}
+
+Suppose you learn that a healthy patient has a hormone level of 60. What
+was the likelihood of observing this value, assuming we know which
+hypothesis is correct? That is, what is \(P(x = 60 | h)\). It depends on
+how we assume the patient was chosen.
+
+\paragraph{Weak vs.~strong sampling}\label{weak-strong-sampling}
+
+Under \emph{weak sampling}, we assume that each observation was sampled
+from the full range of possibilities, and it was just a coincidence that
+we happened to get one from the consequential region (a healthy
+patient). If that's true, then the probability of getting any particular
+value doesn't depend on which hypothesis is true:
+
+\[
+P(x|h) = \frac{1}{L}
+\]
+
+where \(L\) is the length of the range of possible values (100 in our
+case).
+
+Under \emph{strong sampling}, we assume that each observation was
+specifically chosen as an example of the consequential region \(C\). In
+other words, someone chose a healthy person and tested their hormone
+levels as an example for you. In this case, the probability of seeing a
+particular value depends on the size of the region:
+
+\[
+P(x|h) = \begin{cases} 
+  \frac{1}{|h|} & \text{if } x \in h \\
+  0 & \text{otherwise}
+  \end{cases}
+\] where \(|h|\) is the \emph{size} of \(h\), i.e., the number of values
+contained in \(h\). If you have multiple observations
+\(X = \{x_1, x_2, \ldots, x_n \}\), then \(P(X|h) = (1/|h|)^n\). This is
+because we will assume each sample is independent like a coin flip.
+
+The result of the strong sampling assumption is the \emph{size
+principle}: among hypotheses that include all of the observed examples,
+those that are smallest will receive higher posterior probability
+because they will have higher likelihoods.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{images/03/hypotheses.png}
+
+}
+
+\caption{Sample hypotheses. The thickness of the lines indicates their
+likelihood, depicting the size principle. Image from Griffiths \&
+Tenenbaum (2001).}
+
+\end{figure}%
+
+\subsubsection{Posterior}\label{posterior}
+
+We can now simply apply Bayes's rule to compute the probability of each
+hypothesis, given an observation (or set of observations).
+
+\[
+P(h|X) = \frac{P(X|h) P(h)}{\sum_{h_i} P(X|h_i) P(h_i)}
+\]
+
+\subsection{Generalizing}\label{generalizing}
+
+We aren't quite finished. Remember that we really want to know the
+probability of some new value \(y\) also being a healthy hormone level.
+But at this point all we have done is assign a probability to each
+\emph{interval} being the consequential region.
+
+What we want to do is essentially a two-step process:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  For each hypothesis \(h\), check to see if \(y\) is in it.
+\item
+  If it is, check how probable it is that \(h\) is the consequential
+  region \(C\), given our observations \(X\).
+\end{enumerate}
+
+This basic idea is sometimes known as hypothesis averaging because we
+don't actually care which hypothesis is the right one, so we'll just
+average over \emph{all} hypotheses, weighted by how probable they are.
+Specifically, we'll compute:
+
+\[
+P(y \in C|X) = \sum_h P(y \in C | h) P(h | X)
+\]
+
+The second term on the right is what we computed earlier using Bayes's
+rule.
+
+What about the first term? This time, we'll assume \emph{weak sampling}
+because there's no reason to assume that this new value \(y\) was chosen
+to be a healthy value or not.
+
+\subsection{Homework 2: Finish the
+details}\label{homework-2-finish-the-details}
+
+\href{https://colab.research.google.com/drive/1aqPpMyc-eMyLGpHFl2Fq_NlLiTuHkGky?usp=sharing}{\pandocbounded{\includesvg[keepaspectratio]{index_files/mediabag/colab-badge.svg}}}
+
+I haven't provided all the details for this model because your
+assignment is to finish the implementation yourself, run some
+simulations, and collect a small amount of real data to compare the
+model to.
+
+\section{The number game 🔢}\label{the-number-game}
+
+In most domains, requiring concepts to be restricted to contiguous
+intervals is not realistic. Numbers are one example. Consider the space
+of possible number concepts you could make up for integers between 1 to
+100. In addition to concepts like ``numbers between 20 and 50'', there
+are many other plausible concepts like ``multiples of 10'', ``even
+numbers'', or ``powers of 3''.
+
+Consider the following problem: You are given one or more examples \(X\)
+of numbers that fit some rule and you want to know how probable it is
+that a new number \(y\) also fits the rule.
+
+The model we discussed before can be naturally extended to this problem.
+For the likelihood, we can make the same
+\hyperref[weak-strong-sampling]{strong sampling} assumption as before.
+
+The prior is where things get a little trickier. Intuitively, some
+concepts like ``even numbers'' seem more probable than concepts like
+``multiples of 7''. This now becomes a psychological question: Which
+rules will people find to be more intuitively plausible? There is no
+single way to decide this, but we could run a survey to find out: Give
+people a long list of rules and ask them to judge how intuitively
+natural they seem. We could then construct a prior probability
+distribution using this data.
+
+Alternatively, we could come up with some definition of ``complexity''
+in hypotheses and assume that less complex hypotheses will receive
+higher prior probability.
+
+Once we have chosen a prior probability distribution \(P(h)\), we can
+now proceed just as we did before.
+
+\section{Inductive generalizations about animal properties
+🐴}\label{inductive-generalizations-about-animal-properties}
+
+Now let's consider an even more complex generalization problem, based on
+a \href{http://sanjanalab.org/reprints/Sanjana_NIPS_2002.pdf}{2002 paper
+by Neville Sanjana and Josh Tenenbaum}\footnote{Sanjana, N. \&
+  Tenenbaum, J. (2002). Bayesian models of inductive generalization.
+  Advances in Neural Information Processing Systems 15}. This is the
+problem of generalizing properties from a set of example animals to
+other animals. The paper uses the following example:
+
+\begin{verbatim}
+Chimps have blicketitis
+Squirrels have blicketitis
+--------------------------
+Horses have blicketitis
+\end{verbatim}
+
+The way to read this is as follows: The premises state that
+\textbf{chimps and squirrels have blicketitis}. The conclusion is that
+\textbf{horses have blicketitis}. The inductive generalization question
+is how probable is the conclusion given the premises? Intuitively, the
+conclusion in this example seems more plausible than the conclusion in
+the following example:
+
+\begin{verbatim}
+Chimps have blicketitis
+Gorillas have blicketitis
+--------------------------
+Horses have blicketitis
+\end{verbatim}
+
+The interesting psychological question is why is it that some
+generalizations seem more intuitively plausible than others?
+
+\subsection{Hypothesis space}\label{hypothesis-space}
+
+This problem is conceptually similar to the ones we've already been
+discussing. You want to infer what animals have blicketitis after seeing
+some examples of animals that blicketitis. The first question to answer
+is: What is the analogue of a consequential region for this problem?
+Animals don't naturally fall on a one-dimensional interval so we'll need
+to define a different hypothesis space. One possibility is a hierarchy,
+which naturally captures the knowledge people have about animals.
+
+\subsubsection{Clustering}\label{clustering}
+
+The paper first creates a hierarchy of eight animals using similarity
+data collected from people. Specifically, they asked people to judge how
+similar all pairs of eight animals were and then calculated the average
+similarity judgment for each animal.
+
+These similarity judgments can be used to construct a tree using a
+simple clustering algorithm. The algorithm works as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Put all animals in their own cluster.
+\item
+  Where there is more than one cluster that hasn't been placed in a
+  group, do the following:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Identify the pair of clusters with the greatest similarity between
+    them.
+  \item
+    Group those clusters into their own new cluster.
+  \end{enumerate}
+\end{enumerate}
+
+There are several approaches for computing the similarity between two
+clusters that contain multiple animals. For example, you might use the
+maximum similarity between any pair of individual animals in the two
+clusters.
+
+The results of this algorithm can be represented as a tree, shown below.
+Each node in the tree represents a cluster. The hypotheses we will
+consider will be any combination of 1, 2, or 3 of the clusters
+determined using the clustering algorithm.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{images/03/animal_clusters.png}
+
+}
+
+\caption{The tree of animal species. Image from Sanjana \& Tenenbaum
+(2002).}
+
+\end{figure}%
+
+\subsection{The model}\label{the-model}
+
+We can now define the model. First, let's define \(P(h)\) where \(h\) is
+a set of clusters. The authors make an assumption analogous to the
+following:
+
+\[
+P(h) \propto \frac{1}{\phi^k}
+\] where \(k\) is the number of clusters in \(h\). \(\phi\) is a
+parameter that we can choose. As long as \(\phi > 1\), \(P(h)\) will be
+smaller for hypotheses consisting of more clusters. This has the effect
+of assigning higher weight to ``simpler'' hypotheses.
+
+Once again, we will make the \hyperref[sampling-assumptions]{strong
+sampling assumption} for the likelihood. This time, \(|h|\) is the
+number of animal species in \(h\) and \(n\) is the number of examples in
+the premises.
+
+A consequence of both of these assumptions is something like
+\href{https://en.wikipedia.org/wiki/Occam\%27s_razor}{Occam's razor}
+which says that the simplest explanation should be preferred. This model
+will assign 0 likelihood to any hypotheses that don't include \(X\),
+thus narrowing the hypothesis space down to just hypotheses that are
+possible. Of those, it will favor hypotheses with fewer clusters and
+with fewer animals. In other words, it will favor the simplest
+hypotheses that are consistent with the examples we've seen.
+
+\subsection{Try out the model
+yourself}\label{try-out-the-model-yourself}
+
+You can try out a running version of the model by making a copy of the
+\href{https://colab.research.google.com/drive/1QIhYLYMcNXjrRQBXKRz9CZ4xMirzqcsp?usp=sharing}{code
+here}. Here, let's look at how the model handles a few specific cases.
+
+Let's start with a single example: horses can get blicketitis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animalGeneralization([}\StringTok{"horse"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-3-output-1.pdf}}
+
+\begin{verbatim}
+array([1.        , 0.52984834, 0.30628906, 0.30628906, 0.19579428,
+       0.19579428, 0.12893614, 0.12893614, 0.0842413 , 0.0842413 ])
+\end{verbatim}
+
+Here, we see a standard generalization curve. Now, let's add a few more
+animals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animalGeneralization([}\StringTok{"horse"}\NormalTok{, }\StringTok{"cow"}\NormalTok{, }\StringTok{"mouse"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-4-output-1.pdf}}
+
+\begin{verbatim}
+array([1.        , 1.        , 0.57379051, 0.57379051, 0.47852518,
+       0.47852518, 1.        , 0.60980466, 0.1707609 , 0.1707609 ])
+\end{verbatim}
+
+Now the model has increased probability for most other animals. This
+makes sense because there is more reason to think blicketitis might
+affect lots of different animals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animalGeneralization([}\StringTok{"horse"}\NormalTok{, }\StringTok{"cow"}\NormalTok{, }\StringTok{"mouse"}\NormalTok{, }\StringTok{"squirrel"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-5-output-1.pdf}}
+
+\begin{verbatim}
+array([1.        , 1.        , 0.64983602, 0.64983602, 0.58531333,
+       0.58531333, 1.        , 1.        , 0.18405475, 0.18405475])
+\end{verbatim}
+
+Adding a squirrel further supported this idea. But what if we add
+additional examples of animals we've already seen?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animalGeneralization([}\StringTok{"horse"}\NormalTok{, }\StringTok{"cow"}\NormalTok{, }\StringTok{"mouse"}\NormalTok{, }\StringTok{"squirrel"}\NormalTok{, }\StringTok{"horse"}\NormalTok{, }\StringTok{"squirrel"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-6-output-1.pdf}}
+
+\begin{verbatim}
+array([1.        , 1.        , 0.32551484, 0.32551484, 0.26938358,
+       0.26938358, 1.        , 1.        , 0.06883892, 0.06883892])
+\end{verbatim}
+
+Now the probabilities for other animals drop, because it's starting to
+look like maybe this disease only affects the four animals we've seen so
+far.
+
+To sum up, when we've seen a small number of examples, like a single
+horse, the model will generally prefer simpler hypotheses. But once
+we've seen more data, it will favor more complex hypotheses (like a
+group of animals from two separate evolutionary clusters) if the data
+support it.
+
+As one final example, let's look at the impact of multiple examples of a
+single animal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animalGeneralization([}\StringTok{"gorilla"}\NormalTok{])}
+\NormalTok{animalGeneralization([}\StringTok{"gorilla"}\NormalTok{, }\StringTok{"gorilla"}\NormalTok{])}
+\NormalTok{animalGeneralization([}\StringTok{"gorilla"}\NormalTok{, }\StringTok{"gorilla"}\NormalTok{, }\StringTok{"gorilla"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-7-output-1.pdf}}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-7-output-2.pdf}}
+
+\pandocbounded{\includegraphics[keepaspectratio]{03-generalization_files/figure-pdf/cell-7-output-3.pdf}}
+
+\begin{verbatim}
+array([0.01730482, 0.01730482, 0.01730482, 0.01730482, 0.1259028 ,
+       1.        , 0.01270155, 0.01270155, 0.01111944, 0.01111944])
+\end{verbatim}
+
+Here, we see that the model becomes increasingly confident that the
+property is unique to gorillas. This makes intuitive sense and it's
+something that people seem to exhibit in their judgments. But, as they
+point out in the paper, it's not something that non-probabilistic models
+can easily explain.
+
+\subsection{Results}\label{results}
+
+The results in the paper show that this model predicts people's
+judgments quite well, better than alternative models that do not rely on
+Bayesian inference. These results suggest that the assumptions of the
+model are very similar to the assumptions that people make when making
+inductive generalizations.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{images/03/st_results.png}
+
+}
+
+\caption{Comparison between model results and human judgments. Image
+from Sanjana \& Tenenbaum (2002).}
+
+\end{figure}%
+
+\bookmarksetup{startatroot}
+
+\chapter{Categorization}\label{categorization}
+
+The last chapter introduced the problem of inductive generalization.
+This chapter will focus on a specific case of generalization that is of
+particular interest to psychologists, cognitive scientists, and people
+who use AI and machine learning: \emph{classification} or
+\emph{categorization}. Basically, assigning labels to things.
+
+People constantly classify things in the world into categories (chairs,
+cats, friends, enemies, edible stuff, and so on). Doing this helps us to
+communicate and function in novel situations.
+
+In machine learning, it's often useful to classify inputs into different
+categories like whether a social media post violates community standards
+or not, whether an image contains a human face or not, or whether an MRI
+contains a tumor.
+
+Psychologists study how people form categories because it provides a
+window into how we organize our knowledge. But the basic problem is the
+same as the one studied in machine learning.
+
+I'm going to introduce a fairly simple psychological model of
+categorization introduced by Robert Nosofsky called the Generalized
+Context Model. It assumes that people make classification judgments
+using the following algorithm:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Remember all the examples of categories you've seen before.
+\item
+  When you want to classify a new instance, compare it to all previous
+  examples of different categories and rate how similar it is to each
+  one.
+\item
+  Assign it to the category that has the highest average similarity.
+\end{enumerate}
+
+This model makes some outlandish assumptions (like the idea that people
+would remember every example they had seen before). But, to a first
+approximation, it does a decent job of predicting people's
+classification judgments in a lot of situations. And for learning
+purposes, it has the advantage of being pretty easy to understand and
+implement.
+
+\section{A typical category learning experiment
+🟢🟨}\label{a-typical-category-learning-experiment}
+
+In psychology, category learning experiments have a pretty similar
+structure. People see some unfamiliar stimuli that differ on several
+dimensions and can be sorted into different categories. The task is to
+learn what distinguishes one category from another. The experiments
+usually consist of two phases: a training phase, and a testing phase.
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Training phase}: People see many examples of each category and
+  have to classify them, often simply by guessing at first. They get
+  feedback and gradually learn to tell the different categories apart.
+\item
+  \emph{Testing phase}: People see more examples, usually some brand new
+  ones, and have to classify them again. This time they don't get
+  feedback. The point of this phase is to test what people actually
+  learned about the meaning of the categories.
+\end{itemize}
+
+The stimuli could be abstract shapes, cartoon insects, race cars with
+different features, or really anything. What matters is that they have
+clearly distinguishable features.
+
+\section{Representing stimuli in a model
+🧩}\label{representing-stimuli-in-a-model}
+
+For modeling purposes, all of these types of stimuli (with
+discrete-valued features) can be represented in a matrix, with the
+following properties:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Each dimension of the matrix represents a different feature of the
+  stimuli.
+\item
+  The length of each dimension represents how many different values that
+  feature can have.
+\item
+  A single item can then be represented by a binary matrix with 1s in
+  the cells indicating which feature values it has and 0s everywhere
+  else.
+\end{enumerate}
+
+For example, in Robert Nosofsky's (1986) test of the GCM\footnote{Nosofsky,
+  R. M. (1986). Attention, similarity, and the
+  identification-categorization relationship. Journal of Experimental
+  Psychology: General, 115(1), 39-57.}, the stimuli were semicircles
+with lines through them. The two feature dimensions were (1) circle size
+and (2) line orientation. Each feature had four possible values.
+
+Using our binary matrix representation, here is one possible stimulus
+from the Nosofsky experiment:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\NormalTok{stimulus }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{],}
+\NormalTok{                     [}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{],}
+\NormalTok{                     [}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{],}
+\NormalTok{                     [}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{]], dtype}\OperatorTok{=}\BuiltInTok{int}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(stimulus)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[0 0 0 0]
+ [0 0 0 0]
+ [0 0 1 0]
+ [0 0 0 0]]
+\end{verbatim}
+
+The Nosofksy stimuli are pretty simple: they can have exactly one value
+on each dimension, so this representation will always only have a single
+1 in the matrix.
+
+If we wanted to know how many of each stimulus to present our model, it
+would be pretty cumbersome to maintain a long list of arrays like this
+one. So we could instead maintain a single matrix that stores counts of
+stimuli. That is, the values at each element will represent the number
+of stimuli observed with those feature values.
+
+For example, let's consider the ``dimensional'' condition of Nosofsky's
+experiment, in which subjects saw only the stimuli on the ``diagonals''
+of the matrix. Let's assume they saw each one 100 times (actually, they
+did a mind-numbing 1200 trials after 2600 practice trials 🥴). We could
+represent that like so:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{training\_set }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{100}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{0}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{0}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{100}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{]], dtype}\OperatorTok{=}\BuiltInTok{int}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(training\_set)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[100   0   0 100]
+ [  0 100 100   0]
+ [  0 100 100   0]
+ [100   0   0 100]]
+\end{verbatim}
+
+This still isn't ideal though. Because it doesn't represent the category
+labels that subjects got during their training. We don't know which
+examples belonged to which categories.
+
+Thinking ahead to how the GCM works, let's instead represent the
+training examples more like a list, so that we can iterate through them:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tDimensional }\OperatorTok{=}\NormalTok{ np.zeros((}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{), dtype}\OperatorTok{=}\BuiltInTok{int}\NormalTok{)}
+\NormalTok{tDimensional[}\DecValTok{0}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{1}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{2}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{3}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{4}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{5}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{6}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{tDimensional[}\DecValTok{7}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+
+\BuiltInTok{print}\NormalTok{(tDimensional)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[1 1 1]
+ [1 2 2]
+ [1 3 2]
+ [1 4 1]
+ [2 1 4]
+ [2 2 3]
+ [2 3 3]
+ [2 4 4]]
+\end{verbatim}
+
+In this format, each row of the matrix is an array with three elements.
+The first element is the category label: 1 or 2. The second two elements
+are the indices into the stimulus matrix. \textbf{Note: Here I've
+deviated from Python norms to be consistent with the numbering in the
+table in the original Nosofsky paper, shown below. When working with the
+model, remember that indexing in Python starts with 0.}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio]{images/04/dimensional_table.png}
+
+}
+
+\caption{Training examples from the dimensional condition. Image from
+Nosofsky (1986).}
+
+\end{figure}%
+
+\section{The Generalized Context Model
+(GCM)}\label{the-generalized-context-model-gcm}
+
+Here, I will describe a special case of the model here that applies to
+tasks (like the one in the paper) with only two categories. However,
+this model can easily be extended to any number of categories. The model
+is defined by two key equations.
+
+The first equation defines the probability of classifying Stimulus
+\(S_i\) into Category \(C_1\) (i.e., Category 1):
+
+\begin{equation}\phantomsection\label{eq-gcm1}{
+\begin{equation}
+P(C_1|S_i) = \frac{b_1 \sum_{j \in C_1} \eta_{ij}}{b_1 \sum_{j \in C_1} \eta_{ij} + (1-b_1) \sum_{k \in C_2} \eta_{ik}}
+\end{equation}
+}\end{equation}
+
+The sum \(\sum_{j \in C_1}\) is a sum over all stimuli \(S_j\) that
+belong to Category 1. The sum \(\sum_{j \in C_1}\) is a sum over all
+stimuli \(S_k\) that belong to Category 2.
+
+Equation~\ref{eq-gcm1} has a parameter \(b_1\) which is defined as the
+response bias for Category 1. \(b_1\) can range from 0 to 1 and captures
+the possibility that a subject is biased to respond with one category or
+another. This is similar but not identical to a prior distribution. When
+\(b_1\) is small, the model is biased toward Category 2; when \(b_1\) is
+large, the model is biased toward Category 1. Note that when
+\(b = 0.5\), it cancels out of the equation.
+
+We could also include a response bias for Category 2, but the model
+assumes that \(\sum_i b_i = 1\). Therefore, when there are only two
+categories, \(b_2 = 1 - b_1\) which is what you see in the second term
+of the denominator of Equation~\ref{eq-gcm1}.
+
+\(\eta_{ij}\) is a function that defines how similar to \(S_i\) and
+\(S_j\) are. The GCM assumes that stimuli can be represented as points
+in a multi-dimensional space (in this case, a two-dimensional space) and
+the similarity is defined as a function of the distance between those
+two points:
+
+\[
+\eta_{ij} = e^{-c^2 \left[w_1 (f_{i1} - f_{j1})^2 + (1-w_1)(f_{i2} - f_{j2})^2 \right]}
+\]
+
+where \(f_{i1}\) and \(f_{i2}\) refer to the feature values on
+dimensions 1 and 2 of \(S_i\). This equation has two parameters: \(c\)
+and \(w_1\). \(c\) is a scaling parameter that affects how steeply the
+exponential curve is. This will allow us to account for how different
+people might have different ideas of how close two stimuli have must be
+to be called similar. \(w_1\) is called the attentional weight for
+dimension 1. This parameter captures how much weight is placed on
+dimension 1 over dimension 2. Just like \(b_1\), \(w_1\) can range from
+0 to 1, and the larger it is, the more weight is placed on dimension 1.
+Similarly, we could add a \(w_2\), but the attention weights are
+constrained to sum to 1.
+
+\subsection{Generating model
+predictions}\label{generating-model-predictions}
+
+In order to generate predictions from this model, we need two things.
+First, we need to define what the training stimuli are, and what their
+feature values are. This is what will allow us to compute the sums in
+Equation~\ref{eq-gcm1}.
+
+Next, we need to specify the values of the three parameters \(b_1\),
+\(c\), and \(w_1\). Nosofsky does this by first collecting data from
+people in the experiment. That is, for every stimulus \(S_i\) we can
+record the proportion of times people classified it as Category 1. In
+other words, we can collect empirical estimates of \(P(C_1|S_i)\) for
+all values of \(S_i\).
+
+Then Nosofsky uses a maximum likelihood procedure for fitting the model
+to the data. Conceptually, the idea is to find the set of values of the
+three parameters that produce model predictions that are as close as
+possible to the empirical data. (This is exactly how linear regression
+works, where you have some data \((\bar{x},\bar{y})\) and want to find
+the best-fitting values of \(a\) and \(b\) for the function
+\(y = ax + b\) that describes the relationship between \(x\) and \(y\).)
+
+We can define model fit by mean squared error (MSE). MSE is defined as
+
+\[
+\frac{1}{n} \sum_i (y_i - x_i)^2
+\]
+
+where \(y\) are the data and \(x\) are the model predictions. A lower
+MSE means a better model fit. Finding the best values of the parameters
+can be achieved through an exhaustive search of all values. For example,
+we might consider all possible values of each parameter in increments of
+0.1. We could then write a program that performs the following basic
+algorithm:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set minimum MSE to \(\inf\).
+\item
+  For all possible values of \(b_1\), \(c\), and \(w_1\):
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Generate model predictions \(P(R_1|S_i)\) for all \(S_i\).
+  \item
+    Compute MSE between the empirical data and model predictions
+    generated in the previous step.
+  \item
+    If this MSE is smaller than minimum MSE, set minimum MSE to the
+    current value and store the current values of \(b_1\), \(c\), and
+    \(w_1\).
+  \end{enumerate}
+\item
+  Return the stored values of \(b_1\), \(c\), and \(w_1\).
+\end{enumerate}
+
+\subsection{Cross-validation}\label{cross-validation}
+
+To avoid over-fitting models to our collected data, best practice is to
+use an approach that splits the data into training and evaluation (or
+test) sets and judge performance only on the test sets.
+
+The basic idea, known as
+\href{https://en.wikipedia.org/wiki/Cross-validation_(statistics)}{cross-validation},
+comes in many forms. The principle is straightforward, but the details
+are outside the scope of this book. There are existing packages in
+Python that perform many of the key cross-validation steps
+automatically.
+
+\subsection{Homework 3}\label{homework-3}
+
+\href{https://colab.research.google.com/drive/140NfyG4UV1au0722KIy54-o0f62Ifp2u?usp=sharing}{\pandocbounded{\includesvg[keepaspectratio]{index_files/mediabag/colab-badge.svg}}}
+
+In your next homework you will implement the GCM described above. In the
+homework, you will have to encode training and test stimuli and
+implement the equations and model-fitting algorithm above. Additionally,
+to get some experience with the behavioral side of cognitive science,
+you will create a working version of a category learning experiment in
+order to collect some data that you can use to compare with the GCM's
+predictions.
+
+\bookmarksetup{startatroot}
+
+\chapter{Hierarchical generalization}\label{hierarchical-generalization}
+
+In \hyperref[bayes]{previous examples}, there was always a finite number
+of hypotheses that we were making inferences about (number of black
+balls, fair or trick coin, yellow or green taxi). Sometimes, we want to
+consider an infinite set of hypotheses. For example, after flipping a
+coin, what is the probability of that coin coming up heads? The answer
+to this question could be any number in the interval {[}0,1{]}.
+
+\section{The Beta-Binomial model 🪙}\label{beta-binomial}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,height=\textheight,keepaspectratio]{images/05/coin-in-hand.jpg}
+
+}
+
+\caption{Photo by ZSun Fu on Unsplash.}
+
+\end{figure}%
+
+We can answer this question with a model called the Beta-Binomial model,
+named for the probability distributions it uses. First, let's set up the
+basic assumptions of the model.
+
+Let \(P(\text{heads}) = \theta\). We don't know what \(\theta\) is.
+After observing a sequence of coin flips \(D\), we want to estimate
+\(\theta\). This can be accomplished by directly applying Bayes's rule:
+
+\[
+P(\theta|D) = \frac{P(D|\theta) P(\theta)}{P(D)}
+\]
+
+The data \(D\) in this case corresponds to the number of \(k\) heads out
+of \(n\) total flips. This follows a
+\href{https://en.wikipedia.org/wiki/Binomial_distribution}{Binomial
+distribution}, which describes the probability of getting \(k\)
+successes out of \(n\) trials, when the probability of success on each
+trial is \(\theta\). We will define heads as a ``success''.
+
+\[
+\begin{align}
+P(D|\theta) = P(k|\theta,n) &= \text{Bin}(k; n, \theta) \\
+&= \binom{n}{k} \theta^{k} (1-\theta)^{n-k}
+\end{align}
+\]
+
+The notation for the \(\text{Bin}(\cdot)\) function indicates that this
+is a distribution over \(k\) (number of successes) and the distribution
+has the parameters \(n\) (the total number of trials) and \(\theta\)
+(the probability of a success on each trial).
+
+We can define the prior, \(P(\theta)\), however we like. Because
+\(\theta\) is a random variable that can take on any value from 0 to 1,
+we cannot just say \(P(\theta) = 0.5\) like we could in earlier
+examples. Instead, \(P(\theta)\) must be a probability distribution that
+assigns probabilities to any value from 0 to 1. If we know nothing about
+\(\theta\), we could use a Uniform(\([0,1]\)) or non-informative prior
+that assigns equal probability to all values of \(\theta\).
+
+Alternatively, a convenient choice (for reasons explained below) for
+\(P(\theta)\) is the Beta distribution:
+
+\[
+P(\theta) = \text{Beta}(\theta;\alpha,\beta)
+\]
+
+The \href{https://en.wikipedia.org/wiki/Beta_distribution}{Beta
+distribution} has two parameters: \(\alpha > 0\) and \(\beta > 0\).
+Let's create a function that will allow us to visualize the Beta
+distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ scipy }\ImportTok{import}\NormalTok{ stats}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+
+\NormalTok{sns.set\_theme()}
+
+\KeywordTok{def}\NormalTok{ plot\_beta(a, b):}
+\NormalTok{  x }\OperatorTok{=}\NormalTok{ np.linspace(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,num}\OperatorTok{=}\DecValTok{500}\NormalTok{)}
+\NormalTok{  px }\OperatorTok{=}\NormalTok{ stats.beta.pdf(x, a, b)}
+  
+\NormalTok{  fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\NormalTok{  sns.lineplot(x }\OperatorTok{=}\NormalTok{ x, y }\OperatorTok{=}\NormalTok{ px)}
+\NormalTok{  ax.set\_xlabel(}\VerbatimStringTok{r\textquotesingle{}}\DecValTok{$}\CharTok{\textbackslash{}t}\VerbatimStringTok{heta}\DecValTok{$}\VerbatimStringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{  plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{plot\_beta} takes two arguments: \texttt{a} (\(\alpha\)), and
+\texttt{b}(\(\beta\)) and plots a Beta distribution with those parameter
+values.
+
+Let's see what it looks like with a few different values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-3-output-1.pdf}}
+
+When \(\alpha = \beta = 1\), the Beta distribution is identical to a
+Uniform(\([0,1]\)) distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-4-output-1.pdf}}
+
+When \(\alpha\) and \(\beta\) are greater than 1 and equal, we get a
+distribution with a peak around 0.5. If we had strong prior expectations
+that the coin was unbiased, we could increase the parameters even more:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{50}\NormalTok{,}\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-5-output-1.pdf}}
+
+What about when \(\alpha\) and \(\beta\) are not equal?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-6-output-1.pdf}}
+
+This allows us to capture skewed priors, perhaps capturing a belief that
+the coin has a specific bias.
+
+Now, what if \(\alpha\) and \(\beta\) are less than 1?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-7-output-1.pdf}}
+
+This might capture the belief that the coin is strongly biased, but we
+aren't sure in which direction.
+
+\subsection{Conjugate distributions}\label{conjugate-distributions}
+
+The Beta distribution is the \emph{conjugate distribution} for the
+Binomial distribution. This means that when the likelihood is a Binomial
+distribution and the prior is a Beta distribution, then the posterior is
+also a Beta distribution. Specifically, after making these assumptions,
+
+\[
+P(\theta|D) = \text{Beta}(\theta; \alpha + k, \beta + n-k)
+\]
+
+The parameters of the posterior distribution are (1) the sum of
+\(\alpha\) from the prior and the number of observed heads and (2) the
+sum of \(\beta\) from the prior and the number of observed tails. This
+means that the parameters \(\alpha\) and \(\beta\) of the Beta prior
+have a natural interpretation as ``virtual flips''. For example, the
+larger \(\alpha\) is compared to \(\beta\), the more biased toward heads
+we expect \(\theta\) to be. Additionally, the larger \(\alpha\) and
+\(\beta\) are, the more certain (less diffuse) the prior is.
+
+\subsection{Parameter estimation}\label{parameter-estimation}
+
+Because we used a conjugate distribution, we can use our same
+\texttt{plot\_beta} function to generate posterior probability
+distributions after some coin flips.
+
+Suppose you start with a fairly strong belief that a coin is fair,
+represented by this distribution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{30}\NormalTok{,}\DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-8-output-1.pdf}}
+
+Now, suppose you flip a coin 20 times and it comes up heads every time.
+What should you think about the bias of the coin now? According to our
+model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{30}\OperatorTok{+}\DecValTok{20}\NormalTok{,}\DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-9-output-1.pdf}}
+
+As you can see, this should cause you to shift your beliefs somewhat.
+
+This wasn't totally realistic, though. If you picked a coin off the
+ground, your prior beliefs about it being biased would probably look
+more like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{2000}\NormalTok{,}\DecValTok{2000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-10-output-1.pdf}}
+
+What happens if you \emph{now} flipped this coin 20 times and it came up
+heads every time?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{2000}\OperatorTok{+}\DecValTok{20}\NormalTok{,}\DecValTok{2000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-11-output-1.pdf}}
+
+You might be mildly surprised, but those 20 flips wouldn't be enough to
+budge your estimate about the bias of the coin by much.
+
+Finally, let's imagine a situation in which you had a weak prior belief
+that a coin was biased:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-12-output-1.pdf}}
+
+Now you flip the coin 100 times and it comes up heads 48 times. What
+should your updated beliefs be?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_beta(}\DecValTok{5}\OperatorTok{+}\DecValTok{48}\NormalTok{,}\DecValTok{1}\OperatorTok{+}\DecValTok{52}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{05-hierarchical-bayes_files/figure-pdf/cell-13-output-1.pdf}}
+
+As you can see, the posterior distribution shows that you should think
+this coin is probably fair now. This illustrates how sufficient evidence
+can override prior beliefs.
+
+\subsection{Hypothesis averaging}\label{hypothesis-averaging}
+
+\hyperref[generalizing]{In Chapter 3}, we solved the generalization
+problem by summing over all hypotheses, weighted by their posterior
+probabilities. Here, we can do something similar.
+
+Suppose we want to know the probability of the next flip coming up
+heads. In other words, we want to know \(P(\text{heads}|D)\). We can do
+that by averaging over all possible values of \(\theta\):
+
+\[
+P(\text{heads}|D) = \int_\theta P(\text{heads}|\theta) \cdot P(\theta|D) d\theta = \int_\theta \theta \cdot P(\theta|D) d\theta
+\]
+
+\section{Overhypotheses 🙆}\label{overhypotheses}
+
+Now consider a slightly different situation. You flip 19 different coins
+in a row, each one time, and they all come up heads. Now you pick up a
+20th coin from the same bag as the previous 19 coins. What do you think
+is the probability of that 20th coin coming up heads? Is it higher than
+0.5?
+
+If you answered yes, it's probably because you formed an
+\emph{overhypothesis} about the bias of the coins. After flipping all
+those coins, you may have concluded that this particular set of coins is
+more likely than usual to be biased. As a result, your estimate about
+the probability of the 20th coin coming up heads was higher than it
+otherwise would be.
+
+\subsection{The shape bias}\label{the-shape-bias}
+
+This coins example is pretty artificial, but the concept of
+overhypotheses is one that you find in language learning. A phenomenon
+known as \href{https://doi.org/10.1016/0885-2014(88)90014-7}{the shape
+bias} refers to the fact that even young children are more likely to
+generalize a new word based on its shape rather than other properties
+like color or texture.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/05/shape_bias.gif}}
+
+}
+
+\caption{A common task used to test for the shape bias.}
+
+\end{figure}%
+
+This makes sense because objects tend to have common shapes and are less
+likely to have common colors or textures.
+
+\subsection{Modeling the learning of overhypotheses through hierarchical
+Bayesian
+learning}\label{modeling-the-learning-of-overhypotheses-through-hierarchical-bayesian-learning}
+
+Charles Kemp, Andy Perfors, and Josh Tenenbaum developed
+\href{http://www.charleskemp.com/papers/KempPTDevSci.pdf}{a model} of
+this kind of learning. They focused on bags of black and white marbles
+rather than flipping coins. They imagine a problem in which you have
+many bags of marbles that you draw from. After drawing from many bags,
+you draw a single marble from a new bag and make a prediction about the
+proportion of black and white marbles in that bag.
+
+The details of the model are outside the scope of this book. But the
+basic idea is that the model learns at two levels simultaneously. At the
+higher level, the model learns the parameters \(\alpha\) and \(\beta\)
+of a Beta distribution that characterizes the proportion of black and
+white marbles in each bag. As we saw above, a Beta distribution can have
+a peak around a particular proportion, or it can be peaked around both 0
+and 1, meaning that each bag is likely to be nearly all black or all
+white.
+
+At the lower level, the model learns the specific distribution of
+marbles within a bag. If you draw 20 marbles and 5 of them are black,
+you may have some uncertainty about the overall proportion in the bag,
+but your best estimate will be around 5/20 (or 1/4).
+
+Where the model excels is being able to draw inferences \emph{across}
+bags. If you see many bags that are full of \emph{only} black or
+\emph{only} white marbles, and then you draw a single black marble out
+of a new bag, you are likely to be very confident that the rest of the
+marbles in that bag are black.
+
+But if you see many bags that have mixed proportions of black and white
+marbles, and then you draw a single black marble out of a new bag, you
+will be far less confident about the proportion of black marbles in that
+bag. A model that doesn't make inferences at multiple levels would
+struggle to draw this distinction.
+
+\bookmarksetup{startatroot}
+
+\chapter{Sampling assumptions}\label{sampling-assumptions}
+
+So far, we've seen where \hyperref[weak-strong-sampling]{strong
+sampling} was a logical assumption to make. But it isn't always.
+
+For example, consider \hyperref[hormones]{the hormone problem from
+Chapter 3}. If you were randomly testing people's hormone levels and
+every person just happened to be healthy, clearly strong sampling
+wouldn't be appropriate, because we were sampling from the full
+population of both healthy and unhealthy people.
+
+This raises a question: Are people sensitive to the process by which
+data are generated?
+
+\emph{Spoiler alert: Yes.}
+
+\section{Word learning 💬}\label{word-learning}
+
+Suppose you see the following collection of objects on a table.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{images/06/xu_tenenbaum_objects.png}
+
+}
+
+\caption{From Xu \& Tenenbaum (2007).}
+
+\end{figure}%
+
+Now consider the following situation:
+
+\begin{quote}
+A teacher picks three blue circles from the pile and calls them
+``wugs''.
+\end{quote}
+
+\textbf{What is a wug?} Are all circles wugs? Or just blue circles?
+
+Consider a different situation:
+
+\begin{quote}
+A teacher picks one blue circle from the pile and calls it a ``wug''.
+The teacher then asks a child to choose two more (the child picks two
+blue circles). The teacher confirms that they are also wugs.
+\end{quote}
+
+\textbf{What is a wug?} Are all circles wugs? Or just blue circles?
+
+In both situations, the observed data is the same: three blue circles
+labeled as wugs. What's different is the process by which the data were
+generated. In one case, a knowledgeable teacher picked all the wugs; in
+the other, the teacher only picked one example and a (probably not
+knowledgeable) child picked the others.
+
+To use some terms we've seen before, the teacher is using strong
+sampling. The child is using something closer to weak sampling.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{images/06/xu_tenenbaum_hierarchy.png}
+
+}
+
+\caption{The hierarchy of objects. From Xu \& Tenenbaum (2007).}
+
+\end{figure}%
+
+This is based on an
+\href{http://web.mit.edu/cocosci/archive/Papers/devsci07_xu_tenenbaum.pdf}{actual
+study} by Fei Xu and Josh Tenenbaum, who also developed a model of the
+task. They asked whether children and adults would generalize the word
+``wug'' to the basic-level category (circles with lines in them) or the
+subordinate category (blue circles with lines in them). Here are their
+results:
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,height=\textheight,keepaspectratio]{images/06/xu_tenenbaum_results.png}
+
+}
+
+\caption{Experimental results from Xu \& Tenenbaum (2007).}
+
+\end{figure}%
+
+People clearly distinguished between the teacher-driven situation and
+the child-driven (learner-driven) situation, and were much more likely
+to generalize ``wugs'' to the subordinate category when the teacher
+picked the objects.
+
+\section{Pedagogical sampling 🧑‍🏫}\label{pedagogical-sampling}
+
+The teacher choosing wugs could be said to be using \emph{pedagogical
+sampling}. The teacher deliberately used knowledge of the wug concept to
+select informative examples to help the child learn the concept as
+quickly as possible.
+
+This is an idea
+\href{http://shaftolab.com/assets/papers/shaftogg14.pdf}{explored} by
+Patrick Shafto, Noah Goodman, and Thomas Griffiths (as well as Elizabeth
+Bonawitz and other researchers in related work). To put it in formal
+terms:
+
+\begin{equation}\phantomsection\label{eq-pedagogical}{
+\begin{equation}
+P_{\text{teacher}}(d|h) \propto (P_{\text{learner}}(h|d))^\alpha
+\end{equation}
+}\end{equation}
+
+Here, \(\alpha\) is a parameter that controls how optimized the
+teacher's choices are. As \(\alpha \rightarrow \infty\), the teacher
+will choose examples \(d\) that maximize the learner's posterior
+probability.
+
+We can figure out how the learner will update their beliefs about a
+concept by directly applying Bayes rule:
+
+\begin{equation}\phantomsection\label{eq-plearner}{
+\begin{equation}
+  P_{\text{learner}}(h|d) = \frac{P_{\text{teacher}}(d|h)P(h)}{\sum_{h_i} P_{\text{teacher}}(d|h_i)P(h_i)}
+\end{equation}
+}\end{equation}
+
+This equation makes it clear that the teacher and learner are
+inextricably linked: The teacher chooses examples to maximize the
+learner's understanding, and the learner updates beliefs based on
+expectations of how the teacher is choosing examples. The model is
+\emph{recursive}.
+
+As the researchers explain in their paper, the two equations above are a
+system of equations that can be rearranged to create the following
+equation defining how the teacher should choose examples:
+
+\begin{equation}\phantomsection\label{eq-pteacher}{
+\begin{equation}
+  P_{\text{teacher}}(d|h) \propto \left( \frac{P_{\text{teacher}}(d|h) P(h)}{\sum_{h_i} P_{\text{teacher}}(d|h_i) P(h_i)} \right)^\alpha
+\end{equation}
+}\end{equation}
+
+How to solve this equation? In the paper, they use an iterative
+algorithm, that works like this:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Initialize \(P_{\text{teacher}}(d|h)\) using weak sampling.
+\item
+  Iterate through the following steps until \(P_{\text{teacher}}(d|h)\)
+  stabilizes (doesn't change from one iteration to the next):
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    For each possible \(h\) and \(d\), compute
+    \(P_{\text{learner}}(h|d)\) using Equation~\ref{eq-plearner} and
+    \(P_{\text{teacher}}(d|h)\) values from the previous iteration.
+  \item
+    For each possible \(d\) and \(h\), update
+    \(P_{\text{teacher}}(d|h)\) using \(P_{\text{learner}}(h|d)\) values
+    from the previous step, where
+    \(P_{\text{teacher}}(d|h_i) = P_{\text{learner}}(h_i|d) / \sum_{d_j} P_{\text{learner}}(h_i|d_j)\)
+    (Equation~\ref{eq-pedagogical}).
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{The rectangle game}\label{the-rectangle-game}
+
+The researchers tested out their model in an experiment using a simple
+task called the rectangle game.
+
+In the game, concepts are rectangular boundaries in a two-dimensional
+space. The teacher knows the boundary and the learner has to figure it
+out from examples given by the teacher.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{images/06/shafto_etal_expt1.png}
+
+}
+
+\caption{The rectangle game. From Shafto et al.~(2014).}
+
+\end{figure}%
+
+In one version, the teacher can only provide positive examples (``Here's
+an example that's inside the boundary''). In another version, the
+teacher can also provide negative examples (``Here's an example that's
+not inside the boundary'').
+
+In an experiment, they asked people to play the role of the learner in
+the rectangle game. There were three conditions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{Teaching-pedagogical learning}: People first acted as teachers,
+  then as learners.
+\item
+  \emph{Pedagogical learning}: People acted just as learners and were
+  told the examples they saw were chosen by a teacher.
+\item
+  \emph{Non-pedagogical learning}: People acted just as learners and
+  were told the examples they saw were not chosen by a teacher.
+\end{enumerate}
+
+After showing people examples, they asked them to draw a rectangle of
+their best guess about what the boundary was.
+
+One key prediction of the model is that the most informative locations
+for examples under pedagogical sampling are at the corners of the
+rectangles. To test whether the learners understood this, they measured
+the proportion of examples that ended up in the corners of the
+rectangles people drew. The results are shown below.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/06/shafto_etal_expt1_results.png}}
+
+}
+
+\caption{Results from Shafto et al.'s (2014) Experiment 1.}
+
+\end{figure}%
+
+As you can see, when people thought a knowledgeable teacher was
+providing the examples (the teaching-pedagogical and pedagogical
+learning conditions), they were much more likely to draw tight
+boundaries around the examples, compared to when they didn't think a
+teacher was providing the examples (the non-pedagogical learning
+condition). This suggests that people were indeed sensitive to the
+process by which the data were generated and incorporated that
+understanding into their inferences.
+
+\subsection{Why the hypothesis space
+matters}\label{why-the-hypothesis-space-matters}
+
+What happens when teachers and learners have different assumptions about
+the the problem they're looking at?
+
+In the rectangle game, it's pretty obvious what the space of hypotheses
+is: it's practically pre-specified as part of the game. But in most
+real-world teaching situations, teachers have much more knowledge not
+shared by the learners than just the specific concept they are trying to
+convey. How might this interfere with learning?
+
+This was the question that a group of researchers led by Rosie Aboody
+\href{https://compdevlab.yale.edu/docs/2023/aboody2023-cogsci.pdf}{tested}.
+They applied the model we just looked at to a problem where the space of
+hypotheses was more ambiguous than in the rectangle game. In a study of
+220 people (20 teachers and 200 learners), only about half of the
+learners managed to fully learn the concept (a rule in this case). They
+used the model to better understand what was going on.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{images/06/aboody_etal_expt1.PNG}
+
+}
+
+\caption{From Aboody et al.~(2023).}
+
+\end{figure}%
+
+They input the teachers' chosen examples into the model to see if the
+model successfully learned the correct rule. What they varied was the
+hypothesis space of possible rules the model considered. When the
+hypothesis space was small (55 or fewer total rules), the model inferred
+the correct rule for 75\% of the teachers' sets of examples (by correct,
+they mean placing 95\% or more posterior probability on the correct
+rule). It wasn't until they increased the hypothesis space to 95 total
+rules that the percentage of times the teachers' examples led the model
+to correctly infer the rule dropped to 55\%.
+
+The researchers concluded from this that the learners were probably
+considering a larger, more complex set of rules than the teachers were.
+This misaligned set of assumptions likely caused the low learning rate.
+
+In the next chapter, we'll work through one more application of people's
+sensitivity to different sampling assumptions: understanding the
+pragmatics of speech.
+
+\bookmarksetup{startatroot}
+
+\chapter{Language pragmatics}\label{pragmatics}
+
+When we talk to each other, we often rely on shared assumptions and
+context to get our points across more quickly. Linguists call this
+\href{https://en.wikipedia.org/wiki/Pragmatics}{pragmatics}. For
+example, consider the following exchange:
+
+\begin{quote}
+A: I'm almost out of gas.
+
+B: There's a gas station up ahead.
+\end{quote}
+
+Person A didn't explicitly ask a question, but Person B understood that
+A wouldn't have said anything at all if they didn't need something or
+weren't explaining something they were about to do, so B responded with
+an answer to the implied question (``Where can I get gas?'').
+
+In this chapter, we'll see how some aspects of pragmatics can be
+explained by combining Bayesian inference with two new ideas:
+\emph{information theory} and \emph{decision theory} (or expected
+utility).
+
+\section{Surprisal 😯}\label{surprisal}
+
+We'll focus on one concept from information theory: surprisal. Surprisal
+captures how unexpected an observation is. Intuitively, the
+unexpectedness of an observation should depend how probable it is.
+Namely, the more probable it is, the less unexpected it is.
+
+We want a function \(f(p)\) that takes a probability and gives us its
+unexpectedness. Here are some reasonable constraints on \(f\):
+
+\begin{itemize}
+\tightlist
+\item
+  When an observation has probability 0, it is infinitely unexpected:
+  \(f(0) = \infty\).
+\item
+  When an observation has probability 1, it is not unexpected at all:
+  \(f(1) = 0\).
+\item
+  When we have two independent observations with probabilities \(p_1\)
+  and \(p_2\), such that the probability of both occurring is
+  \(p_1 \cdot p_2\), we want the total unexpectedness of observing both
+  to be the sum of the unexpectedness of each observation:
+  \(f(p_1 \cdot p_2) = f(p_1) + f(p_2)\).
+\end{itemize}
+
+A function that satisfies these constraints is:
+
+\[
+f(p) = -log(p)
+\] Let's verify.
+
+\begin{itemize}
+\tightlist
+\item
+  \(-log(p) \rightarrow \infty\) as \(p \rightarrow 0\) ✅
+\item
+  \(-log(1) = 0\) ✅
+\item
+  \(-log(p_1 \cdot p_2) = -(log(p_1) + log(p_2)) = (-log(p_1))+(-log(p_2))\)
+  ✅
+\end{itemize}
+
+Here's a plot of this function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+
+\NormalTok{p }\OperatorTok{=}\NormalTok{ np.linspace(}\FloatTok{0.001}\NormalTok{,}\DecValTok{1}\NormalTok{,num}\OperatorTok{=}\DecValTok{500}\NormalTok{)}
+\NormalTok{fp }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{np.log(p)}
+
+\NormalTok{sns.set\_theme()}
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\NormalTok{sns.lineplot(x }\OperatorTok{=}\NormalTok{ p, y }\OperatorTok{=}\NormalTok{ fp)}
+\NormalTok{ax.set\_xlabel(}\StringTok{"p"}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{"surprisal"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{07-RSA_files/figure-pdf/cell-2-output-1.pdf}}
+
+\emph{What does surprisal have to do with language?}
+
+When you're communicating with someone, surprisal can help you decide
+what information to give the other person. For example, imagine that you
+observe a number between 1 and 10 and you want to share it with someone
+else. You could either say:
+
+\begin{quote}
+I saw an even number.
+\end{quote}
+
+Or you could say:
+
+\begin{quote}
+I saw two.
+\end{quote}
+
+Which would you say? The second one, duh. But why?
+
+In formal terms, you're trying to send a signal such that the number you
+observed is not surprising for the other person after receiving your
+signal. That is, you're trying to minimize the surprisal of
+\(P(2|\text{signal})\).
+
+\textbf{Exercise}: Compute the surprisal of each of these two signals.
+
+\section{The Rational Speech Act model 🍪}\label{rsa-model}
+
+Let's apply the concept of surprisal to the following example. There
+were initially two cookies in a cookie jar, you may have eaten some, and
+you're telling your friend how many you had. You can say:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ``I had \emph{some} cookies.'' (You ate one or two.)
+\item
+  ``I had \emph{all} the cookies.'' (You ate two.)
+\item
+  ``I had \emph{no} cookies.'' (You ate none.)
+\item
+  Nothing -- stay silent. (You could have eaten no cookies, one cookie,
+  or two cookies.)
+\end{enumerate}
+
+Let's define this situation using a binary matrix. Each row is a signal
+(what you say) and each column is a state (how many cookies were eaten).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{state\_matrix }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]])}
+                         
+\NormalTok{signals }\OperatorTok{=}\NormalTok{ [}\StringTok{"some"}\NormalTok{, }\StringTok{"all"}\NormalTok{, }\StringTok{"no"}\NormalTok{, }\StringTok{"silent"}\NormalTok{]}
+\NormalTok{states }\OperatorTok{=}\NormalTok{ [}\StringTok{"0"}\NormalTok{,}\StringTok{"1"}\NormalTok{,}\StringTok{"2"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+We'll define a function that prints out this matrix as a heat map.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ print\_state\_matrix(m, x\_labels}\OperatorTok{=}\VariableTok{None}\NormalTok{, y\_labels}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
+\NormalTok{  fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+  \ControlFlowTok{if}\NormalTok{ (x\_labels }\KeywordTok{and}\NormalTok{ y\_labels):}
+\NormalTok{    sns.heatmap(m, annot}\OperatorTok{=}\VariableTok{True}\NormalTok{, xticklabels}\OperatorTok{=}\NormalTok{x\_labels, yticklabels}\OperatorTok{=}\NormalTok{y\_labels)}
+  \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{    sns.heatmap(m, annot}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+  
+\NormalTok{  plt.show()}
+
+\CommentTok{\# Print out the matrix}
+\NormalTok{print\_state\_matrix(state\_matrix, states, signals)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{07-RSA_files/figure-pdf/cell-4-output-1.pdf}}
+
+Now let's calculate how a literal listener would interpret each of these
+statements. Each row in the matrix above (one for each signal) will
+define a distribution over the states. That is, for state \(h\) and
+signal \(d\), we want to compute:
+
+\[
+P_{\text{listener}}(h|d) \propto P(d|h) P(h)
+\]
+
+The literal listener assumes that, given a state, a signal consistent
+with that state is chosen at random by the speaker. This is already
+captured in the matrix above: signals consistent with a state have a
+value of 1 in their cells and signals inconsistent have a 0. We will
+also assume that the listener has a uniform prior over states.
+Therefore, we can calculate the literal listener's probabilities by just
+normalizing the rows of the matrix.
+
+We'll do this more than once, so let's write a function to do it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ normalize\_rows(m):}
+\NormalTok{  normalized\_m }\OperatorTok{=}\NormalTok{ np.zeros((m.shape))}
+\NormalTok{  row\_num }\OperatorTok{=} \DecValTok{0}
+  \ControlFlowTok{for}\NormalTok{ row }\KeywordTok{in}\NormalTok{ m:}
+\NormalTok{    normalized\_m[row\_num,:] }\OperatorTok{=}\NormalTok{ row }\OperatorTok{/} \BuiltInTok{sum}\NormalTok{(row)}
+\NormalTok{    row\_num }\OperatorTok{+=} \DecValTok{1}
+    
+  \ControlFlowTok{return}\NormalTok{(normalized\_m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{literal\_listener }\OperatorTok{=}\NormalTok{ normalize\_rows(state\_matrix)}
+\NormalTok{print\_state\_matrix(literal\_listener, states, signals)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{07-RSA_files/figure-pdf/cell-6-output-1.pdf}}
+
+Now let's calculate the pragmatic speaker. The pragmatic speaker chooses
+a signal given a state. Therefore, this time, the \emph{columns} of the
+matrix will be probability distributions.
+
+Unlike the literal listener, the pragmatic speaker is trying to convey
+some information, so they will choose a signal with the greatest
+\emph{expected utility} for the literal listener. Expected utility in
+this case is defined as the expected increase in understanding about the
+true state of the world. Remember, we already have a way of quantifying
+this: surprisal. So we'll define utility as negative surprisal of the
+state given the signal from the point of view of the literal listener:
+\(-(-log(P_{\text{listener}}(h|d)))\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# First we apply a softmax decision function}
+\NormalTok{alpha }\OperatorTok{=} \DecValTok{1} \CommentTok{\# this paramater controls how close to maximizing the speaker is}
+
+\CommentTok{\# To avoid an error, let\textquotesingle{}s avoid the cells with P(0)}
+\NormalTok{nonzero\_probs }\OperatorTok{=}\NormalTok{ literal\_listener }\OperatorTok{!=} \DecValTok{0}
+
+\NormalTok{pragmatic\_speaker }\OperatorTok{=}\NormalTok{ literal\_listener}
+\NormalTok{pragmatic\_speaker[nonzero\_probs] }\OperatorTok{=}\NormalTok{ np.exp(np.log(literal\_listener[nonzero\_probs])}\OperatorTok{*}\NormalTok{alpha)}
+
+\ControlFlowTok{for}\NormalTok{ col }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(pragmatic\_speaker.shape[}\DecValTok{1}\NormalTok{]):}
+\NormalTok{  pragmatic\_speaker[:,col] }\OperatorTok{=}\NormalTok{ (pragmatic\_speaker[:,col] }\OperatorTok{/}
+    \BuiltInTok{sum}\NormalTok{(pragmatic\_speaker[:,col]))}
+
+\NormalTok{print\_state\_matrix(pragmatic\_speaker, states, signals)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{07-RSA_files/figure-pdf/cell-7-output-1.pdf}}
+
+In the above code, I used something known as a ``softmax'' rather than a
+true maximizing function. The exponential function captures the idea
+that the speaker will choose probabilistically, generally choosing
+options with more utility. This is a common assumption in both
+psychology and economics because we often don't have complete
+information when making decisions (or when modeling other people's
+decisions), so assuming a pure maximizing function isn't always the best
+choice.
+
+However, I also included a parameter \texttt{alpha} that controls how
+close to maximizing the speaker is. The larger \texttt{alpha} is, the
+closer the speaker will get to maximizing utility.
+
+Now we can calculate the probabilities for the pragmatic listener. This
+will be similar to the literal listener in that the pragmatic listener
+receives a signal and computes the probability of each state given a
+signal. The difference is that the pragmatic listener doesn't assume the
+signals are chosen at random, but that the signals are chosen by the
+pragmatic speaker above.
+
+We can compute the pragmatic listener by normalizing the matrix above
+along the rows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pragmatic\_listener }\OperatorTok{=}\NormalTok{ normalize\_rows(pragmatic\_speaker)}
+\NormalTok{print\_state\_matrix(pragmatic\_listener, states, signals)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{07-RSA_files/figure-pdf/cell-8-output-1.pdf}}
+
+The pragmatic listener correctly infers a
+\href{https://en.wikipedia.org/wiki/Scalar_implicature}{scalar
+implicature}, a concept from pragmatics in linguistics. Even though ``I
+had some cookies'' is consistent with eating all of the cookies, a
+pragmatic listener will infer that if a person says they ate \emph{some}
+then they did not eat \emph{all} (otherwise they would have said so).
+
+\section{Does this model match human behavior?
+🔵}\label{does-this-model-match-human-behavior}
+
+In a word, yes. One of the
+\href{http://langcog.stanford.edu/papers_new/frank-2012-science.pdf}{first
+papers} to look at this was by Michael Frank and Noah Goodman. They
+applied this model to the simple task of picking out a shape from a
+small set and tested the model's predictions in a behavioral experiment.
+
+\subsection{The task}\label{the-task}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{The speaker}: ``Imagine you are talking to someone and you
+  want to refer to the middle object. What word would you use:
+  \emph{blue} or \emph{circle}?'' 🟦 🔵 🟩
+\item
+  \textbf{The listener}: ``Imagine someone is talking to you and uses
+  the word \emph{blue} to refer to one of these objects. Which object
+  are they talking about?'' 🟦 🔵 🟩
+\end{itemize}
+
+In the task and experiment, the researchers varied the actual set of
+objects in a systematic way.
+
+\subsection{The model}\label{the-model-1}
+
+Their model is virtually identical to the cookie jar model we just
+worked through. They assume that speakers try to choose words to
+maximize the listener's utility, as measured by surprisal.
+
+A literal listener in this case would assume that any object that is
+consistent with the speaker's chosen word could have been the one they
+were referring to.
+
+With these assumptions, the researchers derive the probability of the
+speaker choosing each word (details in the paper) as:
+
+\[
+P(w|r_s,C) = \frac{|w|^{-1}}{\sum_{w^\prime \in W} {|w^\prime|}^{-1}}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(w\): The speaker's chosen word.
+\item
+  \(r_s\): The object the speaker meant to refer to.
+\item
+  \(C\): The set of objects.
+\item
+  \(|w|\): The number of objects that \(w\) could apply to.
+\item
+  \(W\): The set of words that apply to the object that the speaker
+  meant to refer to.
+\end{itemize}
+
+Regarding \(W\), imagine that the speaker wanted to refer to the blue
+circle. In that case, \(W = \{ \text{blue}, \text{circle} \}\), because
+either word could apply to the object.
+
+According to this model, speakers will tend to choose words that more
+uniquely identify an object in a set. For example, in the set above,
+because \emph{blue} applies to two objects (blue square and blue
+circle), but \emph{circle} only applies to one, \emph{circle} will get
+higher probability.
+
+\subsection{Homework 4: Implement the
+model}\label{homework-4-implement-the-model}
+
+\href{https://colab.research.google.com/drive/1qrSDiXLG4VlBJI_XajdbAFQdcwMAqD0W?usp=sharing}{\pandocbounded{\includesvg[keepaspectratio]{index_files/mediabag/colab-badge.svg}}}
+
+I haven't provided all the details for this model because your
+assignment is to finish the implementation yourself, run some
+simulations, and collect a small amount of real data to compare the
+model to.
+
+\bookmarksetup{startatroot}
+
+\chapter{Social cognition}\label{social-cognition}
+
+Watch the video below. What do you see?
+
+\url{https://www.youtube.com/embed/VTNmLt7QX8E}
+
+If you're like most people, you see more than just lifeless shapes
+moving around. You see a whole drama play out involving characters with
+goals and emotions.
+
+This animation, from a
+\href{https://psycnet.apa.org/doi/10.2307/1416950}{1944 study by Heider
+and Simmel}, is an excellent example of our capacity for \emph{social
+cognition}: thinking about other people. \textbf{We are constantly
+attributing goals, beliefs, desires, and feelings to others.} The fact
+that we are willing to do it for simple shapes suggests we may not be
+able to help ourselves from doing it.
+
+When someone takes an action, makes a decision, or makes a facial
+expression, how do we infer what they're thinking or feeling? In this
+chapter, we'll look at two simple computational approaches to answering
+this question.
+
+\section{Inverse decision-making 🍑}\label{inverse-decision-making}
+
+All social cognition problems have the same basic character: you
+\emph{observe} something about other people and you want to \emph{infer}
+some underlying cause of what you observed. For example, you see someone
+take an action and you want to infer the goal that motivated their
+action.
+
+The basic idea behind many approaches to understanding how people reason
+about other people is that people have some kind of mental model of how
+other people act and they essentially run that model backward (or invert
+the model) to infer the information they don't get to see.
+
+Consider a simple decision-making situation. Rue likes peaches more than
+oranges and oranges more than apples:
+
+\begin{quote}
+🍑 \textgreater{} 🍊 \textgreater{} 🍎
+\end{quote}
+
+Now you give Rue a choice between these three fruits. Which one is she
+most likely to choose?
+
+Probably the peach, right? She might choose the orange or the apple
+because she happens to be in the mood for one of those, but given the
+information you have, the peach is a good guess.
+
+Now imagine you don't know Rue's fruit preferences. She's offered the
+following fruits to pick from:
+
+\begin{quote}
+🍑 🍊 🍎
+\end{quote}
+
+She chooses the peach 🍑. If you had to guess her relative preferences
+for the fruits, what would you think?
+
+At the very least, you might guess she likes peaches more than oranges
+and apples. But why?
+
+You assume that people's choices are guided by \emph{preferences} and
+that people's actions are basically \emph{rational}. So seeing Rue make
+one choice from a set of options gives you information about what she
+likes.
+
+Can we formalize this intuition?\footnote{The following is based on
+  \href{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0092160}{a
+  model originally developed by Chris Lucas and his collaborators}.}
+
+\subsection{A preference learning
+model}\label{a-preference-learning-model}
+
+Let's start with some assumptions:
+
+\begin{itemize}
+\tightlist
+\item
+  Each fruit provides some utility to the person who takes it (recall
+  the notion of utility introduced in \hyperref[pragmatics]{Chapter 7}).
+\item
+  Utilities are additive, meaning two peaches provide twice as much
+  utility as one peach.
+\item
+  People will choose options \emph{in proportion} to their utility. This
+  is the same ``softmax'' assumption we used in \hyperref[rsa-model]{the
+  rational speech act model}.
+\end{itemize}
+
+These assumptions combine to give us a \emph{choice model}, a model of
+how people will make choices between different options. (We've limited
+our focus to fruits, but the model could be applied to anything.)
+
+\begin{equation}\phantomsection\label{eq-choicemodel}{
+\begin{equation}
+p(c = o_j|\mathbf{u}, \mathbf{A}) = \frac{\exp(U_j)}{\sum^n_{k=1}\exp(U_k)}
+\end{equation}
+}\end{equation}
+
+In this model, \(c\) is the choice, \(o_j\) refers to option \(j\),
+\(\mathbf{A}\) is a vector specifying each option and their attributes
+(or features), \(\mathbf{u}\) is a vector of utilities that the
+decision-maker assigns to each attribute, and \(U_j\) is the summed
+total utility in each option.
+
+\subsubsection{Inverting the model}\label{inverting-the-choice-model}
+
+Remember that our goal is to \emph{infer other people's preferences},
+not predict their choices. So, after we see someone make a choice
+between some fruits, how do we infer what fruits they like best? We can
+invert Equation~\ref{eq-choicemodel} using Bayes's rule:
+
+\begin{equation}\phantomsection\label{eq-idmodel}{
+\begin{equation}
+p(\mathbf{u}|c,\mathbf{A}) = \frac{p(c|\mathbf{u},\mathbf{A})p(\mathbf{u})}{p(c|\mathbf{A})}
+\end{equation}
+}\end{equation}
+
+Suppose Rue has a choice between the following options:
+
+\begin{quote}
+Option 1: 🍑 🍎 🍊
+
+Option 2: 🍌
+\end{quote}
+
+Jules has a choice between the following options:
+
+\begin{quote}
+Option 1: 🍑
+
+Option 2: 🍎 🍊 🍌
+\end{quote}
+
+Both Rue and Jules pick Option 1, which includes a peach 🍑. Based on
+their choices alone, who do you think likes peaches more? Or, to put it
+a different way, which person's choice would make you more confident
+they like peaches?
+
+Let's apply the inverse decision-making model to these two choices.
+
+We'll start by encoding these choices using a binary encoding scheme in
+which each element in a list represents a fruit and this element is set
+to 1 if that fruit is present in the option.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\CommentTok{\# Fruit order:}
+\CommentTok{\# 1. peach}
+\CommentTok{\# 2. apple}
+\CommentTok{\# 3. orange}
+\CommentTok{\# 4. banana}
+\NormalTok{choice\_rue }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{],}
+\NormalTok{                       [}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{]])}
+\NormalTok{choice\_jules }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{],}
+\NormalTok{                         [}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+Let's define a function that calculates the choice probability in
+Equation~\ref{eq-choicemodel}. This is our likelihood function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ compute\_choice\_prob(j, u, options): }
+  \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{}}
+\CommentTok{  Returns the probability of choosing option j from the set options.}
+\CommentTok{     }
+\CommentTok{  Args:}
+\CommentTok{    j (int): the chosen option}
+\CommentTok{    u (array): a vector of utilities assigned to the}
+\CommentTok{      attributes in the options}
+\CommentTok{    options (array): a matrix in which each row is an}
+\CommentTok{      option, and each option is a binary array of the }
+\CommentTok{      attributes in that option}
+\CommentTok{     }
+\CommentTok{  Returns:}
+\CommentTok{    p (float): probability of choosing option j}
+\CommentTok{  \textquotesingle{}\textquotesingle{}\textquotesingle{}}
+  
+  \CommentTok{\# Compute the total utility of each option}
+\NormalTok{  total\_u }\OperatorTok{=}\NormalTok{ np.}\BuiltInTok{sum}\NormalTok{(u}\OperatorTok{*}\NormalTok{options, axis}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
+  
+\NormalTok{  p }\OperatorTok{=}\NormalTok{ np.exp(total\_u[j]) }\OperatorTok{/}\NormalTok{ np.}\BuiltInTok{sum}\NormalTok{(np.exp(total\_u))}
+  \ControlFlowTok{return}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's first assume they both like all fruits equally (they get a utility
+of 1 from any fruit). What is the probability of Rue and Jules making
+these choices?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{utilities }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Rue\textquotesingle{}s choice probability: }\SpecialCharTok{\{:.3f\}}\StringTok{"}\NormalTok{.}\BuiltInTok{format}\NormalTok{(}
+\NormalTok{  compute\_choice\_prob(}\DecValTok{0}\NormalTok{, utilities, choice\_rue)))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Jules\textquotesingle{}s choice probability: }\SpecialCharTok{\{:.3f\}}\StringTok{"}\NormalTok{.}\BuiltInTok{format}\NormalTok{(}
+\NormalTok{  compute\_choice\_prob(}\DecValTok{0}\NormalTok{, utilities, choice\_jules)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Rue's choice probability: 0.881
+Jules's choice probability: 0.119
+\end{verbatim}
+
+Unsurprisingly, Rue's choice is much more probable. What if they like
+peaches four times as much as other fruits?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{utilities }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Rue\textquotesingle{}s choice probability: }\SpecialCharTok{\{:.3f\}}\StringTok{"}\NormalTok{.}\BuiltInTok{format}\NormalTok{(}
+\NormalTok{  compute\_choice\_prob(}\DecValTok{0}\NormalTok{, utilities, choice\_rue)))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Jules\textquotesingle{}s choice probability: }\SpecialCharTok{\{:.3f\}}\StringTok{"}\NormalTok{.}\BuiltInTok{format}\NormalTok{(}
+\NormalTok{  compute\_choice\_prob(}\DecValTok{0}\NormalTok{, utilities, choice\_jules)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Rue's choice probability: 0.993
+Jules's choice probability: 0.731
+\end{verbatim}
+
+This increases Rue's choice probability by just over 10\%, but it
+increases Jules's choice probability by over 60\%.
+
+To invert the model, we also need to specify the prior probability,
+\(p(\mathbf{u})\). We'll assume that people generally like fruit, but
+they are likely to disagree about how much they like different fruits,
+and there's a possibility that some people will dislike like certain
+fruits.
+
+We can capture this idea by assuming that utilities for fruits are
+normally distributed with a positive mean. Let's say that they have a
+mean of 2 and a standard deviation of 0.5:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ scipy.stats }\ImportTok{import}\NormalTok{ norm}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+
+\NormalTok{sns.set\_theme()}
+
+\NormalTok{u\_mean }\OperatorTok{=} \DecValTok{2}
+\NormalTok{u\_sd }\OperatorTok{=} \FloatTok{0.5}
+
+\NormalTok{u }\OperatorTok{=}\NormalTok{ np.linspace(}\OperatorTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1000}\NormalTok{)}
+\NormalTok{pu }\OperatorTok{=}\NormalTok{ norm.pdf(u,u\_mean,u\_sd)}
+
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{sns.lineplot(x }\OperatorTok{=}\NormalTok{ u, y }\OperatorTok{=}\NormalTok{ pu)}
+\NormalTok{ax.set\_xlabel(}\StringTok{"u"}\NormalTok{)}
+\NormalTok{ax.set\_title(}\StringTok{"Prior probability of u"}\NormalTok{)}
+
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{08-social-cognition_files/figure-pdf/cell-6-output-1.pdf}}
+
+Additionally, we'll make the simplifying assumption that utilities for
+different fruits are \emph{independent}. This means that knowing someone
+likes pineapples doesn't tell you anything about how much they'll like
+grapefruits.
+
+Finally, we need a way to compute \(p(c|\mathbf{A})\). In other words,
+after seeing Rue make a choice, what was the probability of
+\emph{anyone} with \emph{any preferences} making that choice?
+
+\hyperref[normalization]{Previously}, we avoided computing denominators
+like this by normalizing. This works when you can enumerate the full
+hypothesis space. This time, the space of hypotheses (all possible
+assignments of utilities to fruits) is continuous and it's not easy to
+integrate over. So we need to do something else.
+
+\subsubsection{Monte Carlo estimation}\label{monte-carlo}
+
+We'll use an estimation method known as
+\href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo}
+that relies on random sampling.
+
+Here's the basic idea as it applies to our problem. We want to know the
+overall probability of someone in the general population making a
+certain choice. We don't know what that is, but we do know the
+distribution of utilities in the general population. That's the prior
+\(p(\mathbf{u})\) we just defined. So we can get a close approximation
+to what we want using the following algorithm:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Draw a random sample \(\mathbf{u}\) from \(p(\mathbf{u})\).
+\item
+  Compute \(p(c|\mathbf{u}, \mathbf{A})\).
+\item
+  Repeat many times.
+\item
+  Calculate the mean choice probability of all trials.
+\end{enumerate}
+
+Let's write a function to do this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ estimate\_marginal\_likelihood(j, options, n\_samples, m, sd): }
+  \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{}}
+\CommentTok{  Returns an estimate of the probability of choosing option j}
+\CommentTok{     from the set of options using Monte Carlo estimation.}
+\CommentTok{     }
+\CommentTok{   Args:}
+\CommentTok{    j (int): the chosen option}
+\CommentTok{    options (array): a matrix in which each row is an}
+\CommentTok{     option, and each option is a binary array of the }
+\CommentTok{     attributes in that option}
+\CommentTok{    n\_samples (int): number of Monte Carlo samples to}
+\CommentTok{     collect}
+\CommentTok{    m: mean of utility prior}
+\CommentTok{    sd: std. dev. of utility prior}
+\CommentTok{      }
+\CommentTok{       }
+\CommentTok{   Returns:}
+\CommentTok{    (float): probability of choosing option j}
+\CommentTok{  \textquotesingle{}\textquotesingle{}\textquotesingle{}}
+  
+\NormalTok{  n\_attributes }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(options[}\DecValTok{0}\NormalTok{])}
+\NormalTok{  mc\_samples }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+  
+  \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_samples):}
+    \CommentTok{\# draw random u sample}
+\NormalTok{    u }\OperatorTok{=}\NormalTok{ np.random.normal(m,sd,n\_attributes)}
+\NormalTok{    mc\_samples[i] }\OperatorTok{=}\NormalTok{ compute\_choice\_prob(j, u, options)}
+  
+  \ControlFlowTok{return}\NormalTok{(np.mean(mc\_samples))}
+\end{Highlighting}
+\end{Shaded}
+
+Let's compare the probability of someone making
+\hyperref[inverting-the-choice-model]{the choices that Rue and Jules
+made}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Rue\textquotesingle{}s choice probability: }\SpecialCharTok{\{:.3f\}}\StringTok{"}\NormalTok{.}\BuiltInTok{format}\NormalTok{(}
+\NormalTok{  estimate\_marginal\_likelihood(}\DecValTok{0}\NormalTok{, choice\_rue, }\DecValTok{2000}\NormalTok{, u\_mean, u\_sd)))}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"Jules\textquotesingle{}s choice probability: }\SpecialCharTok{\{:.3f\}}\StringTok{"}\NormalTok{.}\BuiltInTok{format}\NormalTok{(}
+\NormalTok{  estimate\_marginal\_likelihood(}\DecValTok{0}\NormalTok{, choice\_jules, }\DecValTok{2000}\NormalTok{, u\_mean, u\_sd)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Rue's choice probability: 0.972
+Jules's choice probability: 0.028
+\end{verbatim}
+
+Unsurprisingly, Rue's choice has a much higher baseline probability
+(because she picked three fruits over one and Jules picked one fruit
+over three).
+
+\subsubsection{Putting it all together}\label{putting-it-all-together}
+
+Now we'll infer Rue's and Jules's preferences from their choices using
+Monte Carlo estimation again.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set random state for reproducibility}
+\NormalTok{np.random.RandomState(}\DecValTok{2022}\NormalTok{) }
+
+\NormalTok{n\_samples }\OperatorTok{=} \DecValTok{2000} \CommentTok{\# number of Monte Carlo samples}
+\NormalTok{n\_attributes }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(choice\_rue[}\DecValTok{0}\NormalTok{])}
+\NormalTok{peach }\OperatorTok{=} \DecValTok{0}
+\NormalTok{banana }\OperatorTok{=} \DecValTok{3}
+
+\NormalTok{marginal\_likelihood\_rue }\OperatorTok{=}\NormalTok{ estimate\_marginal\_likelihood(}
+  \DecValTok{0}\NormalTok{, choice\_rue, n\_samples, u\_mean, u\_sd)}
+\NormalTok{marginal\_likelihood\_jules }\OperatorTok{=}\NormalTok{ estimate\_marginal\_likelihood(}
+  \DecValTok{0}\NormalTok{, choice\_jules, n\_samples, u\_mean, u\_sd)}
+
+\NormalTok{mc\_samples\_rue }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+\NormalTok{mc\_samples\_jules }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_samples):}
+  \CommentTok{\# Draw u samples for Rue and Jules}
+\NormalTok{  u\_rue }\OperatorTok{=}\NormalTok{ np.random.normal(u\_mean,u\_sd,n\_attributes)}
+\NormalTok{  u\_jules }\OperatorTok{=}\NormalTok{ np.random.normal(u\_mean,u\_sd,n\_attributes)}
+  
+  \CommentTok{\# Compute posterior for peach utility for each person}
+\NormalTok{  pu\_rue }\OperatorTok{=}\NormalTok{ ((compute\_choice\_prob(}\DecValTok{0}\NormalTok{, u\_rue, choice\_rue) }\OperatorTok{*}\NormalTok{ u\_rue) }\OperatorTok{/} 
+\NormalTok{    marginal\_likelihood\_rue)}
+\NormalTok{  pu\_jules }\OperatorTok{=}\NormalTok{ ((compute\_choice\_prob(}\DecValTok{0}\NormalTok{, u\_jules, choice\_jules) }\OperatorTok{*}\NormalTok{ u\_jules) }\OperatorTok{/}
+\NormalTok{    marginal\_likelihood\_jules)}
+
+\NormalTok{  mc\_samples\_rue[i] }\OperatorTok{=}\NormalTok{ pu\_rue[peach]}
+\NormalTok{  mc\_samples\_jules[i] }\OperatorTok{=}\NormalTok{ pu\_jules[peach]}
+\end{Highlighting}
+\end{Shaded}
+
+Let's look at the results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+
+\NormalTok{samples }\OperatorTok{=}\NormalTok{ pd.DataFrame(data }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}Rue\textquotesingle{}}\NormalTok{: mc\_samples\_rue,}
+                               \StringTok{\textquotesingle{}Jules\textquotesingle{}}\NormalTok{: mc\_samples\_jules\})}
+\CommentTok{\# reorganize the data}
+\NormalTok{samples }\OperatorTok{=}\NormalTok{ samples.melt(value\_vars}\OperatorTok{=}\NormalTok{[}\StringTok{"Jules"}\NormalTok{,}\StringTok{"Rue"}\NormalTok{], }
+\NormalTok{  var\_name}\OperatorTok{=}\StringTok{"person"}\NormalTok{, value\_name}\OperatorTok{=}\StringTok{"u"}\NormalTok{)}
+\CommentTok{\# filter out extreme samples}
+\NormalTok{samples\_filtered }\OperatorTok{=}\NormalTok{ samples[samples[}\StringTok{"u"}\NormalTok{] }\OperatorTok{\textless{}} \DecValTok{50}\NormalTok{]}
+
+\NormalTok{sns.displot(data}\OperatorTok{=}\NormalTok{samples\_filtered, x}\OperatorTok{=}\StringTok{"u"}\NormalTok{, hue}\OperatorTok{=}\StringTok{"person"}\NormalTok{, kind}\OperatorTok{=}\StringTok{"kde"}\NormalTok{)}
+
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{08-social-cognition_files/figure-pdf/cell-10-output-1.pdf}}
+
+The model's inferences here require some interpretation. The model is
+more certain about Rue having a preference for peach, but the
+distribution on the Jules's preference for peach has a much longer tail.
+
+This makes some sense. Because of our mostly positive prior
+distribution, it's reasonable to assume by default that Rue likes
+peaches.
+
+Jules's choice is a bit odd, so it's harder to make sense of. One way to
+explain it is that she simply made a mistake (after all,
+\hyperref[monte-carlo]{as we saw above}, it's an improbable choice).
+Another way to explain it is by assuming she has a very strong
+preference for peaches. (Of course, the model doesn't take into account
+the countless other reasons Jules might prefer one fruit over three.)
+
+\subsection{Homework 5: Your turn}\label{homework-5-your-turn}
+
+\href{https://colab.research.google.com/drive/1hGTsIzEeT5YtS1X2aA625YZDI8OSLCSU?usp=sharing}{\pandocbounded{\includesvg[keepaspectratio]{index_files/mediabag/colab-badge.svg}}}
+
+In your next assignment, you'll fully implement a version of this model
+and compare it to data I collected (along with Chris Lucas and Charles
+Kemp).
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,height=\textheight,keepaspectratio]{images/08/cards.jpg}
+
+}
+
+\caption{Cards used in the preference learning task from Jern, Lucas, \&
+Kemp (2017).}
+
+\end{figure}%
+
+\section{Naïve utility calculus 🧮}\label{nauxefve-utility-calculus}
+
+Suppose Rue and Jules both make a choice between the same two fruits:
+
+\begin{quote}
+Option 1: 🍑
+
+Option 2: 🍌
+\end{quote}
+
+They both choose the peach 🍑. The difference is that Rue and Jules had
+to exert a different degree of effort to make their choices. For Rue,
+both fruits were placed in a bowl in front of her. For Jules, the peach
+was in a bowl in front her and the banana was on a high shelf in another
+room.
+
+In both cases, you'd probably assume they like peaches, but you might
+conclude there's weaker evidence that Jules likes them. She may have
+chosen the peach because it was just convenient.
+
+This (pretty contrived) example shows how people's choices are a
+function of both \emph{rewards} (or preferences) and \emph{costs}. And
+when we're thinking about other people's behavior, we take their
+potential rewards and costs into account to understand why they're doing
+things.
+
+This idea was best articulated and formalized by
+\href{https://compdevlab.yale.edu/docs/Jara-EttingerGweonShulzTenenbaum_TiCS.pdf}{Julian
+Jara-Ettinger and his collaborators}. And they incorporated it into a
+computational model.
+
+Specifically, suppose a person has a plan \(p\) to achieve an outcome
+\(o\). We can define their utility \(U\) as:
+
+\[
+U(o,p) = R(o) - C(p)
+\]
+
+where \(R(\cdot)\) is their reward from the outcome and \(C(\cdot)\) is
+the cost they incur from carrying out the plan.
+
+\subsection{Markov decision processes}\label{markov-decision-processes}
+
+Earlier, we considered single decisions that happened in isolation. But
+lots of behavior involves a series of small decisions that happen in a
+sequence: the order in which someone prepares and cooks a dish, the
+route someone takes to get from their workplace to their home, which
+sections of a book chapter they write first.
+
+A series of decisions is a plan \(p\). And a useful computational
+framework for choosing optimal plans is a
+\href{https://en.wikipedia.org/wiki/Markov_decision_process}{Markov
+decision process}.
+
+To be concrete, let's focus on the specific environment in
+\href{https://compdevlab.yale.edu/docs/2020/cogpsych_NUC.pdf}{Jara-Ettinger
+et al (2020)}: a 7x7 grid in which agents can move in any direction, one
+step at a time.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{images/08/jara-ettinger-grid.png}
+
+}
+
+\caption{Example of a grid and an agent path from Jara-Ettinger et al
+(2020).}
+
+\end{figure}%
+
+The locations in the grid are states \(S\). Whenever an agent is in a
+state \(s\), it can take an action \(a \in A\), moving to any adjacent
+state. The agent has some goal state in mind (in the figure above, it's
+the green square). What we want is an optimal \emph{policy} that takes a
+state and returns an optimal action for getting toward the goal state.
+This can be computed as follows.
+
+First, we compute each state's optimal value \(V^*(s)\), using this
+recursive equation:
+
+\[
+V^*(s) = \text{max}_a\gamma \sum_{s^\prime} P_{s,a}(s^\prime) V^*(s^\prime) + R(a,s) - C(a,s)
+\]
+
+where \(P_{s,a}(s^\prime)\) is ``the probability that the agent will be
+in state \(s^\prime\) when she takes action \(a\) in state \(s\) and
+\(\gamma \in {0,1}\).''
+
+Essentially, this equation requires going through every state in the
+grid, summing up its rewards and costs, plus the expected downstream
+rewards and costs of that state.
+
+Solving this recursive function is outside the scope of this book, but
+there are standard methods for doing it and even
+\href{https://pymdptoolbox.readthedocs.io/en/latest/index.html}{Python
+packages} for solving MDPs.
+
+The action policy is then defined as:
+
+\begin{equation}\phantomsection\label{eq-optimalpolicy}{
+\begin{equation}
+p(a|s) \propto \exp \left( \sum_{s^\prime} P_{s,a}(s^\prime) V^*(s^\prime) \right)
+\end{equation}
+}\end{equation}
+
+In their model, they once again introduce a notion of a ``softmax''
+choice rule, rather than assume agents will be perfectly optimal. This
+makes sense because the goal is to model how people reason about others,
+and people often have incomplete information about other people.
+
+\subsection{Inverting the MDP}\label{inverting-the-mdp}
+
+After seeing an agent take a series of actions \(\mathbf{a}\), we can
+infer their costs and rewards pretty much the same way we did before, by
+applying Bayes's rule.
+
+\[
+p(C,R|\mathbf{a}) \propto p(\mathbf{a}|C,R) p(C,R)
+\]
+
+In the model, they use uniform priors over costs and rewards. Computing
+\(p(\mathbf{a}|C,R)\) means just applying
+Equation~\ref{eq-optimalpolicy} repeatedly for each action the agent
+took in their sequence. (The researchers also modeled a notion of
+sub-goals that I've omitted.)
+
+\subsection{Results}\label{results-1}
+
+The researchers tested their model in a series of experiments in which
+people saw paths that agents took across the grid and then had to rate
+the costs and rewards the agent assigned to different states.
+
+Results from one experiment are below.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{images/08/jara-ettinger-results.png}
+
+}
+
+\caption{Partial results from Experiment 1b of Jara-Ettinger et al
+(2020).}
+
+\end{figure}%
+
+The cost and reward ratings were separately normalized so that they had
+a mean of zero. Then they were combined in the plots.
+
+Compared to simpler alternative models, the full naïve utility calculus
+model provided the best fit to people's judgments.
+
+\bookmarksetup{startatroot}
+
+\chapter{Iterated learning}\label{iterated-learning}
+
+If someone told you they defecated their water before drinking it, you
+probably wouldn't be too impressed. Unless you lived in the 1600s, when
+``defecate''
+\href{https://www.mentalfloss.com/article/54770/15-words-dont-mean-what-they-used}{meant
+``to purify something''}.
+
+Language changes. Words change. Concepts change. Is there any way to
+predict the conceptual drift that is always happening in our culture?
+
+Yeah, maybe, kinda! But first, some math.
+
+\section{Markov chains 🔗}\label{markov-chains}
+
+Words and concepts change over \emph{time}. \textbf{Markov chains}
+provide a useful modeling framework for time-dependent data.
+
+As the name suggests, a Markov chain is a chain -- specifically of
+states. At each time step, it moves to a new state. A Markov chain meets
+the following conditions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A system can be in one of a finite number of states.
+\item
+  The state at each step of the chain depends only on the previous
+  state. (This dependence can be probabilistic.)
+\end{enumerate}
+
+For example, consider the game Telephone, where one person whispers a
+word to the next person, they whisper what they hear to the next person,
+and so on. The set of possible words are the states (finite but large).
+
+The word that Person \(n+1\) hears only depends on the word that Person
+\(n\) whispered. But there might be some miscommunication: that is, the
+probability that Person \(n+1\) accurately hears the word could be less
+than 1, with similar-sounding words getting higher probability than
+dissimilar words.
+
+\subsection{Examples}\label{examples}
+
+Consider a very simple chain of colors that are either red or blue.
+Here, the state space \(S = \{ \text{red, blue} \}\). To specify this
+Markov chain, we need to define the \emph{transition probabilities}: the
+probabilities of moving from each state to every other state.
+
+Let \(t_{ij}\) be the probability of transitioning from state \(i\) to
+state \(j\). For example, if \(t_{RB} = 0.3\) then the probability of
+transitioning from red to blue is 0.3. We can then write the transition
+probabilities in a matrix.
+
+\subsubsection{Example 1}\label{markov-example1}
+
+Here's an example transition probability matrix for the red/blue state
+space.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+& R & B \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+R & 0 & 1 \\
+B & 1 & 0 \\
+\end{longtable}
+
+In this example, \(t_{RB} = t_{BR} = 1\). This means that the chain will
+deterministically alternate between red and blue. Note that the rows of
+the transition matrix must sum to 1 because they represent all the
+possible states that the chain might transition to given a current
+state. Although the columns also sum to 1 in this example, this is not a
+requirement.
+
+\emph{Example sequence}: {R} {B} {R} {B} {R} {B} \ldots{}
+
+\subsubsection{Example 2}\label{markov-example2}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+& R & B \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+R & 0.25 & 0.75 \\
+B & 0.75 & 0.25 \\
+\end{longtable}
+
+In this example, we'd expect to the sequence to flip back and forth
+between red and blue, but not deterministically. At every step, the
+sequence is more likely to flip than to stay in the current color.
+
+\emph{Example sequence}: {R} {B} {R} {R} {B} {R} {R} {B} {R} {B} {R}
+\ldots{}
+
+\subsubsection{Example 3}\label{markov-example3}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+& R & B \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+R & 0.75 & 0.25 \\
+B & 0.75 & 0.25 \\
+\end{longtable}
+
+In this example, no matter what state we're in, there is a 0.75
+probability of moving to red and a 0.25 probability of moving to blue.
+Therefore, in this example, we'd expect the chain to spend about 3/4 of
+its time in the red state and 1/4 of its time in the blue state. This
+example makes clear that the columns do not need to sum to 1.
+
+\emph{Example sequence}: {R} {R} {B} {B} {R} {R} {B} {B} {R} {R} {R}
+\ldots{}
+
+\subsection{Stationary distributions}\label{stationary-distributions}
+
+A common question for a given Markov chain is what is its so-called
+\emph{stationary distribution}, the proportion of time the chain will
+spend in each state if it runs for a very long time. For Markov chains
+with a small number of states, computing the stationary distribution is
+easy to do with some algebra. Consider the following example.
+
+Let's define a transition matrix for Markov chain with two states,
+\(s_1\) and \(s_2\):
+
+\[
+\begin{equation}
+T = \left(
+\begin{matrix}
+t_{11} & t_{12} \\
+t_{21} & t_{22}
+\end{matrix} \right)
+\end{equation}
+\]
+
+The stationary distribution corresponds to the probability of the chain
+being in state \(s_1\) versus \(s_2\). We will define \(\theta_1\) as
+the probability of the chain being in state \(s_1\) and \(\theta_2\) as
+the probability of the chain being in state \(s_2\). We can define
+\(\theta_1\) and \(\theta_2\) recursively as follows:
+
+\[
+\begin{eqnarray}
+\theta_1 = t_{11} \theta_1 + t_{21} \theta_2 \\
+\theta_2 = t_{22} \theta_2 + t_{12} \theta_1 \\
+\end{eqnarray}
+\]
+
+These equations essentially say that the probability of being in a state
+is the probability of being in that state and staying in that state plus
+the probability of being in the other state and switching states. We
+will then use the following facts to solve for the \(\theta\)s:
+
+\[
+\begin{eqnarray}
+\theta_1 + \theta_2 = 1 \\
+t_{11} + t_{12} = 1 \\
+t_{21} + t_{22} = 1
+\end{eqnarray}
+\]
+
+Using some algebra, we get the following expressions:
+
+\[
+\begin{eqnarray}
+\theta_1 = \frac{t_{21}}{t_{12}+t_{21}} \\
+\theta_2 = \frac{t_{12}}{t_{21}+t_{12}}
+\end{eqnarray}
+\]
+
+We can see that these expressions give sensible results by applying them
+to the red-blue examples above.
+
+In \hyperref[markov-example1]{Example 1}, unsurprisingly,
+\(\theta_R = \theta_B = 0.5\). Because the sequence alternates, it will
+be red half the time and blue half the time. In
+\hyperref[markov-example2]{Example 2}, again
+\(\theta_R = \theta_B = 0.5\). Even though the alternating is not
+deterministic, no matter what state the sequence is in, there is an
+equal probability that it will switch to the other state. In
+\hyperref[markov-example3]{Example 3}, \(\theta_R = 0.75\) and
+\(\theta_B = 0.25\).
+
+\section{Hidden Markov models 🙈}\label{hmms}
+
+Now let's consider a more complicated situation in which each step in a
+Markov chain generates an observation. A learner gets to see the
+observations, but not the states themselves. In this situation, we say
+that the states are ``hidden'', hence the name \textbf{hidden Markov
+model}.
+
+Hidden Markov models are sometimes used to model language production,
+where the hidden states are the parts of speech (like noun, verb,
+adjective, or more complex things like noun phrases, objects, and
+subjects). What we actually get to observe as readers and listeners,
+however, are words (like ``dog'', ``eats'', and ``play''). In English,
+many words are ambiguous and can potentially belong to different parts
+of speech. ``Play'', for example could be a noun (``The actors performed
+in a play'') or a verb (``The children play in the sand''). We are
+constantly decoding the language we observe to infer the parts of speech
+of the words.
+
+\subsection{Formal definition}\label{formal-definition}
+
+A hidden Markov model includes the following pieces:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A set of states \(S = \{s_1, \ldots, s_N\}\)
+\item
+  A set of observations \(O = \{o_1, \ldots, o_M\}\)
+\item
+  A set of initial state probabilities
+  \(\Pi = \{\pi_1, \ldots, \pi_N\}\), where \(\pi_i\) is the probability
+  of state \(i\) begin the first state in the sequence
+\item
+  A matrix of state transition probabilities \(T\), where \(t_{ij}\) in
+  the matrix is the probability of transitioning from state \(s_i\) to
+  state \(s_j\)
+\item
+  A matrix of ``emission'' probabilities \(B\), where \(b_{ik}\) in the
+  matrix is the probability of producing observation \(o_k\) while in
+  state \(s_i\)
+\item
+  An observation sequence \(Y = (y_1, \ldots, y_T)\), where \(T\) is the
+  length of the observed sequence of data
+\item
+  An state sequence that is not observed \(X = (x_1, \ldots, x_T)\)
+\end{enumerate}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{images/09/hmm.png}
+
+}
+
+\caption{A hidden Markov model. Source: Wikipedia (public domain).}
+
+\end{figure}%
+
+\subsection{Inference}\label{inference}
+
+Usually the purpose of using an HMM is to infer \(X\) from \(Y\). There
+is a standard algorithm for doing this called
+\href{https://en.wikipedia.org/wiki/Viterbi_algorithm}{the Viterbi
+algorithm}, the details of which are beyond the scope of this book.
+
+There are many existing programming packages available for working with
+HMMs. On Python package is
+\href{https://github.com/hmmlearn/hmmlearn}{hmmlearn}, which includes a
+\href{https://hmmlearn.readthedocs.io/en/stable/api.html\#hmmlearn.base.BaseHMM.predict}{\texttt{predict()}}
+function, which will predict the most probable sequence of hidden states
+\(X\), given a sequence of observations \(Y\) and a fully specified
+Hidden Markov model. Note that this function will not always be correct.
+If the model is probabilistic and there are some observations that can
+be produced in more than one state (for example, the word ``play'' could
+be produced by either the noun or verb state), there will be some cases
+where it is impossible to be certain which state an observation came
+from.
+
+\section{Cultural transmission 🗣}\label{cultural-transmission}
+
+So what does all this have to do with ``defecate'' changing meaning over
+time?
+
+Well, you can think of communication over time as one giant long-term
+game of Telephone. And an important question you can then ask is: What
+is the stationary distribution of these chains?
+
+This is the subject of a line research in computational cognitive
+science. The basic model combines some assumptions we've seen before
+with some assumptions of hidden Markov models you just learned about in
+this chapter.
+
+First, assume that people are trying to learn some concept by seeing an
+example \(x_i\) and getting a label for it \(y_i\) and then trying to
+generalize that label to other instances by forming a hypothesis \(h\)
+about what other things \(y_i\) applies to. This is the problem we
+encountered in the \hyperref[generalization]{generalization chapter},
+and we can assume that each person forms their beliefs about \(h\) using
+Bayesian inference.
+
+Now let's add in the communication factor. Each person \(n+1\) gets a
+label \(y_n\) from someone else Person \(n\), forms their own hypothesis
+\(h_{n+1}\) then labels a new object \(x_{n+1}\) for the next person.
+This process repeats, creating a Markov chain.
+
+To simplify this chain, what we end up with is a sequence of states
+where each state is a hypothesis about the concept.
+
+\emph{What will this chain converge to?}
+
+\textbf{It turns out that the stationary distribution of this chain is
+the prior} \(P(h)\). Because people make mistakes and communication is
+noisy, over time, the labels \(y_n\) become virtually useless and people
+will converge to their shared prior beliefs.
+
+\subsection{Using iterated learning to identify people's
+priors}\label{using-iterated-learning-to-identify-peoples-priors}
+
+For this reason, we can use a kind of Telephone game as a way to find
+out what people's shared prior beliefs are.
+
+\href{https://link.springer.com/content/pdf/10.3758/BF03194066.pdf}{A
+study lead by Michael Kalish} tested this idea for function learning:
+learning to predict \(y\) values from \(x\) values.
+
+In the task, people were given \(x\) values and had to predict the
+corresponding \(y\) values using a slider. They got feedback on 50
+training examples. Then they did an additional 25 trials without
+feedback.
+
+Those 25 test trials were doubled and used as the 50 training examples
+for the next person, and so on. What functions would people eventually
+learn?
+
+The figure below shows several representative chains. The researchers
+found that regardless of what the initial training data was, the chains
+usually converged to a linear increasing function, suggesting that this
+is what most people were expecting.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/09/kalishetal_functionlearning_results.png}}
+
+}
+
+\caption{Iterated function learning results from Kalish et al.~(2007).}
+
+\end{figure}%
+
+This same method has been applied in other domains as well. For example,
+in \href{https://suchow.io/assets/docs/suchow2016dzp.pdf}{a study lead
+by Jordan Suchow}, people had to reproduce as accurately as possible the
+positions of characters in a word. The initial positions were randomly
+positioned, and what each person reproduced would be passed to the next
+person in the chain.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/09/suchowetal_letterspacing.png}}
+
+}
+
+\caption{Iterated typesetting results from Suchow et al.~(2016).}
+
+\end{figure}%
+
+The researchers found that, over time, people drifted much closer to
+equal spaced letters, which was much more legible. Moreover, if they
+averaged the responses across all chains (DZP2 in the figure), they
+found that people's responses were even better than equal spacing,
+getting closer to Linotype, recommended by designers.
+
+\bookmarksetup{startatroot}
+
+\chapter{Causal inference}\label{causal-inference}
+
+The world is full of weird and interesting relationships. Like this one.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/10/pikachu-puerto-rico.png}
+
+}
+
+\caption{Correlation between ``surprised Pikachu'' meme and number of
+middle school teachers in Puerto Rico. Source: tylervigen.com.}
+
+\end{figure}%
+
+Which of these weird relationships are \emph{causal} relationships and
+how can we tell? Here's an AI-generated explanation for why the rise in
+the meme's popularity might be responsible for the uptick in teachers in
+Puerto Rico:
+
+\begin{quote}
+As the `surprised Pikachu' meme gained traction, it led to an uptick in
+internet usage. This surge in online activity put a higher demand on the
+telecommunication infrastructure in Puerto Rico. To meet this demand,
+more tech companies invested in the region, creating job opportunities.
+With the expanding job market, there was a need for additional educators
+to support the growing number of families relocating to Puerto Rico. As
+a result, the popularity of the meme indirectly contributed to an
+increase in the number of middle school teachers in Puerto Rico.
+\end{quote}
+
+\includegraphics[width=0.4\linewidth,height=\textheight,keepaspectratio]{images/10/surprised pikachu.jpg}
+
+Causal inference is, in fact, a major area of research in statistics and
+machine learning. But we'll just focus on the question of how people
+decide what causes what.
+
+We'll use a computational framework for making optimal probabilistic
+causal judgments called Bayesian networks, or \textbf{Bayes nets} for
+short. Comparing people's judgments to Bayes net predictions allows us
+to see how optimal (or not) people are. Additionally, as we'll see,
+Bayes nets are well suited for \emph{intervention}, which is one way
+that people learn about causes.
+
+\section{Bayes nets ➡️}\label{bayes-nets}
+
+A Bayes net is a graph that describes the dependencies between all the
+variables in a situation.
+
+For example, let's make a Bayes net for the problem in Chapter 5 of
+\hyperref[beta-binomial]{inferring the bias of a coin}. In that problem,
+there were three key variables: the bias \(\theta\), the total number of
+flips \(n\), and the number of heads \(k\). We can represent this as a
+Bayes net.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/10/beta_binomial_bayesnet1.png}}
+
+}
+
+\caption{Bayes net representation of the coin bias problem.}
+
+\end{figure}%
+
+In Bayes nets, shaded nodes represent variables that are known or
+observed, and unshaded nodes represent variables that are unknown. We
+know how many times the coin was flipped and came up heads, but we don't
+directly know the bias \(\theta\).
+
+We could extend this Bayes net to capture the \emph{generalization}
+problem of predicting the outcome of the next coin flip \(x\).
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/10/beta_binomial_bayesnet2.png}}
+
+}
+
+\caption{Bayes net representation of the biased coin generalization
+problem.}
+
+\end{figure}%
+
+A complete Bayes net also specifies a probability distribution for each
+variable. In the example above, \(k\) is a function of \(\theta\) and
+\(n\). As we learned in \hyperref[beta-binomial]{Chapter 5}, this is a
+Binomial distribution. We also need to specify a prior probability over
+any unknown variables, like \(\theta\). Previously we assumed it was
+distributed according to a Beta distribution. \(x\) is just a single
+coin flip -- it's a special case of a Binomial distribution called a
+Bernoulli distribution in which \(n = 1\). To sum up:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\theta \sim \text{Beta}(\alpha, \beta)\)
+\item
+  \(k \sim \text{Binomial}(n,\theta)\)
+\item
+  \(x \sim \text{Binomial}(n=1, \theta)\)
+\end{itemize}
+
+\section{Causal intervention 🪚}\label{causal-intervention}
+
+Consider the following two Bayes nets.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/10/three_var_nets.png}}
+
+}
+
+\caption{Two Bayes nets with three variables.}
+
+\end{figure}%
+
+To be concrete, let's say that variables \(s\) and \(x\) represent
+levels of hormones sonin and xanthan, respectively. Variable \(z\) is an
+unknown variable.
+
+The \emph{common cause} network is so-called because sonin (\(s\)) and
+xanthan (\(x\)) are both causally dependent on \(z\). The \emph{chain}
+network is so-called because all the variables form a causal chain from
+\(s\) to \(x\) to \(z\). (Note the directions of the arrows in the two
+Bayes nets.)
+
+Let's see what kind of data these Bayes nets produce. Let's assume that
+each root node of a network (\(z\) in the common cause, \(x\) in the
+chain) follows a normal distribution with mean 0 and SD 1. Each link in
+a network follows a normal distribution with mean equal to the value of
+its parent node and SD 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\NormalTok{n\_samples }\OperatorTok{=} \DecValTok{10000}
+
+\CommentTok{\# Common cause}
+\NormalTok{z\_mu }\OperatorTok{=} \DecValTok{0}
+\NormalTok{sd }\OperatorTok{=} \DecValTok{1}
+
+\NormalTok{z\_samples\_cc }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+\NormalTok{s\_samples\_cc }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+\NormalTok{x\_samples\_cc }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_samples):}
+\NormalTok{  z\_samples\_cc[i] }\OperatorTok{=}\NormalTok{ np.random.normal(z\_mu, sd)}
+\NormalTok{  s\_samples\_cc[i] }\OperatorTok{=}\NormalTok{ np.random.normal(z\_samples\_cc[i], sd)}
+\NormalTok{  x\_samples\_cc[i] }\OperatorTok{=}\NormalTok{ np.random.normal(s\_samples\_cc[i], sd)}
+
+\CommentTok{\# Chain}
+\NormalTok{x\_mu }\OperatorTok{=} \DecValTok{0}
+
+\NormalTok{z\_samples\_chain }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+\NormalTok{s\_samples\_chain }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+\NormalTok{x\_samples\_chain }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_samples):}
+\NormalTok{  x\_samples\_chain[i] }\OperatorTok{=}\NormalTok{ np.random.normal(x\_mu, sd)}
+\NormalTok{  z\_samples\_chain[i] }\OperatorTok{=}\NormalTok{ np.random.normal(x\_samples\_chain[i], sd)}
+\NormalTok{  s\_samples\_chain[i] }\OperatorTok{=}\NormalTok{ np.random.normal(z\_samples\_chain[i], sd)}
+\end{Highlighting}
+\end{Shaded}
+
+Because \(z\) represents an unknown variable, let's plot just \(s\) and
+\(x\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+
+\NormalTok{sns.set\_theme()}
+
+\NormalTok{fig, axes }\OperatorTok{=}\NormalTok{ plt.subplots(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{sns.scatterplot(x }\OperatorTok{=}\NormalTok{ s\_samples\_cc, y }\OperatorTok{=}\NormalTok{ x\_samples\_cc, alpha }\OperatorTok{=} \FloatTok{0.1}\NormalTok{, ax }\OperatorTok{=}\NormalTok{ axes[}\DecValTok{0}\NormalTok{])}
+\NormalTok{axes[}\DecValTok{0}\NormalTok{].set\_xlabel(}\StringTok{"s"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{0}\NormalTok{].set\_ylabel(}\StringTok{"x"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{0}\NormalTok{].set\_title(}\StringTok{"Common cause"}\NormalTok{)}
+
+\NormalTok{sns.scatterplot(x }\OperatorTok{=}\NormalTok{ s\_samples\_chain, y }\OperatorTok{=}\NormalTok{ x\_samples\_chain, alpha }\OperatorTok{=} \FloatTok{0.1}\NormalTok{, ax }\OperatorTok{=}\NormalTok{ axes[}\DecValTok{1}\NormalTok{])}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{].set\_xlabel(}\StringTok{"s"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{].set\_ylabel(}\StringTok{"x"}\NormalTok{)}
+\NormalTok{axes[}\DecValTok{1}\NormalTok{].set\_title(}\StringTok{"Chain"}\NormalTok{)}
+
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{10-causal-inference_files/figure-pdf/cell-3-output-1.pdf}}
+
+Clearly, the data isn't identical in the two cases, but data generated
+by both Bayes nets results in a strong positive correlation between
+\(s\) and \(x\).
+
+Imagine you didn't know how this data was generated and you just got one
+of these plots. Could you use it to tell whether it was produced by a
+common cause structure or a chain structure?
+
+Sorry, but no. 😔 Just knowing the data are positively correlated
+doesn't give you enough information to figure out how \(s\) and \(x\)
+are causally related.
+
+But what if you could manipulate the variables? That is, what if you
+could \emph{intervene} on sonin levels and see what effect it had on
+xanthan levels?
+
+\begin{itemize}
+\tightlist
+\item
+  If you increase the sonin levels 📈 and the xanthan levels also
+  increase 📈, then the causal structure must be a chain.
+\item
+  If you increase the sonin levels 📈 and the xanthan levels don't
+  change ❌, then the causal structure can't be a chain (and therefore
+  must be a common cause, because that's the only other option we're
+  considering).
+\end{itemize}
+
+\subsection{Graph surgery}\label{graph-surgery}
+
+This intuition can be illustrated visually on the Bayes nets by
+performing ``surgery'' on the graphs. It works like this:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Remove all incoming connections to the variable you're intervening on.
+\item
+  If there's still a path between the variable you intervened on and
+  another variable, then you should still expect those variables to be
+  related.
+\end{enumerate}
+
+Let's apply this idea to our common cause and chain Bayes nets.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/10/graph_surgery.png}}
+
+}
+
+\caption{Graph surgery applied to the common cause and chain Bayes nets.
+The intervention is indicated by the red arrow.}
+
+\end{figure}%
+
+After intervening on sonin levels (\(s\)), we remove the connection to
+\(s\) in the common cause network, but no connections in the chain
+network. The resulting Bayes nets show why we should expect to see a
+resulting change in xanthan for the chain, but not the common cause.
+
+\subsection{Do people intuitively understand the logic of casual
+intervention?}\label{do-people-intuitively-understand-the-logic-of-casual-intervention}
+
+\href{https://psycnet.apa.org/doi/10.1037/0278-7393.31.2.216}{A study by
+Michael Waldmann and York Hagmayer} presented people with either the
+common cause or the chain structure. They were told that sonin and
+xanthan were hormone levels in chimps and they got some example data
+that allowed them to learn that the hormone levels were positively
+correlated.
+
+Then they were either assigned to a \emph{doing} or \emph{seeing}
+condition. People in the doing condition were asked to imagine that 20
+chimps had their sonin levels raised (or lowered). They then predicted
+how many of the chimps would have elevated xanthan levels. People in the
+seeing condition got essentially the same information but just learned
+that the chimps' sonin levels were high (not that it had been
+intentionally raised).
+
+Average results and model predictions are below.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/10/waldmann_hagmayer_results.png}}
+
+}
+
+\caption{Results from Waldmann \& Hagmayer (2005), Experiment 2.}
+
+\end{figure}%
+
+People's judgments mostly followed those of the Bayes net model
+predictions. In the common cause case, when the sonin levels are
+artificially raised, the relationship between sonin and xanthan is
+decoupled, so the model reverts to a base rate prediction about xanthan
+levels (and so did people, for the most part). But when just observing
+elevated sonin levels, the model should expect the positive relationship
+to hold.
+
+In the chain case, the predictions are the same for seeing or doing,
+because intervening doesn't change anything about the relationship
+between sonin and xanthan. People's judgments indicate that they
+understood this.
+
+\section{Causal structure and strength 🏗💪}\label{structure-strength}
+
+Bayes nets can also account for how people judge the strength of
+evidence for a causal relationship after seeing some data. This was the
+idea that Tom Griffiths and Josh Tenenbaum explored in
+\href{https://cocosci.princeton.edu/tom/papers/causal4.pdf}{a 2005
+computational study}.
+
+Here's the basic problem they considered. Suppose researchers perform an
+experiment with rats to test whether a drug causes a gene to be
+expressed. A control group of rats doesn't get the injection and the
+experimental group does. They record the number of rats in each group
+that express the gene.
+
+Here are some possible results from an experiment with 8 rats in each
+group. The table shows how many rats in each group expressed the gene.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Control 🐀 & Experimental 🐀 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+6/8 🧬 & 8/8 🧬 \\
+4/8 🧬 & 6/8 🧬 \\
+2/8 🧬 & 4/8 🧬 \\
+0/8 🧬 & 2/8 🧬 \\
+\end{longtable}
+
+In each of these hypothetical experiments, how strongly would you say
+that the drug causes the gene to be expressed?
+
+These are a few of the cases that were included in an experiment
+conducted by Marc Buehner and Patricia Cheng. Here's the full set of
+averaged human results.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{images/10/buehner_cheng_results.png}}
+
+}
+
+\caption{Results from Buehner \& Cheng (1997), Experiment 1B, reproduced
+by Griffiths \& Tenenbaum (2005). p(e+\textbar c+) is the probability of
+the effect being present (e.g., the gene being expressed) given that the
+cause is present (e.g., the drug was administered). p(e+\textbar c-)
+means the probability of the effect being present given that the cause
+is absent.}
+
+\end{figure}%
+
+Focusing just on the cases in the table, on average, people judged that
+the drug was less likely to have a causal effect on the gene as the
+total number of rats expressing the gene decreased, even when the
+difference in number of rats expressing the gene between conditions was
+held constant.
+
+\subsection{The causal support model}\label{the-causal-support-model}
+
+Maybe people reason about these problems by performing a kind of model
+selection between the two Bayes nets below.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,height=\textheight,keepaspectratio]{images/10/griffiths_tenenbaum_graphs.png}
+
+}
+
+\caption{Causal inference as model selection. In one model, there is a
+connection from the potential cause to the effect; in the other, the two
+variables are unconnected. Image from Griffiths \& Tenenbaum (2005).}
+
+\end{figure}%
+
+These Bayes nets each have three variables: an effect \(E\), a cause
+\(C\), and a background cause \(B\). For our problem, the effect and
+cause refer to the gene and the drug. The inclusion of the background
+cause is to account for unknown factors that might cause the gene to be
+expressed without the drug.
+
+The problem people are faced with is deciding which of these two models
+is best supported by the data \(D\) -- the number of times the effect
+occurred with and without the potential cause.
+
+This can be done with Bayesian inference:
+
+\[
+P(\text{Graph } i) \propto P(D|\text{Graph } i) P(\text{Graph } i)
+\]
+
+Because there are only two possible networks, we can compute the
+relative evidence for one Bayes net over the other as a ratio. We can
+then take the log of the expression to simplify it:
+
+\[
+\log \frac{P(\text{Graph } 1|D)}{P(\text{Graph } 0|D)} = \log \frac{P(D | \text{Graph } 1)}{P(D | \text{Graph } 0)} + \log \frac{P(\text{Graph } 1)}{P(\text{Graph } 0)}
+\]
+
+Regardless of what prior probabilities we assign to the two graphs, the
+relative evidence for one graph over the other is entirely determined by
+the log-likelihood ratio. This is defined as \textbf{causal support}:
+\(\log \frac{P(D | \text{Graph } 1)}{P(D | \text{Graph } 0)}\).
+
+Computing \(P(D | \text{Graph } 1)\) requires fully specifying the Bayes
+net. We'll assume that \(P(E|B) = w_0\) and \(P(E|C) = w_1\). When both
+\(B\) and \(C\) are present, we'll assume they contribute independently
+to causing \(E\), and therefore operate like a probabilistic OR
+function:
+
+\[
+P(e^+|b,c; w_o, w_1) = 1 - (1-w_0)^b (1-w_1)^c
+\]
+
+Here, when the B or C are present, \(b\) and \(c\) are set to 1, and
+when they are absent, \(b\) and \(c\) are set to 0.
+
+The likelihood for Graph 1 is therefore
+
+\[
+P(D | w_0, w_1, \text{Graph } 1) = \prod_{e,c} P(e|b^+,c; w_o, w_1)^{N(e,c)}
+\]
+
+where the product is over the possible settings of \(e\) and \(c\)
+(effect absent/cause absent, effect absent/cause present, \ldots) and
+the \(N(e,c)\) values are counts of times that these outcomes happened
+in the data \(D\).
+
+Here's a function to compute this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ compute\_likelihood(data, w0, w1, graph):}
+  \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{}}
+\CommentTok{  Computes likelihood of data for a given graph}
+\CommentTok{     }
+\CommentTok{  Args:}
+\CommentTok{    data (list): observation counts in this order:}
+\CommentTok{      N(c{-},e{-}), N(c{-},e+), N(c+,e{-}), N(c+,e+)}
+\CommentTok{    w0 (float): probability of background cause producing effect}
+\CommentTok{    w1 (float): probability of cause of interest producing effect}
+\CommentTok{      graph (int): 0 (Graph 0) or 1 (Graph 1)}
+
+\CommentTok{    Returns:}
+\CommentTok{      (float): probability of data }
+\CommentTok{  \textquotesingle{}\textquotesingle{}\textquotesingle{}}
+  
+  \ControlFlowTok{if}\NormalTok{ graph }\OperatorTok{==} \DecValTok{0}\NormalTok{:}
+    \CommentTok{\# e{-}}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\OperatorTok{{-}}\NormalTok{w0)}\OperatorTok{**}\NormalTok{(data[}\DecValTok{0}\NormalTok{]}\OperatorTok{+}\NormalTok{data[}\DecValTok{2}\NormalTok{])}
+    \CommentTok{\# e+}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ p }\OperatorTok{*}\NormalTok{ w0}\OperatorTok{**}\NormalTok{(data[}\DecValTok{1}\NormalTok{]}\OperatorTok{+}\NormalTok{data[}\DecValTok{3}\NormalTok{])}
+  \ControlFlowTok{elif}\NormalTok{ graph }\OperatorTok{==} \DecValTok{1}\NormalTok{:}
+    \CommentTok{\# c{-}, e{-}}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ (}\DecValTok{1}\OperatorTok{{-}}\NormalTok{w0)}\OperatorTok{**}\NormalTok{data[}\DecValTok{0}\NormalTok{]}
+    \CommentTok{\# c{-}, e+}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ p }\OperatorTok{*}\NormalTok{ w0}\OperatorTok{**}\NormalTok{data[}\DecValTok{1}\NormalTok{]}
+    \CommentTok{\# c+, e{-}}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ p }\OperatorTok{*}\NormalTok{ (}\DecValTok{1} \OperatorTok{{-}}\NormalTok{ (w0 }\OperatorTok{+}\NormalTok{ w1 }\OperatorTok{{-}}\NormalTok{ w0}\OperatorTok{*}\NormalTok{w1))}\OperatorTok{**}\NormalTok{data[}\DecValTok{2}\NormalTok{]}
+    \CommentTok{\# c+, e+}
+\NormalTok{    p }\OperatorTok{=}\NormalTok{ p }\OperatorTok{*}\NormalTok{ (w0 }\OperatorTok{+}\NormalTok{ w1 }\OperatorTok{{-}}\NormalTok{ w0}\OperatorTok{*}\NormalTok{w1)}\OperatorTok{**}\NormalTok{data[}\DecValTok{3}\NormalTok{]}
+  \ControlFlowTok{else}\NormalTok{:}
+    \CommentTok{\# error!}
+    \ControlFlowTok{return}\NormalTok{(}\DecValTok{0}\NormalTok{)}
+  
+  \ControlFlowTok{return}\NormalTok{(p)}
+\end{Highlighting}
+\end{Shaded}
+
+Causal support doesn't actually depend directly on the parameters
+\(w_0\) and \(w_1\). The reason is that we ultimately don't care what
+the values of these parameters are because we just want to draw an
+inference at a higher level about the best-fitting Bayes net.
+
+Mathematically speaking, \(w_0\) and \(w_1\) are averaged out of the
+model, an idea we first saw in \hyperref[generalizing]{Chapter 3}. We
+can accomplish this using Monte Carlo approximation, introduced in
+\hyperref[monte-carlo]{Chapter 8}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ estimate\_likelihood(graph\_number, data): }
+  \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{}}
+\CommentTok{  Returns an estimate of the probability of observing the data}
+\CommentTok{    under the specified graph using Monte Carlo estimation.}
+\CommentTok{     }
+\CommentTok{  Args:}
+\CommentTok{    graph\_number (int): either 0 (Graph 0) or 1 (Graph 1)}
+\CommentTok{    data (list): observation counts in this order:}
+\CommentTok{      N(c{-},e{-}), N(c{-},e+), N(c+,e{-}), N(c+,e+)}
+
+\CommentTok{  Returns:}
+\CommentTok{    (float): probability of observing data}
+\CommentTok{  \textquotesingle{}\textquotesingle{}\textquotesingle{}}
+  \ImportTok{from}\NormalTok{ numpy.random }\ImportTok{import}\NormalTok{ default\_rng}
+  
+\NormalTok{  n\_samples }\OperatorTok{=} \DecValTok{5000}
+\NormalTok{  rng }\OperatorTok{=}\NormalTok{ default\_rng(}\DecValTok{2022}\NormalTok{)}
+\NormalTok{  mc\_samples }\OperatorTok{=}\NormalTok{ np.zeros(n\_samples)}
+  
+  \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_samples):}
+    \CommentTok{\# Sample values for w0 and w1 from a uniform distribution}
+\NormalTok{    w0 }\OperatorTok{=}\NormalTok{ rng.random()}
+\NormalTok{    w1 }\OperatorTok{=}\NormalTok{ rng.random()}
+    
+\NormalTok{    mc\_samples[i] }\OperatorTok{=}\NormalTok{ compute\_likelihood(data, w0, w1, graph\_number)}
+  
+  \ControlFlowTok{return}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{n\_samples }\OperatorTok{*}\NormalTok{ np.}\BuiltInTok{sum}\NormalTok{(mc\_samples))}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, let's put it all together by writing a function that computes
+causal support.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ causal\_support(data):}
+  \CommentTok{\textquotesingle{}\textquotesingle{}\textquotesingle{}}
+\CommentTok{  Returns a causal support value for a given data set.}
+\CommentTok{  Causal support is a measure of how strongly a data}
+\CommentTok{  set indicates that there is evidence for a causal}
+\CommentTok{  effect.}
+\CommentTok{     }
+\CommentTok{  Parameters:}
+\CommentTok{   data (list): observation counts in this order:}
+\CommentTok{    N(c{-},e{-}), N(c{-},e+), N(c+,e{-}), N(c+,e+)}
+
+\CommentTok{  Returns:}
+\CommentTok{    (float): strength of evidence for causal relationship}
+\CommentTok{  \textquotesingle{}\textquotesingle{}\textquotesingle{}}
+  \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+  
+  \ControlFlowTok{return}\NormalTok{ (np.log(estimate\_likelihood(}\DecValTok{1}\NormalTok{,data}\OperatorTok{=}\NormalTok{data) }\OperatorTok{/} 
+\NormalTok{                 estimate\_likelihood(}\DecValTok{0}\NormalTok{,data}\OperatorTok{=}\NormalTok{data)))}
+\end{Highlighting}
+\end{Shaded}
+
+Now let's see what the model predicts for the
+\hyperref[structure-strength]{four cases we considered earlier}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{causal\_support\_predictions }\OperatorTok{=}\NormalTok{ [causal\_support([}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{]),}
+\NormalTok{                              causal\_support([}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{]),}
+\NormalTok{                              causal\_support([}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{]),}
+\NormalTok{                              causal\_support([}\DecValTok{8}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{2}\NormalTok{])]}
+                              
+\NormalTok{labels }\OperatorTok{=}\NormalTok{ [}\StringTok{"6/8, 8/8"}\NormalTok{, }\StringTok{"4/8, 6/8"}\NormalTok{, }\StringTok{"2/8, 4/8"}\NormalTok{, }\StringTok{"0/8, 2/8"}\NormalTok{]}
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots()}
+\NormalTok{sns.barplot(x}\OperatorTok{=}\NormalTok{labels, y}\OperatorTok{=}\NormalTok{causal\_support\_predictions)}
+\NormalTok{ax.set\_xlabel(}\StringTok{"Data"}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{"Model prediction"}\NormalTok{)}
+
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{10-causal-inference_files/figure-pdf/cell-7-output-1.pdf}}
+
+The labels on the x-axis indicate the control condition counts, followed
+by the experimental condition counts.
+
+You can see that the model's predictions largely follow the
+\hyperref[structure-strength]{pattern in the data from earlier}. The
+model favors Graph 1 in the two leftmost cases, is essentially uncertain
+in the third case, and begins to think the evidence favors no causal
+relationship in the rightmost case.
+
+The rest of the Griffiths \& Tenenbaum paper shows how causal support is
+able to capture some subtle aspects of people's causal judgments that
+other models that don't incorporate \emph{both} structure and strength
+fail to capture.
+
+
+
+
+\end{document}

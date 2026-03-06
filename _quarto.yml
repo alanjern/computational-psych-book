@@ -29,10 +29,15 @@ book:
   google-analytics: "G-HG2MG0W08W"
 
 format:
-  html:
+  live-html:
     theme: pulse
-  pdf:
-    documentclass: scrreprt
+pyodide:
+  packages:
+    - matplotlib
+    - numpy
+    - seaborn
+    - scipy
+    - pandas
 
 editor: visual
 
